@@ -88,7 +88,9 @@ class Window(QWidget):
         self.window.show()
 
     def moveData(self):
-        side = self.tasksListWidget.currentRow()
+        side = self.tasksListWidget.currentRow() #questo è il problema, non riesco in alcun modo a selezionare solamente
+        # la riga e il suo interno allo stesso tempo devo trovare un modo per popolare quella riga in particolare con
+        # oggetti invece che con solo un nome e un quadrato di controllo
         print(side)
         #assegna cosa a seconda finestra
         #self.ui.labelReceiver.setText(row)
