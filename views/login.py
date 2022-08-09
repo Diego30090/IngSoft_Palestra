@@ -1,21 +1,18 @@
 import sys
 
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QLineEdit, QPushButton
-from PyQt5.QtGui import QIcon
-from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton
 
 
-class App(QMainWindow):
+class LoginUi(QMainWindow):
 
     def __init__(self):
         super().__init__()
         self.title = 'Login'
         self.width = 300
         self.height = 150
-        self.initUI()
+        self.init_ui()
 
-    def initUI(self):
+    def init_ui(self):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
@@ -35,17 +32,14 @@ class App(QMainWindow):
         pass_text.setEchoMode(QLineEdit.Password)
         pass_text.setFixedHeight(20)
 
-        login_button =QPushButton("Login",self)
+        login_button = QPushButton("Login", self)
         login_button.setFixedHeight(25)
         login_button.move(100, 100)
-        login_button.setObjectName('asd')
 
         self.show()
 
 
-
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = App()
+    ex = LoginUi()
     sys.exit(app.exec_())
