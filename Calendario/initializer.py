@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+import event
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem, QMessageBox
@@ -33,9 +34,9 @@ class Window(QWidget):
         db = sqlite3.connect("DatabaseCalendario.db") #il collegamento
         cursor = db.cursor() #fa il query (cosa gli chiedo del database)
 
-        query = "SELECT task, completed FROM tasks WHERE date = ?"
+        query = "SELECT name, time FROM tasks WHERE date = ?"
         row = (date,)
-        results = cursor.execute(query, row).fetchall()
+        results = cursor.execute(query, row).fetchall() #permette di eseguire i query sul database
         for result in results:
             item = QListWidgetItem(str(result[0])) #result [1] è quello completo, 0 è il task
             item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
@@ -54,10 +55,10 @@ class Window(QWidget):
             item = self.tasksListWidget.item(i)
             task = item.text()
             if item.checkState() == QtCore.Qt.Checked:
-                query = "UPDATE tasks SET completed = 'YES' WHERE task = ? AND date = ?"
+                query = "UPDATE tasks SET completed = 'YES' WHERE name = ? AND date = ?"
             else:
-                query = "UPDATE tasks SET completed = 'NO' WHERE task = ? AND date = ?"
-            row = (task, date,)
+                query = "UPDATE tasks SET completed = 'NO' WHERE name = ? AND date = ?"
+            row = (name, date,)
             cursor.execute(query, row)
         db.commit()
 
@@ -70,11 +71,14 @@ class Window(QWidget):
         db = sqlite3.connect("DatabaseCalendario.db")
         cursor = db.cursor()
 
-        newTask = str(self.taskLineEdit.text())
+        newName = str(self.taskLineEdit.text())
         date = self.calendarWidget.selectedDate().toPyDate()
+        newLocation = str(self.taskLineEdit1.text())
+        newTime = str(self.taskLineEdit2.text())
+        newDescription = str(self.taskLineEdit3.text())
 
-        query = "INSERT INTO tasks(task, completed, date) VALUES (?,?,?)"
-        row = (newTask, "NO", date,)
+        query = "INSERT INTO tasks(name, date, location, time, description, completed) VALUES (?,?,?,?,?,?)"
+        row = (newName, date, newLocation, newTime, newDescription, "NO",)
 
         cursor.execute(query, row)
         db.commit()
