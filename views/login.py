@@ -41,7 +41,7 @@ class App(QMainWindow):
         login_button.setObjectName('asd')
 
         self.show()
-
+#tasda
 
 
 
