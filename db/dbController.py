@@ -73,5 +73,14 @@ def modify_event(new_name, event_id):
     cur.execute(query)
     con.commit()
 
+def update_event(event_id, name, location, time, organizer, description):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', description = '{description}' WHERE id='{event_id}'"
+    cur.execute(query)
+    con.commit()
+
 if __name__ == "__main__":
-    remove_event(13)
+    print(event_by_id(1))
+    update_event(1, 'Gara U15','Palabaddinelli, Osimo', '8:30 - 17:00', 'Marco Rossi', 'The world was going to roll me')
+    print(event_by_id(1))
