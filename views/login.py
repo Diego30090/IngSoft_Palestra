@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushB
 
 
 class LoginUi(QWidget):
-#class LoginUi(QMainWindow):
+    # class LoginUi(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -43,13 +43,10 @@ class LoginUi(QWidget):
         self.login_button.setFixedHeight(25)
         self.login_button.move(100, 100)
         self.show()
+
     def login_clicked(self):
         print(self.user_text.text())
         print(self.pass_text.text())
-
-
-
-
 
 
 if __name__ == '__main__':
