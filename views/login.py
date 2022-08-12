@@ -2,22 +2,26 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QWidget
 
+from views import mainMenu
+
 
 class LoginUi(QWidget):
-    # class LoginUi(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        #Window settings
+        self.title = 'Login'
+        self.width = 300
+        self.height = 150
+        #Item settings
         self.login_button = None
         self.pass_text = None
         self.user_text = None
         self.pass_label = None
         self.user_label = None
-        self.title = 'Login'
-        self.width = 300
-        self.height = 150
+        #item initializers and item commands
         self.init_ui()
-        self.login_button.clicked.connect(self.login_clicked)
+        self.instruction()
 
     def init_ui(self):
         self.setWindowTitle(self.title)
@@ -44,9 +48,21 @@ class LoginUi(QWidget):
         self.login_button.move(100, 100)
         self.show()
 
+    def instruction(self):
+        self.login_button.clicked.connect(self.login_clicked)
+
     def login_clicked(self):
-        print(self.user_text.text())
-        print(self.pass_text.text())
+        user = self.user_text.text()
+        pwd = self.pass_text.text()
+        if user != '' and pwd != '':
+            print(f'User: {user} \nPassword: {pwd} \nCorrect!')
+            self.screen = mainMenu.MainMenu()
+            self.screen.show()
+            self.close()
+
+
+
+
 
 
 if __name__ == '__main__':
