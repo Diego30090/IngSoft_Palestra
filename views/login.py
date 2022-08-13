@@ -1,5 +1,5 @@
 import sys
-
+from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QWidget
 
 from views import mainMenu
@@ -9,17 +9,17 @@ class LoginUi(QWidget):
 
     def __init__(self):
         super().__init__()
-        #Window settings
+        # Window settings
         self.title = 'Login'
         self.width = 300
         self.height = 150
-        #Item settings
+        # Item settings
         self.login_button = None
         self.pass_text = None
         self.user_text = None
         self.pass_label = None
         self.user_label = None
-        #item initializers and item commands
+        # item initializers and item commands
         self.init_ui()
         self.instruction()
 
@@ -55,13 +55,22 @@ class LoginUi(QWidget):
         user = self.user_text.text()
         pwd = self.pass_text.text()
         if user != '' and pwd != '':
-            print(f'User: {user} \nPassword: {pwd} \nCorrect!')
+            flag = db.login(user, pwd)
+            if flag:
+                print(f'User: {user}, password: {pwd} \nCredentials Correct!\n')
+                self.screen = mainMenu.MainMenu()
+                self.screen.show()
+                self.close()
+            else:
+                print('Errore: Credenziali non corrette!')
+        else:
+            print('Errore: inserisci i valori di login!')
+
+            '''
             self.screen = mainMenu.MainMenu()
             self.screen.show()
             self.close()
-
-
-
+            '''
 
 
 

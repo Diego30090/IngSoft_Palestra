@@ -1,6 +1,29 @@
 import sqlite3
 import Calendario
 
+#It sets the connection to the db, from any folder
+def connect():
+    con = sqlite3.connect('..\db\dbProject.db')
+    cursor = con.cursor()
+    return cursor
+
+#Official login function
+def login(user, pwd):
+    cur=connect()
+    query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}' AND password = '{pwd}';"
+    val = cur.execute(query)
+    val= val.fetchall()
+    val = str(val)
+    val = ''.join(val)
+    val = val.replace('[(','')
+    val = val.replace(',)]','')
+    if val == '1':
+        return True
+    else:
+        return False
+
+
+
 
 def menu(con, cur):
     value = input(
@@ -42,13 +65,17 @@ def del_elem(con, cur):
 
 
 def task_insert(val: int, table: str):
-    con = sqlite3.connect('DatabaseCalendario.db')
+    con = sqlite3.connect('dbProject.db')
     cur = con.cursor()
     if val == 1:
         query = f'SELECT * FROM {table}'
 
 
 if __name__ == "__main__":
-    con = sqlite3.connect('DatabaseCalendario.db')
+    '''
+    con = sqlite3.connect('dbProject.db')
     cur = con.cursor()
-    menu(con, cur)
+    #menu(con, cur)
+    '''
+    res= login('root1','pwd')
+    print(res)
