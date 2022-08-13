@@ -1,28 +1,28 @@
 import sqlite3
 import Calendario
 
-#It sets the connection to the db, from any folder
+
+# It sets the connection to the db, from any folder
 def connect():
     con = sqlite3.connect('..\db\dbProject.db')
     cursor = con.cursor()
     return cursor
 
-#Official login function
+
+# Official login function
 def login(user, pwd):
-    cur=connect()
+    cur = connect()
     query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}' AND password = '{pwd}';"
     val = cur.execute(query)
-    val= val.fetchall()
+    val = val.fetchall()
     val = str(val)
     val = ''.join(val)
-    val = val.replace('[(','')
-    val = val.replace(',)]','')
+    val = val.replace('[(', '')
+    val = val.replace(',)]', '')
     if val == '1':
         return True
     else:
         return False
-
-
 
 
 def menu(con, cur):
@@ -77,5 +77,5 @@ if __name__ == "__main__":
     cur = con.cursor()
     #menu(con, cur)
     '''
-    res= login('root1','pwd')
+    res = login('root1', 'pwd')
     print(res)
