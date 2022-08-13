@@ -19,6 +19,7 @@ class LoginUi(QWidget):
         self.user_text = None
         self.pass_label = None
         self.user_label = None
+        self.error_label = None
         # item initializers and item commands
         self.init_ui()
         self.instruction()
@@ -33,6 +34,11 @@ class LoginUi(QWidget):
 
         self.pass_label = QLabel('Password', self)
         self.pass_label.move(60, 60)
+
+        self.error_label = QLabel('', self)
+        self.error_label.move(70, 80)
+        self.error_label.setFixedWidth(300)
+        self.error_label.setStyleSheet("color:red")
 
         self.user_text = QLineEdit(self)
         self.user_text.move(130, 30)
@@ -62,16 +68,17 @@ class LoginUi(QWidget):
                 self.screen.show()
                 self.close()
             else:
-                print('Errore: Credenziali non corrette!')
+                err_text = "Errore: Credenziali non corrette!"
+                self.error_label.setText(err_text)
         else:
-            print('Errore: inserisci i valori di login!')
+            err_text = "Errore: inserisci i valori di login!"
+            self.error_label.setText(err_text)
 
             '''
             self.screen = mainMenu.MainMenu()
             self.screen.show()
             self.close()
             '''
-
 
 
 if __name__ == '__main__':
