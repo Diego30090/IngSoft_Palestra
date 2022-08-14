@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushB
 from views import mainMenu
 
 
-class LoginUi(QWidget):
+class MainView(QWidget):
 
     def __init__(self):
         super().__init__()
@@ -56,7 +56,7 @@ class LoginUi(QWidget):
 
     def instruction(self):
         self.login_button.clicked.connect(self.login_clicked)
-
+        #self.login_button.clicked.connect(self.hide_elem)
     def login_clicked(self):
         user = self.user_text.text()
         pwd = self.pass_text.text()
@@ -66,7 +66,8 @@ class LoginUi(QWidget):
                 print(f'User: {user}, password: {pwd} \nCredentials Correct!\n')
                 self.screen = mainMenu.MainMenu()
                 self.screen.show()
-                self.close()
+                self.hide_elem()
+                #self.close()
             else:
                 err_text = "Errore: Credenziali non corrette!"
                 self.error_label.setText(err_text)
@@ -74,14 +75,18 @@ class LoginUi(QWidget):
             err_text = "Errore: inserisci i valori di login!"
             self.error_label.setText(err_text)
 
-            '''
-            self.screen = mainMenu.MainMenu()
-            self.screen.show()
-            self.close()
-            '''
+
+    #test per disabilitare o nascondere elementi
+    def hide_elem(self):
+        self.pass_text.hide()
+        self.login_button.hide()
+        self.user_text.setDisabled(True)
+        self.pass_label.hide()
+        self.user_label.hide()
+        self.error_label.hide()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = LoginUi()
+    ex = MainView()
     sys.exit(app.exec_())
