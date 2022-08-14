@@ -74,5 +74,4 @@ if __name__ == "__main__":
     cur = con.cursor()
     #menu(con, cur)
     '''
-    res = login_test('root1', 'pwd')
-    print(res)
+
