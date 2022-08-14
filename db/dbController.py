@@ -15,10 +15,7 @@ def login(user, pwd):
     query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}' AND password = '{pwd}';"
     val = cur.execute(query)
     val = val.fetchall()
-    val = str(val)
-    val = ''.join(val)
-    val = val.replace('[(', '')
-    val = val.replace(',)]', '')
+    val=str(val[0][0])
     if val == '1':
         return True
     else:
@@ -77,5 +74,5 @@ if __name__ == "__main__":
     cur = con.cursor()
     #menu(con, cur)
     '''
-    res = login('root1', 'pwd')
+    res = login_test('root1', 'pwd')
     print(res)
