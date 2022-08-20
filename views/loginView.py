@@ -1,6 +1,8 @@
 import sys
+from views import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QWidget
+from GestioneUtente import utente as u
 
 from views import mainMenu
 
@@ -21,10 +23,10 @@ class MainView(QWidget):
         self.user_label = None
         self.error_label = None
         # item initializers and item commands
-        self.init_ui()
+        self.login_ui()
         self.instruction()
 
-    def init_ui(self):
+    def login_ui(self):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
@@ -55,19 +57,17 @@ class MainView(QWidget):
         self.show()
 
     def instruction(self):
-        self.login_button.clicked.connect(self.login_clicked)
-        #self.login_button.clicked.connect(self.hide_elem)
-    def login_clicked(self):
+        self.login_button.clicked.connect(self.login_butt_clicked)
+
+    def login_butt_clicked(self):
         user = self.user_text.text()
         pwd = self.pass_text.text()
         if user != '' and pwd != '':
             flag = db.login(user, pwd)
             if flag:
-                print(f'User: {user}, password: {pwd} \nCredentials Correct!\n')
-                self.screen = mainMenu.MainMenu()
-                self.screen.show()
-                self.hide_elem()
-                #self.close()
+                print(f'User: {user}, password: {pwd} \nCredenziali corrette!\n')
+                self.toMainMenu(user)
+
             else:
                 err_text = "Errore: Credenziali non corrette!"
                 self.error_label.setText(err_text)
@@ -75,15 +75,19 @@ class MainView(QWidget):
             err_text = "Errore: inserisci i valori di login!"
             self.error_label.setText(err_text)
 
-
-    #test per disabilitare o nascondere elementi
-    def hide_elem(self):
+    # test per disabilitare o nascondere elementi
+    def hide_all(self):
         self.pass_text.hide()
-        self.login_button.hide()
+        self.login_button = None
         self.user_text.setDisabled(True)
-        self.pass_label.hide()
-        self.user_label.hide()
-        self.error_label.hide()
+        self.pass_label = None
+        self.user_label = None
+        self.error_label = None
+
+    def toMainMenu(self, user):
+        self.screen = menu.MainMenu(username=user)
+        self.screen.show()
+        self.close()
 
 
 if __name__ == '__main__':
