@@ -1,10 +1,7 @@
 import sys
 from views import mainMenu as menu
 from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QWidget
-from GestioneUtente import utente as u
-
-from views import mainMenu
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
 
 
 class MainView(QWidget):
@@ -75,14 +72,6 @@ class MainView(QWidget):
             err_text = "Errore: inserisci i valori di login!"
             self.error_label.setText(err_text)
 
-    # test per disabilitare o nascondere elementi
-    def hide_all(self):
-        self.pass_text.hide()
-        self.login_button = None
-        self.user_text.setDisabled(True)
-        self.pass_label = None
-        self.user_label = None
-        self.error_label = None
 
     def toMainMenu(self, user):
         self.screen = menu.MainMenu(username=user)

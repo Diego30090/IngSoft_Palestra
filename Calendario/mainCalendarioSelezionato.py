@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\utente\PycharmProjects\pythonProject\mainCalendarioSelezionato.ui'
+# Form implementation generated from reading ui file 'C:\Users\utente\PycharmProjects\IngSoft_Palestra\Calendario\mainCalendarioSelezionato.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -42,10 +42,50 @@ class Ui_SecondWindow(object):
         self.backButton.setStyleSheet("background-color: rgb(177,177,177)")
         self.backButton.setObjectName("backButton")
         self.labelReceiver = QtWidgets.QLabel(Form)
-        self.labelReceiver.setGeometry(QtCore.QRect(70, 130, 401, 321))
-        self.labelReceiver.setStyleSheet("background: white")
+        self.labelReceiver.setGeometry(QtCore.QRect(80, 130, 401, 321))
+        self.labelReceiver.setStyleSheet("background: light grey")
         self.labelReceiver.setText("")
         self.labelReceiver.setObjectName("labelReceiver")
+        self.widgetName = QtWidgets.QWidget(Form)
+        self.widgetName.setGeometry(QtCore.QRect(110, 180, 141, 21))
+        self.widgetName.setStyleSheet("background: white")
+        self.widgetName.setObjectName("widgetName")
+        self.widgetTime = QtWidgets.QWidget(Form)
+        self.widgetTime.setGeometry(QtCore.QRect(110, 250, 141, 21))
+        self.widgetTime.setStyleSheet("background: white")
+        self.widgetTime.setObjectName("widgetTime")
+        self.widgetLocation = QtWidgets.QWidget(Form)
+        self.widgetLocation.setGeometry(QtCore.QRect(310, 180, 141, 21))
+        self.widgetLocation.setStyleSheet("background: white")
+        self.widgetLocation.setObjectName("widgetLocation")
+        self.widget_4 = QtWidgets.QWidget(Form)
+        self.widget_4.setGeometry(QtCore.QRect(310, 250, 141, 21))
+        self.widget_4.setStyleSheet("background: white")
+        self.widget_4.setObjectName("widget_4")
+        self.widget_5 = QtWidgets.QWidget(Form)
+        self.widget_5.setGeometry(QtCore.QRect(110, 330, 341, 101))
+        self.widget_5.setStyleSheet("background: white")
+        self.widget_5.setObjectName("widget_5")
+        self.label_3 = QtWidgets.QLabel(Form)
+        self.label_3.setGeometry(QtCore.QRect(146, 160, 71, 20))
+        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(Form)
+        self.label_4.setGeometry(QtCore.QRect(356, 160, 51, 20))
+        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_4.setObjectName("label_4")
+        self.label_5 = QtWidgets.QLabel(Form)
+        self.label_5.setGeometry(QtCore.QRect(150, 230, 61, 20))
+        self.label_5.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(Form)
+        self.label_6.setGeometry(QtCore.QRect(340, 230, 81, 20))
+        self.label_6.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_6.setObjectName("label_6")
+        self.label_7 = QtWidgets.QLabel(Form)
+        self.label_7.setGeometry(QtCore.QRect(250, 310, 61, 20))
+        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_7.setObjectName("label_7")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -60,6 +100,11 @@ class Ui_SecondWindow(object):
         self.modifyButton.setText(_translate("Form", "MODIFICA"))
         self.deleteButton.setText(_translate("Form", "ELIMINA"))
         self.backButton.setText(_translate("Form", "INDIETRO"))
+        self.label_3.setText(_translate("Form", "Nome Evento"))
+        self.label_4.setText(_translate("Form", "Luogo"))
+        self.label_5.setText(_translate("Form", "Orario"))
+        self.label_6.setText(_translate("Form", "Organizzatore"))
+        self.label_7.setText(_translate("Form", "Descrizione"))
 
 
 if __name__ == "__main__":

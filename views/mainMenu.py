@@ -1,9 +1,9 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QWidget
-from GestioneUtente import utente as u
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
 from db import dbController as db
 from views import loginView as lv
+
 
 class MainMenu(QWidget):
 
@@ -18,7 +18,7 @@ class MainMenu(QWidget):
             self.username = username
             self.flag = True
             self.user_type = db.user_type(self.username)
-        print(type(self.user_type))
+        print(self.user_type)
         self.starting_label = None
         self.title = 'Main Menu'
         self.width = 450
@@ -36,7 +36,6 @@ class MainMenu(QWidget):
         self.inventory_button = None
         # Manda al login
         self.logout_button = None
-
 
         #Label di prova
         self.trial_label = None
