@@ -72,7 +72,6 @@ class MainView(QWidget):
             err_text = "Errore: inserisci i valori di login!"
             self.error_label.setText(err_text)
 
-
     def toMainMenu(self, user):
         self.screen = menu.MainMenu(username=user)
         self.screen.show()
