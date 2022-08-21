@@ -82,10 +82,9 @@ class Window(QWidget):
         self.taskLineEdit.clear()
 
     def openWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_SecondWindow()
-        self.ui.setupUi(self.window)
+        self.window = Window2()
         self.window.show()
+        self.close()
 
     '''def moveData(self):
          side = self.tasksListWidget.currentRow() #questo è il problema, non riesco in alcun modo a selezionare solamente
@@ -117,9 +116,9 @@ class Window(QWidget):
         db = sqlite3.connect("DatabaseCalendario.db")
         cursor = db.cursor()'''
 
-class Window(QWidget):
+class Window2(QWidget):
     def __init__(self):
-        super(Window,self).__init__()
+        super(Window2,self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
         self.dataUpdate()
         self.backButton.clicked.connect(self.backWindow)
@@ -158,9 +157,7 @@ class Window(QWidget):
             self.widgetDesc.addItem(row)
 
     def backWindow(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_Window()
-        self.ui.setupUi(self.window)
+        self.window = Window()
         self.window.show()
         self.close()
 
