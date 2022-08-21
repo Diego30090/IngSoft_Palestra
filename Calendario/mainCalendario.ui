@@ -87,7 +87,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>-30</x>
-     <y>120</y>
+     <y>150</y>
      <width>861</width>
      <height>381</height>
     </rect>
@@ -261,6 +261,19 @@ font: 12pt;
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>460</y>
+     <width>81</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Organizzatore</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>label_2</zorder>
   <zorder>calendarWidget</zorder>
@@ -278,6 +291,7 @@ font: 12pt;
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
   <zorder>label_7</zorder>
+  <zorder>label_8</zorder>
  </widget>
  <resources/>
  <connections/>
