@@ -54,21 +54,17 @@ class Window(QWidget):
         messageBox.exec()
 
     def addNewTask(self):
-        cursor= db.connect()
 
-        newName = str(self.taskLineEdit.text())
-        date = self.calendarWidget.selectedDate().toPyDate()
-        newLocation = str(self.taskLineEdit1.text())
-        newTime = str(self.taskLineEdit2.text())
-        newOrganizer = str(self.taskLineEdit3.text())
-        newDescription = str(self.taskLineEdit4.text())
 
-        query = "INSERT INTO tasks(name, date, location, time, organizer, description) VALUES (?,?,?,?,?,?)"
-        row = (newName, date, newLocation, newTime, newOrganizer, newDescription,)
+        name_event = str(self.taskLineEdit.text())
+        date_event = self.calendarWidget.selectedDate().toPyDate()
+        location_event = str(self.taskLineEdit1.text())
+        time_event = str(self.taskLineEdit2.text())
+        organizer_event = str(self.taskLineEdit3.text())
+        description_event = str(self.taskLineEdit4.text())
 
-        cursor.execute(query, row)
-        db.commit()
-        self.updateTaskList(date)
+        db.insert_event(name_event, date_event, location_event, time_event, organizer_event, description_event)
+        self.updateTaskList(date_event)
         self.taskLineEdit.clear()
 
     def openWindow(self):
