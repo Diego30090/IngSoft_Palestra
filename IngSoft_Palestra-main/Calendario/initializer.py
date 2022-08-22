@@ -14,7 +14,9 @@ class Window(QWidget):
         self.calendarWidget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
+        self.saveButton.clicked.connect(self.saveChanges)
         self.addButton.clicked.connect(self.addNewTask)
+        self.infoButton.clicked.connect(self.openWindow)
         self.tasksListWidget.clicked.connect(self.openWindow)
 
     def calendarDateChanged(self):
@@ -52,6 +54,8 @@ class Window(QWidget):
         messageBox.exec()
 
     def addNewTask(self):
+
+
         name_event = str(self.taskLineEdit.text())
         date_event = self.calendarWidget.selectedDate().toPyDate()
         location_event = str(self.taskLineEdit1.text())
@@ -75,15 +79,13 @@ class Window2(QWidget):
         super(Window2, self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
         self.dataUpdate(name=self.name, date= self.date)
-        self.deleteButton.clicked.connect(self.deleteEvent)
         self.backButton.clicked.connect(self.backWindow)
 
     def dataUpdate(self, name, date):
         event = db.event_by_name_and_date(name, date)
-        self.id_event = event[0]
         name_event = event[1]
         location_event = event[3]
-        time_event = event[4]
+        time_event = event[2]
         organizer_event = event[5]
         description_event = event[6]
         self.widgetName.addItem(name_event)
@@ -92,10 +94,7 @@ class Window2(QWidget):
         self.widgetOrganizer.addItem(organizer_event)
         self.widgetDesc.addItem(description_event)
 
-    def deleteEvent(self):
-        id_event = self.id_event
-        db.delete_event(id_event)
-        self.backWindow()
+
 
     def backWindow(self):
         self.window = Window()
