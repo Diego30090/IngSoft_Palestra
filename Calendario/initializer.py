@@ -135,7 +135,7 @@ class Window2(QWidget):
         cursorTime.execute("SELECT time FROM tasks")
         cursorOrganizer.execute("SELECT organizer FROM tasks")
         cursorDesc.execute("SELECT description FROM tasks")
-        result = cursorName.fetchone()
+        result = cursorName.fetc-row()
         result1 = cursorLocation.fetchone()
         result2 = cursorTime.fetchone()
         result3 = cursorOrganizer.fetchone()
