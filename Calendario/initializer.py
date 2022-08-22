@@ -76,14 +76,15 @@ class Window(QWidget):
 
 class Window2(QWidget):
     def __init__(self, id):
-        self.id=id
+        self.id_event=id
         super(Window2, self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
-        self.dataUpdate(id=self.id)
+        self.dataUpdate()
         self.backButton.clicked.connect(self.backWindow)
+        self.deleteButton.clicked.connect(self.event_delete)
 
-    def dataUpdate(self, id):
-        event = db.event_by_id(id)
+    def dataUpdate(self):
+        event = db.event_by_id(self.id_event)
         name_event = event[1]
         location_event = event[3]
         time_event = event[2]
@@ -95,7 +96,9 @@ class Window2(QWidget):
         self.widgetOrganizer.addItem(organizer_event)
         self.widgetDesc.addItem(description_event)
 
-
+    def event_delete(self):
+        db.remove_event(self.id_event)
+        self.backWindow()
 
     def backWindow(self):
         self.window = Window()

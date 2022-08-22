@@ -59,12 +59,13 @@ def insert_event(name, date, location, time, organizer, description):
     cur.execute(query)
     con.commit()
 
+def remove_event(event_id):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    query = f"DELETE FROM tasks WHERE id='{event_id}';"
+    cur.execute(query)
+    con.commit()
+
 
 if __name__ == "__main__":
-    name = 'Gara U14'
-    date = '2022-08-15'
-    location = 'Osimo'
-    time = '12:00 - 15:00'
-    organizer = 'Prova1'
-    description = 'prova2'
-    insert_event(name, date, location, time, organizer, description)
+    remove_event(13)
