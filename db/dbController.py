@@ -66,6 +66,12 @@ def remove_event(event_id):
     cur.execute(query)
     con.commit()
 
+def modify_event(new_name, event_id):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    query = f"UPDATE product SET name='{new_name}' WHERE id='{event_id}'"
+    cur.execute(query)
+    con.commit()
 
 if __name__ == "__main__":
     remove_event(13)

@@ -14,9 +14,7 @@ class Window(QWidget):
         self.calendarWidget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
-        self.saveButton.clicked.connect(self.saveChanges)
         self.addButton.clicked.connect(self.addNewTask)
-        self.infoButton.clicked.connect(self.openWindow)
         self.tasksListWidget.clicked.connect(self.openWindow)
 
     def calendarDateChanged(self):
@@ -82,12 +80,13 @@ class Window2(QWidget):
         self.dataUpdate()
         self.backButton.clicked.connect(self.backWindow)
         self.deleteButton.clicked.connect(self.event_delete)
+        self.modifyButton.clicked.connect(self.openWindow)
 
     def dataUpdate(self):
         event = db.event_by_id(self.id_event)
         name_event = event[1]
         location_event = event[3]
-        time_event = event[2]
+        time_event = event[4]
         organizer_event = event[5]
         description_event = event[6]
         self.widgetName.addItem(name_event)
@@ -100,7 +99,32 @@ class Window2(QWidget):
         db.remove_event(self.id_event)
         self.backWindow()
 
+    def openWindow(self):
+        self.window = Window3(id=1)
+        self.window.show()
+        self.close()
+
+        '''item = id(self.tasksListWidget.currentItem())
+        for i in range(len(self.event_list)):
+            if str(item) == str(self.event_list[i][1]):
+                selectedId= str(self.event_list[i][0])
+                self.window = Window3(id=selectedId)
+                self.window.show()
+                self.close()'''
+
     def backWindow(self):
+        self.window = Window()
+        self.window.show()
+        self.close()
+
+class Window3(QWidget):
+    def __init__(self, id):
+        self.id_event=id
+        super(Window3, self).__init__()
+        loadUi("mainCalendarioModifiche.ui", self)
+        self.negateButton.clicked.connect(self.negateWindow)
+
+    def negateWindow(self):
         self.window = Window()
         self.window.show()
         self.close()

@@ -87,7 +87,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>-30</x>
-     <y>150</y>
+     <y>140</y>
      <width>861</width>
      <height>381</height>
     </rect>
@@ -148,7 +148,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>430</y>
+     <y>460</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -161,7 +161,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>460</y>
+     <y>430</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -213,7 +213,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>430</y>
+     <y>460</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -222,26 +222,13 @@ font: 12pt;
     <string>Descrizione</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
-   <property name="geometry">
-    <rect>
-     <x>510</x>
-     <y>460</y>
-     <width>47</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>460</y>
+     <y>430</y>
      <width>81</width>
-     <height>20</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
@@ -262,7 +249,6 @@ font: 12pt;
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
-  <zorder>label_7</zorder>
   <zorder>label_8</zorder>
  </widget>
  <resources/>
