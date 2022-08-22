@@ -27,11 +27,11 @@ class Window(QWidget):
     def updateTaskList(self, date):
         self.tasksListWidget.clear()
         events = db.event_name_by_date(date)
+        self.event_list = []
         for event in range(len(events)):
-            print(events[event])
-            item = QListWidgetItem(str(events[event][0]))
+            item = QListWidgetItem(str(events[event][1]))
             self.tasksListWidget.addItem(item)
-
+            self.event_list.append([str(events[event][0]),str(id(self.tasksListWidget.item(event)))])
 
     def saveChanges(self):
         cursor= db.connect()
@@ -54,8 +54,6 @@ class Window(QWidget):
         messageBox.exec()
 
     def addNewTask(self):
-
-
         name_event = str(self.taskLineEdit.text())
         date_event = self.calendarWidget.selectedDate().toPyDate()
         location_event = str(self.taskLineEdit1.text())
@@ -68,21 +66,24 @@ class Window(QWidget):
         self.taskLineEdit.clear()
 
     def openWindow(self):
-        self.window = Window2(name=self.tasksListWidget.currentItem().text(), date=self.calendarWidget.selectedDate().toPyDate())
-        self.window.show()
-        self.close()
+        item = id(self.tasksListWidget.currentItem())
+        for i in range(len(self.event_list)):
+            if str(item) == str(self.event_list[i][1]):
+                selectedId= str(self.event_list[i][0])
+                self.window = Window2(id=selectedId)
+                self.window.show()
+                self.close()
 
 class Window2(QWidget):
-    def __init__(self, name, date):
-        self.name=name
-        self.date=date
+    def __init__(self, id):
+        self.id=id
         super(Window2, self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
-        self.dataUpdate(name=self.name, date= self.date)
+        self.dataUpdate(id=self.id)
         self.backButton.clicked.connect(self.backWindow)
 
-    def dataUpdate(self, name, date):
-        event = db.event_by_name_and_date(name, date)
+    def dataUpdate(self, id):
+        event = db.event_by_id(id)
         name_event = event[1]
         location_event = event[3]
         time_event = event[2]

@@ -39,15 +39,15 @@ def user_type(user):
 # funzioni calendario
 def event_name_by_date(date):
     cur = connect()
-    query = f"SELECT name FROM tasks WHERE date = '{date}';"
+    query = f"SELECT * FROM tasks WHERE date = '{date}';"
     val = cur.execute(query)
     val = val.fetchall()
     return val
 
 
-def event_by_name_and_date(name, date):
+def event_by_id(id):
     cur = connect()
-    query = f"SELECT * FROM tasks WHERE name = '{name}' and date = '{date}';"
+    query = f"SELECT * FROM tasks WHERE id='{id}';"
     val = cur.execute(query).fetchall()
     return val[0]
 
@@ -58,6 +58,7 @@ def insert_event(name, date, location, time, organizer, description):
     query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
     cur.execute(query)
     con.commit()
+
 
 if __name__ == "__main__":
     name = 'Gara U14'
