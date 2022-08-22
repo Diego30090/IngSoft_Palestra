@@ -1,13 +1,25 @@
-import datetime
+from db import dbController as db
 
 class User:
-    def __init__(self, user_id, username, name, surname, born_data, mail, phone):
-        self.user_id = user_id
+    id_utente = None
+    username = None
+    def __init__(self, username):
         self.username = username
-        self.name = name
-        self.surname = surname
-        self.born_data = born_data
-        self.mail = mail
-        self.phone = phone
 
     pass
+
+    def getInfo(self):
+        values= db.user_info(self.username)
+        print(values)
+        self.id_utente=values[0]
+        self.nome= values[1]
+        self.cognome= values[2]
+
+
+
+if __name__ == "__main__":
+    u=User("root")
+    print(u.id_utente)
+    u.getInfo()
+    print(u.id_utente)
+    print(u.nome)
