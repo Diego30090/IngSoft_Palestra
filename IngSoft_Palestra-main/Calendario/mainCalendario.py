@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\utente\PycharmProjects\IngSoft_Palestra-main\Calendario\mainCalendario.ui'
+# Form implementation generated from reading ui file 'C:\Users\utente\PycharmProjects\IngSoft_Palestra\Calendario\mainCalendario.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
+class Ui_Window(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(739, 499)

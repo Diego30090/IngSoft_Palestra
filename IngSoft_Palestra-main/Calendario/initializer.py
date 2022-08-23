@@ -14,7 +14,9 @@ class Window(QWidget):
         self.calendarWidget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
+        self.saveButton.clicked.connect(self.saveChanges)
         self.addButton.clicked.connect(self.addNewTask)
+        self.infoButton.clicked.connect(self.openWindow)
         self.tasksListWidget.clicked.connect(self.openWindow)
 
     def calendarDateChanged(self):
@@ -25,11 +27,11 @@ class Window(QWidget):
     def updateTaskList(self, date):
         self.tasksListWidget.clear()
         events = db.event_name_by_date(date)
-        self.event_list = []
         for event in range(len(events)):
-            item = QListWidgetItem(str(events[event][1]))
+            print(events[event])
+            item = QListWidgetItem(str(events[event][0]))
             self.tasksListWidget.addItem(item)
-            self.event_list.append([str(events[event][0]),str(id(self.tasksListWidget.item(event)))])
+
 
     def saveChanges(self):
         cursor= db.connect()
@@ -52,6 +54,8 @@ class Window(QWidget):
         messageBox.exec()
 
     def addNewTask(self):
+
+
         name_event = str(self.taskLineEdit.text())
         date_event = self.calendarWidget.selectedDate().toPyDate()
         location_event = str(self.taskLineEdit1.text())
@@ -64,41 +68,24 @@ class Window(QWidget):
         self.taskLineEdit.clear()
 
     def openWindow(self):
-        item = id(self.tasksListWidget.currentItem())
-        for i in range(len(self.event_list)):
-            if str(item) == str(self.event_list[i][1]):
-                selectedId= str(self.event_list[i][0])
-                self.window = Window2(id=selectedId)
-                self.window.show()
-                self.close()
+        self.window = Window2(name=self.tasksListWidget.currentItem().text(), date=self.calendarWidget.selectedDate().toPyDate())
+        self.window.show()
+        self.close()
 
 class Window2(QWidget):
-    def __init__(self, id):
-        self.id_event=id
+    def __init__(self, name, date):
+        self.name=name
+        self.date=date
         super(Window2, self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
-        self.init_list(id=self.id_event)
-        self.dataUpdate()
+        self.dataUpdate(name=self.name, date= self.date)
         self.backButton.clicked.connect(self.backWindow)
-        self.deleteButton.clicked.connect(self.event_delete)
-        self.modifyButton.clicked.connect(self.openWindow)
 
-    def init_list(self, id):
-        self.tasksListWidget.clear()
-        events = db.event_by_id(id)
-        events = db.event_name_by_date(events[2])
-        self.event_list = []
-        for event in range(len(events)):
-            item = QListWidgetItem(str(events[event][1]))
-            self.tasksListWidget.addItem(item)
-            #funzione da finire
-        self.tasksListWidget.setDisabled(True)
-
-    def dataUpdate(self):
-        event = db.event_by_id(self.id_event)
+    def dataUpdate(self, name, date):
+        event = db.event_by_name_and_date(name, date)
         name_event = event[1]
         location_event = event[3]
-        time_event = event[4]
+        time_event = event[2]
         organizer_event = event[5]
         description_event = event[6]
         self.widgetName.addItem(name_event)
@@ -107,60 +94,12 @@ class Window2(QWidget):
         self.widgetOrganizer.addItem(organizer_event)
         self.widgetDesc.addItem(description_event)
 
-    def event_delete(self):
-        db.remove_event(self.id_event)
-        self.backWindow()
 
-    def openWindow(self):
-        self.window = Window3(id=self.id_event)
-        self.window.show()
-        self.close()
 
     def backWindow(self):
         self.window = Window()
         self.window.show()
         self.close()
-
-class Window3(QWidget):
-    def __init__(self, id):
-        self.id_event=id
-        super(Window3, self).__init__()
-        loadUi("mainCalendarioModifiche.ui", self)
-        self.init_ui()
-        self.negateButton.clicked.connect(self.negate_window)
-        self.confirmButton.clicked.connect(self.modify_data)
-
-    def init_ui(self):
-        event = db.event_by_id(self.id_event)
-        name_event = event[1]
-        location_event = event[3]
-        time_event = event[4]
-        organizer_event = event[5]
-        description_event = event[6]
-        self.widgetName.clear()
-        self.widgetName.addItem(name_event)
-        self.widgetLocation.clear()
-        self.widgetLocation.addItem(location_event)
-        self.widgetTime.clear()
-        self.widgetTime.addItem(time_event)
-        self.widgetOrganizer.clear()
-        self.widgetOrganizer.addItem(organizer_event)
-        self.widgetDesc.clear()
-        self.widgetDesc.addItem(description_event)
-
-    def negate_window(self):
-        self.window = Window2(id=self.id_event)
-        self.window.show()
-        self.close()
-
-    def modify_data(self):
-        new_name = self.taskLineEdit.text()
-        new_location = self.taskLineEdit1.text()
-        new_time = self.taskLineEdit2.text()
-        new_organizer = self.taskLineEdit3.text()
-        new_description = self.taskLineEdit4.text()
-        db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
-        self.init_ui()
 
 
 if __name__ == "__main__":
