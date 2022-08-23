@@ -100,7 +100,7 @@ class Window2(QWidget):
         self.backWindow()
 
     def openWindow(self):
-        self.window = Window3(id=1)
+        self.window = Window3(id=self.id_event)
         self.window.show()
         self.close()
 
@@ -122,12 +122,29 @@ class Window3(QWidget):
         self.id_event=id
         super(Window3, self).__init__()
         loadUi("mainCalendarioModifiche.ui", self)
-        self.negateButton.clicked.connect(self.negateWindow)
+        self.init_ui()
+        self.negateButton.clicked.connect(self.negate_window)
+        self.confirmButton.clicked.connect(self.modify_data)
 
-    def negateWindow(self):
-        self.window = Window()
+    def init_ui(self):
+        event = db.event_by_id(self.id_event)
+        name_event = event[1]
+        location_event = event[3]
+        time_event = event[4]
+        organizer_event = event[5]
+        description_event = event[6]
+        self.widgetName.addItem(name_event)
+        self.widgetLocation.addItem(location_event)
+        self.widgetTime.addItem(time_event)
+        self.widgetOrganizer.addItem(organizer_event)
+        self.widgetDesc.addItem(description_event)
+
+    def negate_window(self):
+        self.window = Window2(id=self.id_event)
         self.window.show()
         self.close()
+
+    def modify_data(self):
 
 
 if __name__ == "__main__":
