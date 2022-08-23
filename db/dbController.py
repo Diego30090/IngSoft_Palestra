@@ -59,6 +59,7 @@ def insert_event(name, date, location, time, organizer, description):
     cur.execute(query)
     con.commit()
 
+
 def remove_event(event_id):
     con = sqlite3.connect('..\db\dbProject.db')
     cur = con.cursor()
@@ -66,12 +67,6 @@ def remove_event(event_id):
     cur.execute(query)
     con.commit()
 
-def modify_event(new_name, event_id):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
-    query = f"UPDATE product SET name='{new_name}' WHERE id='{event_id}'"
-    cur.execute(query)
-    con.commit()
 
 def update_event(event_id, name, location, time, organizer, description):
     con = sqlite3.connect('..\db\dbProject.db')
@@ -80,7 +75,9 @@ def update_event(event_id, name, location, time, organizer, description):
     cur.execute(query)
     con.commit()
 
+
 if __name__ == "__main__":
     print(event_by_id(1))
-    update_event(1, 'Gara U15','Palabaddinelli, Osimo', '8:30 - 17:00', 'Marco Rossi', 'The world was going to roll me')
+    update_event(1, 'Gara U15', 'Palabaddinelli, Osimo', '8:30 - 17:00', 'Marco Rossi',
+                 'The world was going to roll me')
     print(event_by_id(1))
