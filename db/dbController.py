@@ -44,7 +44,6 @@ def event_name_by_date(date):
     val = val.fetchall()
     return val
 
-
 def event_by_id(id):
     cur = connect()
     query = f"SELECT * FROM tasks WHERE id='{id}';"
@@ -66,10 +65,10 @@ def remove_event(event_id):
     cur.execute(query)
     con.commit()
 
-def modify_event(new_name, event_id):
+def update_event(event_id, new_name, new_location, new_time, new_organizer, new_description):
     con = sqlite3.connect('..\db\dbProject.db')
     cur = con.cursor()
-    query = f"UPDATE product SET name='{new_name}' WHERE id='{event_id}'"
+    query = f"UPDATE tasks SET name = '{new_name}', location = '{new_location}', time = '{new_time}', organizer = '{new_organizer}', description = '{new_description}' WHERE id='{event_id}'"
     cur.execute(query)
     con.commit()
 

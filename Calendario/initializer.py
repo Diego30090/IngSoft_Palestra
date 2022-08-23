@@ -77,10 +77,22 @@ class Window2(QWidget):
         self.id_event=id
         super(Window2, self).__init__()
         loadUi("mainCalendarioSelezionato.ui", self)
+        self.init_list(id=self.id_event)
         self.dataUpdate()
         self.backButton.clicked.connect(self.backWindow)
         self.deleteButton.clicked.connect(self.event_delete)
         self.modifyButton.clicked.connect(self.openWindow)
+
+    def init_list(self, id):
+        self.tasksListWidget.clear()
+        events = db.event_by_id(id)
+        events = db.event_name_by_date(events[2])
+        self.event_list = []
+        for event in range(len(events)):
+            item = QListWidgetItem(str(events[event][1]))
+            self.tasksListWidget.addItem(item)
+            #funzione da finire
+        self.tasksListWidget.setDisabled(True)
 
     def dataUpdate(self):
         event = db.event_by_id(self.id_event)
@@ -104,14 +116,6 @@ class Window2(QWidget):
         self.window.show()
         self.close()
 
-        '''item = id(self.tasksListWidget.currentItem())
-        for i in range(len(self.event_list)):
-            if str(item) == str(self.event_list[i][1]):
-                selectedId= str(self.event_list[i][0])
-                self.window = Window3(id=selectedId)
-                self.window.show()
-                self.close()'''
-
     def backWindow(self):
         self.window = Window()
         self.window.show()
@@ -133,10 +137,15 @@ class Window3(QWidget):
         time_event = event[4]
         organizer_event = event[5]
         description_event = event[6]
+        self.widgetName.clear()
         self.widgetName.addItem(name_event)
+        self.widgetLocation.clear()
         self.widgetLocation.addItem(location_event)
+        self.widgetTime.clear()
         self.widgetTime.addItem(time_event)
+        self.widgetOrganizer.clear()
         self.widgetOrganizer.addItem(organizer_event)
+        self.widgetDesc.clear()
         self.widgetDesc.addItem(description_event)
 
     def negate_window(self):
@@ -145,6 +154,13 @@ class Window3(QWidget):
         self.close()
 
     def modify_data(self):
+        new_name = self.taskLineEdit.text()
+        new_location = self.taskLineEdit1.text()
+        new_time = self.taskLineEdit2.text()
+        new_organizer = self.taskLineEdit3.text()
+        new_description = self.taskLineEdit4.text()
+        db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
+        self.init_ui()
 
 
 if __name__ == "__main__":
