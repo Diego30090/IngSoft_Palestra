@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
 from db import dbController as db
 from views import loginView as lv
+from views import profileView as profile
 
 
 class MainMenu(QWidget):
@@ -138,16 +139,14 @@ class MainMenu(QWidget):
         self.close()
 
     def toProfile(self):
-        self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova del Profilo", self.screen)
-        self.screen.setFixedWidth(300)
-        self.screen.setFixedHeight(200)
+        self.screen = profile.ProfileView()
         self.screen.show()
         self.close()
 
+
     def toMarket(self):
         self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova del mercato", self.screen)
+        self.screen.trial_label = QLabel("View di prova del Mercato", self.screen)
         self.screen.setFixedWidth(300)
         self.screen.setFixedHeight(200)
         self.screen.show()
