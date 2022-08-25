@@ -277,6 +277,9 @@
    <property name="styleSheet">
     <string notr="true">font: 12;</string>
    </property>
+   <property name="text">
+    <string/>
+   </property>
   </widget>
   <widget class="QLineEdit" name="taskLineEdit1">
    <property name="geometry">
@@ -327,7 +330,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 12;</string>
+    <string notr="true">font: 12;
+</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
