@@ -1,7 +1,7 @@
 import sys
 from views import mainMenu as menu
 from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGroupBox, QVBoxLayout
 
 
 class ProfileView(QWidget):
@@ -10,9 +10,14 @@ class ProfileView(QWidget):
         super().__init__()
         # Window settings
         self.title = 'Profilo'
-        self.width = 500
-        self.height = 450
-        # Item settings
+        self.width = 400
+        self.height = 300
+        # Starting Distance Layout
+        self.starting_height_distance = 30
+        self.fixed_left_distance = 75
+        self.fixed_height_distance = 30
+        self.left_line_distance = 190
+        # Field Label
         self.name_label = None
         self.surname_label = None
         self.born_data_label = None
@@ -20,6 +25,21 @@ class ProfileView(QWidget):
         self.address_label = None
         self.email_label = None
         self.phone_label = None
+        self.user_type_label = None
+
+        # User info
+        self.name_info = None
+        self.surname_info = None
+        self.born_data_info = None
+        self.username_info = None
+        self.address_info = None
+        self.email_info = None
+        self.phone_info = None
+        self.user_type_info = None
+
+        self.trial_button = None
+        self.change_info_button = None
+        self.menu_button = None
         # item initializers and item commands
         self.login_ui()
         self.instruction()
@@ -29,11 +49,60 @@ class ProfileView(QWidget):
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
 
+        # Sezione Nome
+        self.name_label = QLabel('Nome: ', self)
+        self.name_info = QLineEdit(self)
+
+        # Sezione Cognome
+        self.surname_label = QLabel('Cognome: ', self)
+        self.surname_info = QLineEdit(self)
+
+        # Sezione Data di Nascita
+        self.born_data_label = QLabel('Data di nascita: ', self)
+        self.born_data_info = QLineEdit(self)
+
+        # Sezione Indirizzo
+        self.address_label = QLabel('Indirizzo: ', self)
+        self.address_info = QLineEdit(self)
+
+        # Sezione Email
+        self.email_label = QLabel('Email: ', self)
+        self.email_info = QLineEdit(self)
+
+        # Sezione user_type
+        self.user_type_label = QLabel('Tipologia di Utente: ', self)
+        self.user_type_info = QLineEdit(self)
+
+        # Pulsanti
+        #self.trial_button = QPushButton('Test Pulsante', self)
+        self.change_info_button = QPushButton('Modifica Profilo', self)
+        self.menu_button = QPushButton('Torna al Menu', self)
+        self.init_distance()
         self.show()
 
-    def instruction(self):
-        print('no instructions')
+    def init_distance(self):
+        # Label User
+        self.name_label.move(self.fixed_left_distance, self.starting_height_distance)
+        self.surname_label.move(self.fixed_left_distance, self.name_label.y() + self.fixed_height_distance)
+        self.born_data_label.move(self.fixed_left_distance, self.surname_label.y() + self.fixed_height_distance)
+        self.address_label.move(self.fixed_left_distance, self.born_data_label.y() + self.fixed_height_distance)
+        self.email_label.move(self.fixed_left_distance, self.address_label.y() + self.fixed_height_distance)
+        self.user_type_label.move(self.fixed_left_distance, self.email_label.y() + self.fixed_height_distance)
 
+        # Info User
+        self.name_info.move(self.left_line_distance, self.starting_height_distance)
+        self.surname_info.move(self.left_line_distance, self.surname_label.y())
+        self.born_data_info.move(self.left_line_distance, self.born_data_label.y())
+        self.address_info.move(self.left_line_distance, self.address_label.y())
+        self.email_info.move(self.left_line_distance, self.email_label.y())
+        self.user_type_info.move(self.left_line_distance, self.user_type_label.y())
+
+        # Pulsanti
+        self.change_info_button.move(self.user_type_label.x() + 20, self.user_type_label.y() + 50)
+        self.menu_button.move(self.user_type_label.x()+145, self.user_type_label.y() + 50)
+
+    def instruction(self):
+        print('No Instruction')
 
 
 if __name__ == '__main__':
