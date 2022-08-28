@@ -17,6 +17,7 @@ class ProfileView(QWidget):
         self.fixed_left_distance = 75
         self.fixed_height_distance = 30
         self.left_line_distance = 190
+
         # Field Label
         self.name_label = None
         self.surname_label = None
@@ -37,12 +38,19 @@ class ProfileView(QWidget):
         self.phone_info = None
         self.user_type_info = None
 
-        self.trial_button = None
-        self.change_info_button = None
+        # Pulsanti Profilo
+        self.edit_profile_button = None
         self.menu_button = None
+
+        # Aggiunte per la modifica del Profilo
+        self.confirm_button = None
+        self.confirm_password_label = None
+        self.confirm_password_info = None
+
         # item initializers and item commands
         self.login_ui()
         self.instruction()
+        self.disabler()
 
     def login_ui(self):
         self.setWindowTitle(self.title)
@@ -74,9 +82,9 @@ class ProfileView(QWidget):
         self.user_type_info = QLineEdit(self)
 
         # Pulsanti
-        #self.trial_button = QPushButton('Test Pulsante', self)
-        self.change_info_button = QPushButton('Modifica Profilo', self)
+        self.edit_profile_button = QPushButton('Modifica Profilo', self)
         self.menu_button = QPushButton('Torna al Menu', self)
+
         self.init_distance()
         self.show()
 
@@ -98,11 +106,54 @@ class ProfileView(QWidget):
         self.user_type_info.move(self.left_line_distance, self.user_type_label.y())
 
         # Pulsanti
-        self.change_info_button.move(self.user_type_label.x() + 20, self.user_type_label.y() + 50)
+        self.edit_profile_button.move(self.user_type_label.x() + 20, self.user_type_label.y() + 50)
         self.menu_button.move(self.user_type_label.x()+145, self.user_type_label.y() + 50)
 
+
+    def disabler(self):
+        self.name_info.setDisabled(True)
+        self.surname_info.setDisabled(True)
+        self.born_data_info.setDisabled(True)
+        #self.username_info.setDisabled(True)
+        self.address_info.setDisabled(True)
+        self.email_info.setDisabled(True)
+        #self.phone_info.setDisabled(True)
+        self.user_type_info.setDisabled(True)
+
+    def enabler(self):
+        # Disabilitazione dei vari pulsanti
+        self.name_info.setDisabled(False)
+        self.surname_info.setDisabled(False)
+        self.born_data_info.setDisabled(False)
+        # self.username_info.setDisabled(False)
+        self.address_info.setDisabled(False)
+        self.email_info.setDisabled(False)
+        # self.phone_info.setDisabled(True)
+
+        # Da abilitare solo se lo user_type è Admin
+        self.user_type_info.setDisabled(True)
+
     def instruction(self):
-        print('No Instruction')
+        self.edit_profile_button.clicked.connect(self.edit_profile)
+
+    def edit_profile(self):
+        self.enabler()
+
+        self.confirm_button = QPushButton('Salva', self)
+        self.confirm_button.show()
+        self.confirm_password_label = QLabel('Conferma la Password', self)
+        self.confirm_password_label.show()
+        self.confirm_password_info = QLineEdit(self)
+
+
+        self.confirm_password_info.show()
+        #self.confirm_password_info.move()
+        #self.confirm_password_label.move()
+
+        # Hide dei vari pulsanti
+        self.edit_profile_button.hide()
+        self.menu_button.hide()
+
 
 
 if __name__ == '__main__':
