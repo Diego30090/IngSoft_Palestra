@@ -1,1 +1,0 @@
-# IngSoft_Palestra
