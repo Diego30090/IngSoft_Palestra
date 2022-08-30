@@ -97,6 +97,7 @@ class ProfileView(QWidget):
         self.email_label.move(self.fixed_left_distance, self.address_label.y() + self.fixed_height_distance)
         self.user_type_label.move(self.fixed_left_distance, self.email_label.y() + self.fixed_height_distance)
 
+
         # Info User
         self.name_info.move(self.left_line_distance, self.starting_height_distance)
         self.surname_info.move(self.left_line_distance, self.surname_label.y())
