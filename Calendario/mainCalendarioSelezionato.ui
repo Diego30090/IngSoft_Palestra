@@ -112,7 +112,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(177,177,177)</string>
+    <string notr="true">background-color: rgb(200,200,200)</string>
    </property>
    <property name="text">
     <string>INDIETRO</string>
