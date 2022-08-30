@@ -134,22 +134,31 @@ class ProfileView(QWidget):
         # Da abilitare solo se lo user_type è Admin
         self.user_type_info.setDisabled(True)
 
+    def edit_setting(self):
+        self.confirm_password_label = QLabel('Conferma la Password', self)
+        self.confirm_password_label.move(self.fixed_left_distance-30, self.user_type_label.y() + self.fixed_height_distance)
+        self.confirm_password_label.setStyleSheet("font: bold")
+        self.confirm_password_label.show()
+
+
+        self.confirm_password_info = QLineEdit(self)
+        self.confirm_password_info.move(self.left_line_distance, self.user_type_label.y() + self.fixed_height_distance)
+        self.confirm_password_info.setProperty("mandatoryField", True)
+        self.confirm_password_info.show()
+
+        self.confirm_button = QPushButton('Salva', self)
+        self.confirm_button.move(self.left_line_distance, self.user_type_label.y() + 60)
+        self.confirm_button.show()
+
+
+
     def instruction(self):
         self.edit_profile_button.clicked.connect(self.edit_profile)
 
     def edit_profile(self):
         self.enabler()
+        self.edit_setting()
 
-        self.confirm_button = QPushButton('Salva', self)
-        self.confirm_button.show()
-        self.confirm_password_label = QLabel('Conferma la Password', self)
-        self.confirm_password_label.show()
-        self.confirm_password_info = QLineEdit(self)
-
-
-        self.confirm_password_info.show()
-        #self.confirm_password_info.move()
-        #self.confirm_password_label.move()
 
         # Hide dei vari pulsanti
         self.edit_profile_button.hide()
