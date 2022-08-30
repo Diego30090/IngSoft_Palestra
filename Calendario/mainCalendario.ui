@@ -25,9 +25,9 @@
    <property name="styleSheet">
     <string notr="true">    color: black;  
     background-color: light grey;  
-    selection-background-color: rgb(126,126,126); 
+    selection-background-color: rgb(200,200,200); 
     selection-color black; 
-    alternate-background-color: rgb(196,196, 196); 
+    alternate-background-color: rgb(126,126,126); 
 font: 12pt;
 </string>
    </property>
@@ -144,7 +144,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit3">
+  <widget class="QLineEdit" name="taskLineEdit4">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -157,7 +157,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit4">
+  <widget class="QLineEdit" name="taskLineEdit3_2">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -243,8 +243,8 @@ font: 12pt;
   <zorder>taskLineEdit</zorder>
   <zorder>taskLineEdit1</zorder>
   <zorder>taskLineEdit2</zorder>
-  <zorder>taskLineEdit3</zorder>
   <zorder>taskLineEdit4</zorder>
+  <zorder>taskLineEdit3_2</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>

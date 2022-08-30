@@ -163,6 +163,7 @@ class Window3(QWidget):
         self.init_ui()
 
 
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = Window()
