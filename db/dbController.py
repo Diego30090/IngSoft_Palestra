@@ -75,5 +75,18 @@ def update_event(event_id, name, location, time, organizer, description):
     cur.execute(query)
     con.commit()
 
+# Funzioni inventario/mercato
+def select_arma():
+    cur = connect()
+    query = f"SELECT * FROM armi;"
+    val = cur.execute(query).fetchall()
+    return val
+
 if __name__ == "__main__":
-    remove_event(13)
+    sl_armi = select_arma()
+    #print(sl_armi)
+    for i in range(len(sl_armi)):
+        print(sl_armi[i])
+        for k in range(len(sl_armi[i])):
+            print(sl_armi[i][k])
+

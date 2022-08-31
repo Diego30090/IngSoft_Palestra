@@ -78,17 +78,16 @@ class inventarioView(QWidget):
 
 
     def show_armi(self):
-        self.display_table = QTableWidget(10, len(self.table_column_arma), self)
+        lista_armi = db.select_arma()
+        self.display_table = QTableWidget(len(lista_armi), len(self.table_column_arma), self)
         self.display_table.move(80, 150)
         self.display_table.setFixedWidth(self.table_fixed_width)
         self.display_table.setFixedHeight(self.table_fixed_height)
-
         self.display_table.setHorizontalHeaderLabels(self.table_column_arma)
 
-        for i in range(10):
+        for i in range(len(lista_armi)):
             for j in range(len(self.table_column_arma)):
-                #Nella linea sotto viene scritto qualcosa nelle varie celle
-                item = QTableWidgetItem(str(i * j))
+                item = QTableWidgetItem(str(lista_armi[i][j+1]))
                 item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
                 self.display_table.setItem(i, j, item)
 
