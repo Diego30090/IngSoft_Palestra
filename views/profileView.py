@@ -1,7 +1,7 @@
 import sys
 from views import mainMenu as menu
 from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGroupBox, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGroupBox, QVBoxLayout, QGridLayout
 
 
 class ProfileView(QWidget):
@@ -11,7 +11,7 @@ class ProfileView(QWidget):
         # Window settings
         self.title = 'Profilo'
         self.width = 400
-        self.height = 300
+        self.height = 320
         # Starting Distance Layout
         self.starting_height_distance = 30
         self.fixed_left_distance = 75
@@ -46,7 +46,10 @@ class ProfileView(QWidget):
         self.confirm_button = None
         self.confirm_password_label = None
         self.confirm_password_info = None
+        self.err_label = None
 
+        # Layout Grid
+        self.layout_grid = None
         # item initializers and item commands
         self.login_ui()
         self.instruction()
@@ -85,8 +88,13 @@ class ProfileView(QWidget):
         self.edit_profile_button = QPushButton('Modifica Profilo', self)
         self.menu_button = QPushButton('Torna al Menu', self)
 
-        self.init_distance()
         self.show()
+
+        #Oggetti di Conferma
+        self.confirm_password_label = QLabel('Conferma la Password', self)
+        self.confirm_password_label.setStyleSheet("font: bold")
+
+        self.init_distance()
 
     def init_distance(self):
         # Label User
@@ -109,6 +117,14 @@ class ProfileView(QWidget):
         # Pulsanti
         self.edit_profile_button.move(self.user_type_label.x() + 20, self.user_type_label.y() + 50)
         self.menu_button.move(self.user_type_label.x()+145, self.user_type_label.y() + 50)
+
+        # Oggetti della finestra edit
+        self.confirm_password_label.move(self.fixed_left_distance - 30,
+                                         self.user_type_label.y() + self.fixed_height_distance)
+
+    def instruction(self):
+        self.edit_profile_button.clicked.connect(self.edit_profile)
+        #self.confirm_button.clicked.connect(self.salva)
 
 
     def disabler(self):
@@ -135,35 +151,34 @@ class ProfileView(QWidget):
         self.user_type_info.setDisabled(True)
 
     def edit_setting(self):
-        self.confirm_password_label = QLabel('Conferma la Password', self)
-        self.confirm_password_label.move(self.fixed_left_distance-30, self.user_type_label.y() + self.fixed_height_distance)
-        self.confirm_password_label.setStyleSheet("font: bold")
         self.confirm_password_label.show()
-
 
         self.confirm_password_info = QLineEdit(self)
         self.confirm_password_info.move(self.left_line_distance, self.user_type_label.y() + self.fixed_height_distance)
         self.confirm_password_info.setProperty("mandatoryField", True)
+        self.confirm_password_info.setEchoMode(QLineEdit.Password)
         self.confirm_password_info.show()
 
+        self.err_label = QLabel('Errore: ', self)
+        self.err_label.move(self.left_line_distance-40, self.confirm_password_label.y() + self.fixed_height_distance)
+        self.err_label.setStyleSheet("color: red")
+        self.err_label.show()
+
         self.confirm_button = QPushButton('Salva', self)
-        self.confirm_button.move(self.left_line_distance, self.user_type_label.y() + 60)
+        self.confirm_button.move(self.left_line_distance, self.err_label.y() + self.fixed_height_distance)
         self.confirm_button.show()
 
 
 
-    def instruction(self):
-        self.edit_profile_button.clicked.connect(self.edit_profile)
-
     def edit_profile(self):
         self.enabler()
         self.edit_setting()
-
-
         # Hide dei vari pulsanti
         self.edit_profile_button.hide()
         self.menu_button.hide()
 
+    def salva(self):
+        print('salvato')
 
 
 if __name__ == '__main__':
