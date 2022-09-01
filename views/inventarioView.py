@@ -25,6 +25,7 @@ class inventarioView(QWidget):
         self.button_horizontal_distance = 265
         self.button_vertical_distance = 40
         # Table columns settings
+        self.table_column = None
         self.table_column_arma = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore', 'Impugnatura']
         self.table_column_divise = ['Giacenza', 'Disponibilità', 'Elemento', 'D/S', 'Arma', 'Taglia', 'Sesso', 'Produttore']
         self.table_column_borsoni = ['Attrezzatura', 'Produttore']
@@ -63,31 +64,28 @@ class inventarioView(QWidget):
 
 
     def instruction(self):
-        self.armi_button.clicked.connect(lambda: self.select_tab('armi'))
+        self.armi_button.clicked.connect(lambda: self.show_tab('armi'))
         self.divise_button.clicked.connect(lambda: self.show_tab('divise'))
         self.borsoni_button.clicked.connect(lambda: self.show_tab('borsoni'))
 
+    def show_tab(self, tab_type):
 
-    def select_tab(self, tab_type):
         if tab_type == 'armi':
-            self.show_armi()
-        if tab_type == 'divise':
-            print('tabella divise')
-        if tab_type == 'borsoni':
-            print('tabella borsoni')
-
-
-    def show_armi(self):
-        lista_armi = db.select_arma()
-        self.display_table = QTableWidget(len(lista_armi), len(self.table_column_arma), self)
+            self.table_column = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore', 'Impugnatura']
+        elif tab_type == 'divise':
+            self.table_column = ['Giacenza', 'Disponibilità', 'Elemento', 'D/S', 'Arma', 'Taglia', 'Sesso', 'Produttore']
+        elif tab_type == 'borsoni':
+            self.table_column = ['Attrezzatura', 'Produttore']
+        lista = db.select_inventario(tab_type)
+        self.display_table = QTableWidget(len(lista), len(self.table_column), self)
         self.display_table.move(80, 150)
         self.display_table.setFixedWidth(self.table_fixed_width)
         self.display_table.setFixedHeight(self.table_fixed_height)
-        self.display_table.setHorizontalHeaderLabels(self.table_column_arma)
+        self.display_table.setHorizontalHeaderLabels(self.table_column)
 
-        for i in range(len(lista_armi)):
-            for j in range(len(self.table_column_arma)):
-                item = QTableWidgetItem(str(lista_armi[i][j+1]))
+        for i in range(len(lista)):
+            for j in range(len(self.table_column)):
+                item = QTableWidgetItem(str(lista[i][j+1]))
                 item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
                 self.display_table.setItem(i, j, item)
 

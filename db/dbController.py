@@ -76,14 +76,19 @@ def update_event(event_id, name, location, time, organizer, description):
     con.commit()
 
 # Funzioni inventario/mercato
-def select_arma():
+def select_inventario(tab_type):
     cur = connect()
-    query = f"SELECT * FROM armi;"
+    if tab_type == 'armi':
+        query = f"SELECT * FROM armi;"
+    elif tab_type == 'divise':
+        query = f"SELECT * FROM divise;"
+    elif tab_type == 'borsoni':
+        query = f"SELECT * FROM borsoni;"
     val = cur.execute(query).fetchall()
     return val
 
 if __name__ == "__main__":
-    sl_armi = select_arma()
+    sl_armi = select_inventario()
     #print(sl_armi)
     for i in range(len(sl_armi)):
         print(sl_armi[i])
