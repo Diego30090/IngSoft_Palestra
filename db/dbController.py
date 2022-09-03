@@ -71,7 +71,8 @@ def remove_event(event_id):
 def update_event(event_id, name, location, time, organizer, description):
     con = sqlite3.connect('..\db\dbProject.db')
     cur = con.cursor()
-    query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', description = '{description}', location = '{new_location}', time = '{new_time}', organizer = '{new_organizer}', description = '{new_description}' WHERE id='{event_id}'"
+    query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
+            f"description = '{description}' WHERE id='{event_id}' "
     cur.execute(query)
     con.commit()
 
