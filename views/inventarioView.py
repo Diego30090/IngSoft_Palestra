@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidge
 
 class inventarioView(QWidget):
 
-    def __init__(self):
+    def __init__(self, id):
         super().__init__()
         # Window settings
         self.title = 'Inventario'
@@ -22,7 +22,7 @@ class inventarioView(QWidget):
         self.create_button = None
         self.modify_button = None
         self.back_button = None
-        # Button settings
+        # Button distances
         self.button_fixed_height = 90
         self.button_fixed_width = 120
         self.button_horizontal_distance = 265
@@ -32,8 +32,6 @@ class inventarioView(QWidget):
         self.table_fixed_width = 690
         self.table_fixed_height = 400
         # item initializers and item commands
-
-
         self.inventario_ui()
         self.instruction()
 
@@ -68,6 +66,18 @@ class inventarioView(QWidget):
 
         self.show()
 
+        self.create_button = QPushButton('Crea', self)
+        self.create_button.setFixedHeight(self.button_fixed_height)
+        self.create_button.setFixedWidth(self.button_fixed_width)
+        self.create_button.move(100, 580)
+        self.create_button.setStyleSheet("background: rgb(140,255,70);")
+
+        self.modify_button = QPushButton('Visualizza', self)
+        self.modify_button.setFixedHeight(self.button_fixed_height)
+        self.modify_button.setFixedWidth(self.button_fixed_width)
+        self.modify_button.move(self.armi_button.x() + self.button_horizontal_distance, 580)
+        self.modify_button.setStyleSheet("background: rgb(255,255,70);")
+
 
     def instruction(self):
         self.armi_button.clicked.connect(lambda: self.show_tab('armi'))
@@ -95,21 +105,84 @@ class inventarioView(QWidget):
                 item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
                 self.display_table.setItem(i, j, item)
 
-        self.create_button = QPushButton('Crea', self)
-        self.create_button.setFixedHeight(self.button_fixed_height)
-        self.create_button.setFixedWidth(self.button_fixed_width)
-        self.create_button.move(100, 580)
-        self.create_button.setStyleSheet("background: rgb(140,255,70);")
-
-        self.modify_button = QPushButton('Modifica', self)
-        self.modify_button.setFixedHeight(self.button_fixed_height)
-        self.modify_button.setFixedWidth(self.button_fixed_width)
-        self.modify_button.move(self.armi_button.x() + self.button_horizontal_distance, 580)
-        self.modify_button.setStyleSheet("background: rgb(255,255,70);")
-
         self.create_button.show()
         self.modify_button.show()
         self.display_table.show()
+
+class insertArmaWindow (QWidget):
+
+    def __init__(self):
+    # Window settings
+        self.title = 'Inserisci Arma'
+        self.width = 400
+        self.height = 500
+    # Item settings
+        self.giacenza_label = None
+        self.disponibilita_label = None
+        self.arma_label = None
+        self.ds_label = None
+        self.materiale_label = None
+        self.lunghezza_label = None
+        self.produttore_label = None
+        self.impugnatura_label = None
+
+        self.giacenza_text = None
+        self.disponibilita_text = None
+        self.arma_text = None
+        self.ds_text = None
+        self.materiale_text = None
+        self.lunghezza_text = None
+        self.produttore_text = None
+        self.impugnatura_text = None
+
+        self.accept_button = None
+        self.back_button = None
+    #Button distances
+        self.verticalDistance = 50
+        self.horizontalLabelDistance = 50
+        self.horizontalTextDistance = 200
+
+    def insertArmaUI (self):
+
+        self.giacenza_label = QLabel('Giacenza', self)
+        self.giacenza_label.move(self.horizontalLabelDistance, self.verticalDistance)
+
+        self.disponibilita_label = QLabel('Disponibilità', self)
+        self.disponibilita_label.move(self.horizontalLabelDistance, self.giacenza_label.y() + self.verticalDistance)
+
+        self.arma_label = QLabel('Arma', self)
+        self.arma_label.move(self.horizontalLabelDistance, self.disponibilita_label.y() + self.verticalDistance)
+
+        self.ds_label = QLabel('D/S', self)
+        self.ds_label.move(self.horizontalLabelDistance, self.arma_label.y() + self.verticalDistance)
+
+        self.materiale_label = QLabel('Materiale', self)
+        self.materiale_label.move(self.horizontalLabelDistance, self.ds_label.y() + self.verticalDistance)
+
+        self.lunghezza_label = QLabel('Lunghezza', self)
+        self.lunghezza_label.move(self.horizontalLabelDistance, self.materiale_label.y() + self.verticalDistance)
+
+        self.produttore_label = QLabel('Produttore', self)
+        self.produttore_label.move(self.horizontalLabelDistance, self.lunghezza_label.y() + self.verticalDistance)
+
+        self.impugnatura_label = QLabel('Impugnatura', self)
+        self.impugnatura_label.move(self.horizontalLabelDistance, self.produttore_label.y() + self.verticalDistance)
+
+        self.giacenza_text = None
+        self.disponibilita_text = None
+        self.arma_text = None
+        self.ds_text = None
+        self.materiale_text = None
+        self.lunghezza_text = None
+        self.produttore_text = None
+        self.impugnatura_text = None
+
+        self.accept_button = None
+        self.back_button = None
+
+        self.show()
+
+
 
 
 
