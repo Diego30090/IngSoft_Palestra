@@ -157,7 +157,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit3_2">
+  <widget class="QLineEdit" name="taskLineEdit3">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -244,7 +244,7 @@ font: 12pt;
   <zorder>taskLineEdit1</zorder>
   <zorder>taskLineEdit2</zorder>
   <zorder>taskLineEdit4</zorder>
-  <zorder>taskLineEdit3_2</zorder>
+  <zorder>taskLineEdit3</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
