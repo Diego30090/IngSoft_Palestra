@@ -8,10 +8,10 @@ from PyQt5.QtCore import *
 
 class ProfileView(QWidget):
 
-    def __init__(self):
+    def __init__(self, profile_name):
         super().__init__()
         # Starting Distance Layout
-        self.starting_height_distance = 30
+        self.starting_height_distance = 50
         self.fixed_left_distance = 75
         self.fixed_height_distance = 30
         self.left_line_distance = 190
@@ -22,8 +22,8 @@ class ProfileView(QWidget):
         self.starting_confirm_distance = 330
         self.show()
 
-        self.label = QLabel("Test", self)
-        self.label.show()
+        self.profile_name_label = QLabel(f"Profilo di {profile_name}", self)
+        self.profile_name_label.show()
 
         # Field Label
         self.name_label = QLabel(self)
@@ -36,7 +36,7 @@ class ProfileView(QWidget):
         self.user_type_label = QLabel(self)
 
         # User info
-        #self.username_info = None
+        # self.username_info = None
         self.name_info = QLineEdit(self)
         self.surname_info = QLineEdit(self)
         self.born_data_info = QLineEdit(self)
@@ -50,7 +50,7 @@ class ProfileView(QWidget):
         self.menu_button = None
 
         # Oggetti view Modifica profilo
-            # Campi da compilare
+        # Campi da compilare
         self.new_name = QLineEdit(self)
         self.new_surname = QLineEdit(self)
         self.new_born_data = QLineEdit(self)
@@ -59,10 +59,11 @@ class ProfileView(QWidget):
         self.new_email = QLineEdit(self)
         self.new_phone = QLineEdit(self)
         self.new_user_type = QLineEdit(self)
-            # Pulsanti
-        self.confirm_button = None
+        # Pulsanti
+        self.confirm_button = QPushButton(self)
         self.confirm_password_label = None
         self.confirm_password_info = None
+        self.confirm_password_info2 = QLineEdit(self)
         self.err_label = None
 
         # Element Serialization
@@ -84,17 +85,15 @@ class ProfileView(QWidget):
     def profile_view_settings(self):
         self.setWindowTitle('Profilo')
         self.setFixedWidth(400)
-        self.setFixedHeight(320)
-
-    def edit_profile_view_geometry(self):
-        self.setWindowTitle('Modifica Profilo')
-        self.setFixedWidth(510)
-        self.setFixedHeight(320)
+        self.setFixedHeight(350)
 
     def profile_item_def(self):
         # Setting Nome della label
         for label in range(len(self.field_labels_obj)):
             self.field_labels_obj[label].setText(self.field_labels_name[label])
+
+        # Label Nome Profilo
+        self.profile_name_label.setStyleSheet('font: bold; font-size: 14px')
 
         # Pulsanti
         self.edit_profile_button = QPushButton('Modifica Profilo', self)
@@ -109,25 +108,32 @@ class ProfileView(QWidget):
                 self.field_labels_obj[label].move(self.fixed_left_distance, self.starting_height_distance)
                 self.field_labels_obj[label].show()
             else:
-                self.field_labels_obj[label].move(self.fixed_left_distance, self.field_labels_obj[label - 1].y() + self.fixed_height_distance)
+                self.field_labels_obj[label].move(self.fixed_left_distance,
+                                                  self.field_labels_obj[label - 1].y() + self.fixed_height_distance)
                 self.field_labels_obj[label].show()
 
         # set position of info elem
         for elem in range(len(self.field_line_obj)):
-            self.field_line_obj[elem].setGeometry(self.left_line_distance, self.field_labels_obj[elem].y(), self.standard_line_width, self.standard_line_height)
+            self.field_line_obj[elem].setGeometry(self.left_line_distance, self.field_labels_obj[elem].y(),
+                                                  self.standard_line_width, self.standard_line_height)
             self.field_line_obj[elem].setDisabled(True)
             self.field_line_obj[elem].show()
 
-        self.label.move(int((self.width() - self.label.width())/2),0)
-        print(self.label.x())
-
+        self.profile_name_label.adjustSize()
+        self.profile_name_label.move(int((self.width() - self.profile_name_label.width()) / 2), 20)
+        print(self.profile_name_label.x())
 
         # Pulsanti
         self.edit_profile_button.move(self.user_type_label.x() + 20, self.user_type_label.y() + 50)
-        self.menu_button.move(self.user_type_label.x()+145, self.user_type_label.y() + 50)
+        self.menu_button.move(self.user_type_label.x() + 145, self.user_type_label.y() + 50)
 
         self.edit_profile_button.show()
         self.menu_button.show()
+
+    def edit_profile_view_geometry(self):
+        self.setWindowTitle('Modifica Profilo')
+        self.setFixedWidth(510)
+        self.setFixedHeight(350)
 
     def edit_profile_item_def(self):
         # Conferma password per salvare i dati
@@ -143,40 +149,54 @@ class ProfileView(QWidget):
         self.err_label.setStyleSheet("color: red")
 
         # Pulsante salvataggio dati
-        self.confirm_button = QPushButton('Salva', self)
+        self.confirm_button.setText("Salva")
 
     def edit_prof_item_geometry(self):
         for elem in range(len(self.new_line_obj)):
-            self.new_line_obj[elem].setGeometry(self.starting_confirm_distance, self.field_line_obj[elem].y(), self.standard_line_width, self.standard_line_height)
-            self.new_line_obj[elem].show()
+            self.new_line_obj[elem].setGeometry(self.starting_confirm_distance, self.field_line_obj[elem].y(),
+                                                self.standard_line_width, self.standard_line_height)
 
         # Conferma della Password
-        '''
         self.confirm_password_label.move(self.fixed_left_distance - 30,
                                          self.user_type_label.y() + self.fixed_height_distance)
         self.confirm_password_info.setGeometry(self.left_line_distance,
                                                self.user_type_label.y() + self.fixed_height_distance,
                                                self.standard_line_width, self.standard_line_height)
+        self.confirm_password_info2.setGeometry(self.starting_confirm_distance, self.confirm_password_info.y(),
+                                                self.standard_line_width, self.standard_line_height)
         # label di Errore
-        self.err_label.move(self.left_line_distance - 40, self.confirm_password_label.y() + self.fixed_height_distance)
+        self.err_label.move(int((self.width() - self.err_label.width()) / 2),
+                            self.confirm_password_label.y() + self.fixed_height_distance)
         # Pulsante di Conferma
         self.confirm_button.move(self.left_line_distance, self.err_label.y() + self.fixed_height_distance)
-        '''
+        # Label Nome Profilo
+        self.profile_name_label.move(int((self.width() - self.profile_name_label.width()) / 2), 20)
 
     def instruction(self):
         self.edit_profile_button.clicked.connect(self.edit_profile)
-        #self.confirm_button.clicked.connect(self.salva)
+        self.confirm_button.clicked.connect(self.salva)
 
     def edit_profile(self):
         print('change to edit_profile')
         self.edit_profile_view_geometry()
         self.edit_profile_item_def()
         self.edit_prof_item_geometry()
+        elem_to_hide = [self.edit_profile_button, self.menu_button]
+        for i in range(len(elem_to_hide)):
+            elem_to_hide[i].hide()
+        for elem in range(len(self.new_line_obj)):
+            self.new_line_obj[elem].show()
+        # elem_to_show
+        elem_to_show = [self.confirm_password_label, self.confirm_password_info,
+                        self.confirm_password_info2, self.confirm_button]
+        for i in range(len(elem_to_show)):
+            elem_to_show[i].show()
 
     def salva(self):
-        self.profile_view_settings()
+        print('hai salvato')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ProfileView()
+    ex = ProfileView(profile_name="Asdrubale")
     sys.exit(app.exec_())
