@@ -139,7 +139,7 @@ class MainMenu(QWidget):
         self.close()
 
     def toProfile(self):
-        self.screen = profile.ProfileView()
+        self.screen = profile.ProfileView(profile_name=self.username)
         self.screen.show()
         self.close()
 
