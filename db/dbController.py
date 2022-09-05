@@ -39,7 +39,7 @@ def user_info_by_id(id):
 
 def user_type(user):
     val = user_info(user)
-    return val[12]
+    return val[6]
 
 
 # funzioni calendario
@@ -81,6 +81,16 @@ def update_event(event_id, name, location, time, organizer, description):
             f"description = '{description}' WHERE id='{event_id}' "
     cur.execute(query)
     con.commit()
+
+
+# Funzione update dello user
+def update_user(name,surname, born_data, email, phone, user_type, username):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    query= f"UPDATE utente SET nome= {name}, cognome = {surname}, data_nascita = {born_data}, email = {email}, telefono= {phone}, utente_tipo= {user_type} WHERE username={username};"
+    cur.execute(query)
+    con.commit()
+
 
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
