@@ -100,6 +100,7 @@ class ProfileView(QWidget):
         self.menu_button = QPushButton('Torna al Menu', self)
 
         self.prof_item_geometry()
+        self.data_init(name= 'root')
 
     def prof_item_geometry(self):
         # set position of labels
@@ -195,8 +196,14 @@ class ProfileView(QWidget):
     def salva(self):
         print('hai salvato')
 
+    def data_init(self, name):
+        val = db.user_info(name)
+        for elem in range(len(self.field_line_obj)):
+            print(val[elem])
+            self.field_line_obj[elem].setText(val[elem+1])
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ProfileView(profile_name="Asdrubale")
+    ex = ProfileView(profile_name="root")
     sys.exit(app.exec_())
