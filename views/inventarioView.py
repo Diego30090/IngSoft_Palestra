@@ -92,7 +92,7 @@ class inventarioView(QWidget):
             self.table_column = ['Giacenza', 'Disponibilità', 'Elemento', 'D/S', 'Arma', 'Taglia', 'Sesso',
                                  'Produttore']
         elif tab_type == 'borsoni':
-            self.table_column = ['Attrezzatura', 'Produttore']
+            self.table_column = ['Giacenza', 'Disponibilità', 'Attrezzatura', 'Produttore']
         lista = db.select_inventario(tab_type)
         self.display_table = QTableWidget(len(lista), len(self.table_column), self)
         self.display_table.move(80, 150)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     sys.exit(app.exec_())
 
 
-'''class insertArmaWindow (QWidget):
+class insertArmaWindow (QWidget):
 
     def __init__(self):
     # Window settings
@@ -223,7 +223,7 @@ if __name__ == '__main__':
         self.back_button.move(self.horizontalTextDistance, self.impugnatura_label.y() + self.verticalDistance)
         self.back_button.setStyleSheet("background: rgb(140,255,70);")
 
-        self.show()'''
+        self.show()
 
 
 
