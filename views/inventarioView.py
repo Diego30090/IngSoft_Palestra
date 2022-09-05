@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidge
 
 class inventarioView(QWidget):
 
-    def __init__(self, id):
+    def __init__(self):
         super().__init__()
         # Window settings
         self.title = 'Inventario'
@@ -78,7 +78,6 @@ class inventarioView(QWidget):
         self.modify_button.move(self.armi_button.x() + self.button_horizontal_distance, 580)
         self.modify_button.setStyleSheet("background: rgb(255,255,70);")
 
-
     def instruction(self):
         self.armi_button.clicked.connect(lambda: self.show_tab('armi'))
         self.divise_button.clicked.connect(lambda: self.show_tab('divise'))
@@ -87,9 +86,11 @@ class inventarioView(QWidget):
     def show_tab(self, tab_type):
 
         if tab_type == 'armi':
-            self.table_column = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore', 'Impugnatura']
+            self.table_column = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
+                                 'Impugnatura']
         elif tab_type == 'divise':
-            self.table_column = ['Giacenza', 'Disponibilità', 'Elemento', 'D/S', 'Arma', 'Taglia', 'Sesso', 'Produttore']
+            self.table_column = ['Giacenza', 'Disponibilità', 'Elemento', 'D/S', 'Arma', 'Taglia', 'Sesso',
+                                 'Produttore']
         elif tab_type == 'borsoni':
             self.table_column = ['Attrezzatura', 'Produttore']
         lista = db.select_inventario(tab_type)
@@ -109,7 +110,14 @@ class inventarioView(QWidget):
         self.modify_button.show()
         self.display_table.show()
 
-class insertArmaWindow (QWidget):
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = inventarioView()
+    sys.exit(app.exec_())
+
+
+'''class insertArmaWindow (QWidget):
 
     def __init__(self):
     # Window settings
@@ -134,6 +142,9 @@ class insertArmaWindow (QWidget):
         self.lunghezza_text = None
         self.produttore_text = None
         self.impugnatura_text = None
+
+        self.button_fixed_height = 90
+        self.button_fixed_width = 120
 
         self.accept_button = None
         self.back_button = None
@@ -168,25 +179,52 @@ class insertArmaWindow (QWidget):
         self.impugnatura_label = QLabel('Impugnatura', self)
         self.impugnatura_label.move(self.horizontalLabelDistance, self.produttore_label.y() + self.verticalDistance)
 
-        self.giacenza_text = None
-        self.disponibilita_text = None
-        self.arma_text = None
-        self.ds_text = None
-        self.materiale_text = None
-        self.lunghezza_text = None
-        self.produttore_text = None
-        self.impugnatura_text = None
+        self.giacenza_text = QLineEdit(self)
+        self.giacenza_text.move(self.horizontalTextDistance, self.verticalDistance)
+        self.giacenza_text.setFixedHeight(20)
 
-        self.accept_button = None
-        self.back_button = None
+        self.disponibilita_text = QLineEdit(self)
+        self.disponibilita_text.move(self.horizontalTextDistance, self.giacenza_text.y() + self.verticalDistance)
+        self.disponibilita_text.setFixedHeight(20)
 
-        self.show()
+        self.arma_text = QLineEdit(self)
+        self.arma_text.move(self.horizontalTextDistance, self.disponibilita_text.y() + self.verticalDistance)
+        self.arma_text.setFixedHeight(20)
+
+        self.ds_text = QLineEdit(self)
+        self.ds_text.move(self.horizontalTextDistance, self.arma_text.y() + self.verticalDistance)
+        self.ds_text.setFixedHeight(20)
+
+        self.materiale_text = QLineEdit(self)
+        self.materiale_text.move(self.horizontalTextDistance, self.ds_text.y() + self.verticalDistance)
+        self.materiale_text.setFixedHeight(20)
+
+        self.lunghezza_text = QLineEdit(self)
+        self.lunghezza_text.move(self.horizontalTextDistance, self.materiale_text.y() + self.verticalDistance)
+        self.lunghezza_text.setFixedHeight(20)
+
+        self.produttore_text = QLineEdit(self)
+        self.produttore_text.move(self.horizontalTextDistance, self.lunghezza_text.y() + self.verticalDistance)
+        self.produttore_text.setFixedHeight(20)
+
+        self.impugnatura_text = QLineEdit(self)
+        self.impugnatura_text.move(self.horizontalTextDistance, self.produttore_text.y() + self.verticalDistance)
+        self.impugnatura_text.setFixedHeight(20)
+
+        self.accept_button = QPushButton('Accetta', self)
+        self.accept_button.setFixedHeight(self.button_fixed_height)
+        self.accept_button.setFixedWidth(self.button_fixed_width)
+        self.accept_button.move(self.horizontalLabelDistance, self.impugnatura_label.y() + self.verticalDistance)
+        self.accept_button.setStyleSheet("background: rgb(140,255,70);")
+
+        self.back_button = self.accept_button = QPushButton('Indietro', self)
+        self.back_button.setFixedHeight(self.button_fixed_height)
+        self.back_button.setFixedWidth(self.button_fixed_width)
+        self.back_button.move(self.horizontalTextDistance, self.impugnatura_label.y() + self.verticalDistance)
+        self.back_button.setStyleSheet("background: rgb(140,255,70);")
+
+        self.show()'''
 
 
 
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = inventarioView()
-    sys.exit(app.exec_())
