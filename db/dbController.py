@@ -30,6 +30,12 @@ def user_info(user):
     val = val.fetchall()
     return val[0]
 
+def user_info_by_id(id):
+    cur = connect()
+    query = f"SELECT * FROM utente WHERE id_utente='{id}';"
+    val = cur.execute(query).fetchone()
+    return val
+
 
 def user_type(user):
     val = user_info(user)
@@ -89,10 +95,5 @@ def select_inventario(tab_type):
     return val
 
 if __name__ == "__main__":
-    sl_armi = select_inventario()
-    #print(sl_armi)
-    for i in range(len(sl_armi)):
-        print(sl_armi[i])
-        for k in range(len(sl_armi[i])):
-            print(sl_armi[i][k])
+    print(user_info_by_id(3)[0])
 
