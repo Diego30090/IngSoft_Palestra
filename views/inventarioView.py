@@ -31,9 +31,13 @@ class inventarioView(QWidget):
         self.table_column = None
         self.table_fixed_width = 690
         self.table_fixed_height = 400
+        # settings for new windows
+        self.tab_pointer = None
+        self.insert_window = None
         # item initializers and item commands
         self.inventario_ui()
         self.instruction()
+
 
     def inventario_ui(self):
         self.setWindowTitle(self.title)
@@ -82,6 +86,7 @@ class inventarioView(QWidget):
         self.armi_button.clicked.connect(lambda: self.show_tab('armi'))
         self.divise_button.clicked.connect(lambda: self.show_tab('divise'))
         self.borsoni_button.clicked.connect(lambda: self.show_tab('borsoni'))
+        self.create_button.clicked.connect(lambda: self.insert())
 
     def show_tab(self, tab_type):
 
@@ -93,6 +98,7 @@ class inventarioView(QWidget):
                                  'Produttore']
         elif tab_type == 'borsoni':
             self.table_column = ['Giacenza', 'Disponibilità', 'Attrezzatura', 'Produttore']
+        self.tab_pointer = tab_type
         lista = db.select_inventario(tab_type)
         self.display_table = QTableWidget(len(lista), len(self.table_column), self)
         self.display_table.move(80, 150)
@@ -110,22 +116,23 @@ class inventarioView(QWidget):
         self.modify_button.show()
         self.display_table.show()
 
+    def insert(self):
+        if self.tab_pointer == 'armi':
+            self.insert_window = insertWindow('Inserisci arma', self.table_column)
+            self.insert_window.show()
+            self.hide()
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = inventarioView()
-    sys.exit(app.exec_())
+class insertWindow(QWidget):
 
-
-class insertArmaWindow (QWidget):
-
-    def __init__(self):
+    def __init__(self, window_title, table_column):
+        super().__init__()
     # Window settings
-        self.title = 'Inserisci Arma'
-        self.width = 400
-        self.height = 500
+        self.title = window_title
+        self.width = 370
+        self.height = 600
     # Item settings
-        self.giacenza_label = None
+
+        '''self.giacenza_label = None
         self.disponibilita_label = None
         self.arma_label = None
         self.ds_label = None
@@ -141,21 +148,31 @@ class insertArmaWindow (QWidget):
         self.materiale_text = None
         self.lunghezza_text = None
         self.produttore_text = None
-        self.impugnatura_text = None
+        self.impugnatura_text = None'''
 
         self.button_fixed_height = 90
         self.button_fixed_width = 120
 
         self.accept_button = None
         self.back_button = None
-    #Button distances
+
         self.verticalDistance = 50
         self.horizontalLabelDistance = 50
         self.horizontalTextDistance = 200
 
-    def insertArmaUI (self):
+        self.insertArmaUI(table_column)
+        self.instruction()
+        self.show()
 
-        self.giacenza_label = QLabel('Giacenza', self)
+    def insertArmaUI(self, table_column):
+        self.setWindowTitle(self.title)
+        self.setFixedWidth(self.width)
+        self.setFixedHeight(self.height)
+
+        for i in range(len(table_column):
+            print('a')
+
+        '''self.giacenza_label = QLabel('Giacenza', self)
         self.giacenza_label.move(self.horizontalLabelDistance, self.verticalDistance)
 
         self.disponibilita_label = QLabel('Disponibilità', self)
@@ -209,7 +226,7 @@ class insertArmaWindow (QWidget):
 
         self.impugnatura_text = QLineEdit(self)
         self.impugnatura_text.move(self.horizontalTextDistance, self.produttore_text.y() + self.verticalDistance)
-        self.impugnatura_text.setFixedHeight(20)
+        self.impugnatura_text.setFixedHeight(20)'''
 
         self.accept_button = QPushButton('Accetta', self)
         self.accept_button.setFixedHeight(self.button_fixed_height)
@@ -221,10 +238,18 @@ class insertArmaWindow (QWidget):
         self.back_button.setFixedHeight(self.button_fixed_height)
         self.back_button.setFixedWidth(self.button_fixed_width)
         self.back_button.move(self.horizontalTextDistance, self.impugnatura_label.y() + self.verticalDistance)
-        self.back_button.setStyleSheet("background: rgb(140,255,70);")
+        self.back_button.setStyleSheet("background: rgb(255,70,70);")
 
-        self.show()
+    def instruction(self):
+        self.back_button.clicked.connect(lambda: self.close_this())
+
+    def close_this(self):
+        ex.show()
+        self.close()
 
 
-
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = inventarioView()
+    sys.exit(app.exec_())
 
