@@ -41,6 +41,9 @@ def user_type(user):
     val = user_info(user)
     return val[6]
 
+def user_pass(user):
+    val= user_info(user)
+    return val[5]
 
 # funzioni calendario
 def event_name_by_date(date):
@@ -87,7 +90,7 @@ def update_event(event_id, name, location, time, organizer, description):
 def update_user(name,surname, born_data, email, phone, user_type, username):
     con = sqlite3.connect('..\db\dbProject.db')
     cur = con.cursor()
-    query= f"UPDATE utente SET nome= {name}, cognome = {surname}, data_nascita = {born_data}, email = {email}, telefono= {phone}, utente_tipo= {user_type} WHERE username={username};"
+    query= f"UPDATE utente SET nome= '{name}', cognome = '{surname}', data_nascita = '{born_data}', email = '{email}', telefono= '{phone}', utente_tipo= '{user_type}' WHERE username='{username}';"
     cur.execute(query)
     con.commit()
 
@@ -105,5 +108,5 @@ def select_inventario(tab_type):
     return val
 
 if __name__ == "__main__":
-    print(user_info_by_id(3)[0])
+    print(user_pass('root'))
 

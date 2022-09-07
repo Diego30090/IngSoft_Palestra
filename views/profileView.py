@@ -4,12 +4,14 @@ from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGroupBox, QVBoxLayout, QGridLayout, \
     QSizePolicy, QDateEdit
 from PyQt5.QtCore import *
+from general import dateFormatter as dat
 
 
 class ProfileView(QWidget):
 
     def __init__(self, profile_name):
         super().__init__()
+        self.username = profile_name
         # Starting Distance Layout
         self.starting_height_distance = 60
         self.fixed_left_distance = 75
@@ -22,8 +24,7 @@ class ProfileView(QWidget):
         self.starting_confirm_distance = 330
         self.show()
 
-        self.profile_name_label = QLabel(f"Profilo di {profile_name}", self)
-
+        self.profile_name_label = QLabel(f"Profilo di {self.username}", self)
 
         # Field Label
         self.name_label = QLabel(self)
@@ -38,7 +39,7 @@ class ProfileView(QWidget):
         # self.username_info = None
         self.name_info = QLineEdit(self)
         self.surname_info = QLineEdit(self)
-        self.born_data_info = QLineEdit(self)
+        self.born_data_info = QDateEdit(self)
         self.email_info = QLineEdit(self)
         self.phone_info = QLineEdit(self)
         self.user_type_info = QLineEdit(self)
@@ -65,7 +66,7 @@ class ProfileView(QWidget):
 
         # Element Serialization
         self.field_labels_obj = [self.name_label, self.surname_label, self.born_data_label,
-                                  self.email_label, self.phone_label, self.user_type_label]
+                                 self.email_label, self.phone_label, self.user_type_label]
         self.field_labels_name = ['Nome: ', 'Cognome: ', 'Data di Nascita: ', 'Email: ', 'Telefono: ',
                                   'Tipologia di Utente: ']
         self.field_line_obj = [self.name_info, self.surname_info, self.born_data_info,
@@ -97,7 +98,7 @@ class ProfileView(QWidget):
         self.menu_button = QPushButton('Torna al Menu', self)
 
         self.prof_item_geometry()
-        self.profile_data_init(name='root')
+        self.profile_data_init(name=self.username)
 
     def prof_item_geometry(self):
         # set position of labels
@@ -141,6 +142,7 @@ class ProfileView(QWidget):
         self.confirm_password_info = QLineEdit(self)
         self.confirm_password_info.setProperty("mandatoryField", True)
         self.confirm_password_info.setEchoMode(QLineEdit.Password)
+        self.confirm_password_info2.setEchoMode(QLineEdit.Password)
 
         # Label di Errore
         self.err_label = QLabel('Errore: ', self)
@@ -165,14 +167,21 @@ class ProfileView(QWidget):
         # label di Errore
         self.err_label.move(int((self.width() - self.err_label.width()) / 2),
                             self.confirm_password_label.y() + self.fixed_height_distance)
+
         # Pulsante di Conferma
         self.confirm_button.move(self.left_line_distance, self.err_label.y() + self.fixed_height_distance)
         # Label Nome Profilo
         self.profile_name_label.move(int((self.width() - self.profile_name_label.width()) / 2), 20)
 
+        if self.user_type_info.text() == 'Admin':
+            self.new_user_type.setDisabled(False)
+        else:
+            self.new_user_type.setDisabled(True)
+
     def instruction(self):
         self.edit_profile_button.clicked.connect(self.edit_profile)
         self.confirm_button.clicked.connect(self.salva)
+        self.menu_button.clicked.connect(self.toMainMenu)
 
     def edit_profile(self):
         self.edit_profile_view_geometry()
@@ -184,32 +193,73 @@ class ProfileView(QWidget):
         for elem in range(len(self.new_line_obj)):
             self.new_line_obj[elem].show()
         # elem_to_show
-        elem_to_show = [self.confirm_password_label, self.confirm_password_info,
-                        self.confirm_password_info2, self.confirm_button]
-        for i in range(len(elem_to_show)):
-            elem_to_show[i].show()
+        self.elem_to_show = [self.confirm_password_label, self.confirm_password_info,
+                             self.confirm_password_info2, self.confirm_button]
+        for i in range(len(self.elem_to_show)):
+            self.elem_to_show[i].show()
         self.edit_profile_data_init()
-
-    def salva(self):
-        print('hai salvato')
 
     def profile_data_init(self, name):
         val = db.user_info(name)
         to_substitute = [val[1], val[2], val[3], val[8], val[9], val[6]]
         for elem in range(len(to_substitute)):
-            self.field_line_obj[elem].setText(to_substitute[elem])
+            if elem != 2:
+                self.field_line_obj[elem].setText(to_substitute[elem])
+            else:
+                if to_substitute[2] is None:
+                    self.field_line_obj[elem].setDate(QDate(1000, 1, 1))
+                else:
+                    self.field_line_obj[elem].setDate(dat.str_to_date(to_substitute[2]))
 
     def edit_profile_data_init(self):
+        print('init profile data')
         # get from db
-        d=QDate(2020,6,10)
-        self.new_born_data.setDate(d)
-        date2 = self.new_born_data.date().toString('dd-MM-yyyy')
-        spl=date2.split('-')
+        for i in range(len(self.field_line_obj)):
+            if i != 2:
+                self.new_line_obj[i].setText(self.field_line_obj[i].text())
+            else:
+                self.new_line_obj[i].setDate(self.field_line_obj[i].date())
 
+    def error(self, err):
+        self.err_label.setText(err)
+        self.err_label.adjustSize()
+        self.err_label.move(int((self.width() - self.err_label.width()) / 2),
+                            self.confirm_password_label.y() + self.fixed_height_distance)
+        self.err_label.show()
 
+    def salva(self):
+        if self.confirm_password_info.text() == '' and self.confirm_password_info2.text() == '':
+            error = 'Errore: Password non inserita'
+            self.error(err=error)
+        elif self.confirm_password_info.text() != self.confirm_password_info2.text():
+            error = 'Errore: Password non corrispondente'
+            self.error(err=error)
+        elif self.confirm_password_info.text() == self.confirm_password_info2.text():
+            # get pass from db
+            if self.confirm_password_info.text() != db.user_pass(self.username):
+                error = 'Errore: Password sbagliata'
+                self.error(err=error)
+            else:
+                self.err_label.hide()
+                db.update_user(self.new_name.text(), self.new_surname.text(),
+                               self.new_born_data.date().toString('yyyy-MM-dd'),
+                               self.new_email.text(), self.new_phone.text(), self.new_user_type.text(), self.username)
+                print('inserted values')
+                for elem in range(len(self.new_line_obj)):
+                    self.new_line_obj[elem].hide()
+                for elem in range(len(self.elem_to_show)):
+                    self.elem_to_show[elem].hide()
+                self.profile_view_settings()
+                self.prof_item_geometry()
 
+    def toMainMenu(self):
+        self.screen = menu.MainMenu(username=self.username)
+        self.screen.show()
+        self.close()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ProfileView(profile_name="root")
+    ex = ProfileView(profile_name= 'root0')
     sys.exit(app.exec_())
+
+
