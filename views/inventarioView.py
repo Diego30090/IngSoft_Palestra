@@ -4,7 +4,8 @@ from PyQt5.QtCore import Qt
 
 from views import mainMenu as menu
 from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
+                            QComboBox
 
 class inventarioView(QWidget):
 
@@ -32,14 +33,14 @@ class inventarioView(QWidget):
         self.table_fixed_width = 690
         self.table_fixed_height = 400
         # settings for new windows
-        self.tab_pointer = None
+        self.tab_name = None
         self.insert_window = None
         # item initializers and item commands
-        self.inventario_ui()
+        self.inventario_UI()
         self.instruction()
 
 
-    def inventario_ui(self):
+    def inventario_UI(self):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
@@ -89,7 +90,6 @@ class inventarioView(QWidget):
         self.create_button.clicked.connect(lambda: self.insert())
 
     def show_tab(self, tab_type):
-
         if tab_type == 'armi':
             self.table_column = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
                                  'Impugnatura']
@@ -98,7 +98,7 @@ class inventarioView(QWidget):
                                  'Produttore']
         elif tab_type == 'borsoni':
             self.table_column = ['Giacenza', 'Disponibilità', 'Attrezzatura', 'Produttore']
-        self.tab_pointer = tab_type
+        self.tab_name = tab_type
         lista = db.select_inventario(tab_type)
         self.display_table = QTableWidget(len(lista), len(self.table_column), self)
         self.display_table.move(80, 150)
@@ -117,20 +117,9 @@ class inventarioView(QWidget):
         self.display_table.show()
 
     def insert(self):
-        if self.tab_pointer == 'armi':
-            self.insert_window = insertWindow('Inserisci arma', self.table_column)
-            self.insert_window.show()
-            self.hide()
-
-        if self.tab_pointer == 'divise':
-            self.insert_window = insertWindow('Inserisci divisa', self.table_column)
-            self.insert_window.show()
-            self.hide()
-
-        if self.tab_pointer == 'borsoni':
-            self.insert_window = insertWindow('Inserisci borsone', self.table_column)
-            self.insert_window.show()
-            self.hide()
+        self.insert_window = insertWindow(f'Inserisci {self.tab_name}', self.table_column)
+        self.insert_window.show()
+        self.hide()
 
 class insertWindow(QWidget):
 
@@ -139,7 +128,7 @@ class insertWindow(QWidget):
     # Window settings
         self.title = window_title
         self.width = 370
-        self.height = 600
+        self.height = 650
     # Item settings
         self.labels = []
         self.texts = []
@@ -164,28 +153,51 @@ class insertWindow(QWidget):
         self.setFixedHeight(self.height)
 
         for i in range(len(table_column)):
+
             new_label = QLabel(table_column[i], self)
             new_label.move(self.horizontalLabelDistance, self.verticalDistance)
             self.labels.append(new_label)
 
-            new_text = QLineEdit(self)
-            new_text.move(self.horizontalTextDistance, self.verticalDistance)
-            self.texts.append(new_text)
+            if table_column[i] == 'D/S':
+                new_combo = QComboBox(self)
+                new_combo.addItem('D')
+                new_combo.addItem('S')
+                new_combo.addItem('/')
+                new_combo.setFixedWidth(133)
+                new_combo.move(self.horizontalTextDistance, self.verticalDistance)
+                self.texts.append(new_combo)
+            elif table_column[i] == 'Sesso':
+                new_combo = QComboBox(self)
+                new_combo.addItem('M')
+                new_combo.addItem('F')
+                new_combo.addItem('/')
+                new_combo.setFixedWidth(133)
+                new_combo.move(self.horizontalTextDistance, self.verticalDistance)
+                self.texts.append(new_combo)
+            else:
+                new_text = QLineEdit(self)
+                new_text.move(self.horizontalTextDistance, self.verticalDistance)
+                self.texts.append(new_text)
 
             self.verticalDistance += 50
             self.labels[i].show()
             self.texts[i].show()
 
+        new_label = QLabel('Descrizione', self)
+        new_label.move(self.horizontalLabelDistance, self.verticalDistance)
+        new_text = QLineEdit(self)
+        new_text.move(self.horizontalTextDistance, self.verticalDistance)
+
         self.accept_button = QPushButton('Accetta', self)
         self.accept_button.setFixedHeight(self.button_fixed_height)
         self.accept_button.setFixedWidth(self.button_fixed_width)
-        self.accept_button.move(self.horizontalLabelDistance, 475)
+        self.accept_button.move(self.horizontalLabelDistance, 520)
         self.accept_button.setStyleSheet("background: rgb(140,255,70);")
 
         self.back_button = self.accept_button = QPushButton('Indietro', self)
         self.back_button.setFixedHeight(self.button_fixed_height)
         self.back_button.setFixedWidth(self.button_fixed_width)
-        self.back_button.move(self.horizontalTextDistance, 475)
+        self.back_button.move(self.horizontalTextDistance, 520)
         self.back_button.setStyleSheet("background: rgb(255,70,70);")
 
     def instruction(self):
