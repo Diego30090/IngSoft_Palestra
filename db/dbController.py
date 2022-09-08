@@ -9,6 +9,14 @@ def connect():
     return cursor
 
 
+# Funzione universale per insert/delete/update
+def idu(query):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    cur.execute(query)
+    con.commit()
+
+
 # Official login function
 def login(user, pwd):
     cur = connect()
@@ -30,6 +38,7 @@ def user_info(user):
     val = val.fetchall()
     return val[0]
 
+
 def user_info_by_id(id):
     cur = connect()
     query = f"SELECT * FROM utente WHERE id_utente='{id}';"
@@ -41,9 +50,11 @@ def user_type(user):
     val = user_info(user)
     return val[6]
 
+
 def user_pass(user):
-    val= user_info(user)
+    val = user_info(user)
     return val[5]
+
 
 # funzioni calendario
 def event_name_by_date(date):
@@ -60,15 +71,11 @@ def event_by_id(id):
     val = cur.execute(query).fetchall()
     return val[0]
 
-def idu(query):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
-    cur.execute(query)
-    con.commit()
 
 def insert_event(name, date, location, time, organizer, description):
     query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
     idu(query)
+
 
 def remove_event(event_id):
     query = f"DELETE FROM tasks WHERE id='{event_id}';"
@@ -82,9 +89,10 @@ def update_event(event_id, name, location, time, organizer, description):
 
 
 # Funzione update dello user
-def update_user(name,surname, born_data, email, phone, user_type, username):
-    query= f"UPDATE utente SET nome= '{name}', cognome = '{surname}', data_nascita = '{born_data}', email = '{email}', telefono= '{phone}', utente_tipo= '{user_type}' WHERE username='{username}';"
+def update_user(name, surname, born_data, email, phone, user_type, username):
+    query = f"UPDATE utente SET nome= '{name}', cognome = '{surname}', data_nascita = '{born_data}', email = '{email}', telefono= '{phone}', utente_tipo= '{user_type}' WHERE username='{username}';"
     idu(query)
+
 
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
@@ -98,6 +106,6 @@ def select_inventario(tab_type):
     val = cur.execute(query).fetchall()
     return val
 
+
 if __name__ == "__main__":
     print(user_pass('root'))
-
