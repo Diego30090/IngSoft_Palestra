@@ -122,6 +122,16 @@ class inventarioView(QWidget):
             self.insert_window.show()
             self.hide()
 
+        if self.tab_pointer == 'divise':
+            self.insert_window = insertWindow('Inserisci divisa', self.table_column)
+            self.insert_window.show()
+            self.hide()
+
+        if self.tab_pointer == 'borsoni':
+            self.insert_window = insertWindow('Inserisci borsone', self.table_column)
+            self.insert_window.show()
+            self.hide()
+
 class insertWindow(QWidget):
 
     def __init__(self, window_title, table_column):
@@ -131,24 +141,8 @@ class insertWindow(QWidget):
         self.width = 370
         self.height = 600
     # Item settings
-
-        '''self.giacenza_label = None
-        self.disponibilita_label = None
-        self.arma_label = None
-        self.ds_label = None
-        self.materiale_label = None
-        self.lunghezza_label = None
-        self.produttore_label = None
-        self.impugnatura_label = None
-
-        self.giacenza_text = None
-        self.disponibilita_text = None
-        self.arma_text = None
-        self.ds_text = None
-        self.materiale_text = None
-        self.lunghezza_text = None
-        self.produttore_text = None
-        self.impugnatura_text = None'''
+        self.labels = []
+        self.texts = []
 
         self.button_fixed_height = 90
         self.button_fixed_width = 120
@@ -160,84 +154,38 @@ class insertWindow(QWidget):
         self.horizontalLabelDistance = 50
         self.horizontalTextDistance = 200
 
-        self.insertArmaUI(table_column)
+        self.insertUI(table_column)
         self.instruction()
         self.show()
 
-    def insertArmaUI(self, table_column):
+    def insertUI(self, table_column):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
 
-        for i in range(len(table_column):
-            print('a')
+        for i in range(len(table_column)):
+            new_label = QLabel(table_column[i], self)
+            new_label.move(self.horizontalLabelDistance, self.verticalDistance)
+            self.labels.append(new_label)
 
-        '''self.giacenza_label = QLabel('Giacenza', self)
-        self.giacenza_label.move(self.horizontalLabelDistance, self.verticalDistance)
+            new_text = QLineEdit(self)
+            new_text.move(self.horizontalTextDistance, self.verticalDistance)
+            self.texts.append(new_text)
 
-        self.disponibilita_label = QLabel('Disponibilità', self)
-        self.disponibilita_label.move(self.horizontalLabelDistance, self.giacenza_label.y() + self.verticalDistance)
-
-        self.arma_label = QLabel('Arma', self)
-        self.arma_label.move(self.horizontalLabelDistance, self.disponibilita_label.y() + self.verticalDistance)
-
-        self.ds_label = QLabel('D/S', self)
-        self.ds_label.move(self.horizontalLabelDistance, self.arma_label.y() + self.verticalDistance)
-
-        self.materiale_label = QLabel('Materiale', self)
-        self.materiale_label.move(self.horizontalLabelDistance, self.ds_label.y() + self.verticalDistance)
-
-        self.lunghezza_label = QLabel('Lunghezza', self)
-        self.lunghezza_label.move(self.horizontalLabelDistance, self.materiale_label.y() + self.verticalDistance)
-
-        self.produttore_label = QLabel('Produttore', self)
-        self.produttore_label.move(self.horizontalLabelDistance, self.lunghezza_label.y() + self.verticalDistance)
-
-        self.impugnatura_label = QLabel('Impugnatura', self)
-        self.impugnatura_label.move(self.horizontalLabelDistance, self.produttore_label.y() + self.verticalDistance)
-
-        self.giacenza_text = QLineEdit(self)
-        self.giacenza_text.move(self.horizontalTextDistance, self.verticalDistance)
-        self.giacenza_text.setFixedHeight(20)
-
-        self.disponibilita_text = QLineEdit(self)
-        self.disponibilita_text.move(self.horizontalTextDistance, self.giacenza_text.y() + self.verticalDistance)
-        self.disponibilita_text.setFixedHeight(20)
-
-        self.arma_text = QLineEdit(self)
-        self.arma_text.move(self.horizontalTextDistance, self.disponibilita_text.y() + self.verticalDistance)
-        self.arma_text.setFixedHeight(20)
-
-        self.ds_text = QLineEdit(self)
-        self.ds_text.move(self.horizontalTextDistance, self.arma_text.y() + self.verticalDistance)
-        self.ds_text.setFixedHeight(20)
-
-        self.materiale_text = QLineEdit(self)
-        self.materiale_text.move(self.horizontalTextDistance, self.ds_text.y() + self.verticalDistance)
-        self.materiale_text.setFixedHeight(20)
-
-        self.lunghezza_text = QLineEdit(self)
-        self.lunghezza_text.move(self.horizontalTextDistance, self.materiale_text.y() + self.verticalDistance)
-        self.lunghezza_text.setFixedHeight(20)
-
-        self.produttore_text = QLineEdit(self)
-        self.produttore_text.move(self.horizontalTextDistance, self.lunghezza_text.y() + self.verticalDistance)
-        self.produttore_text.setFixedHeight(20)
-
-        self.impugnatura_text = QLineEdit(self)
-        self.impugnatura_text.move(self.horizontalTextDistance, self.produttore_text.y() + self.verticalDistance)
-        self.impugnatura_text.setFixedHeight(20)'''
+            self.verticalDistance += 50
+            self.labels[i].show()
+            self.texts[i].show()
 
         self.accept_button = QPushButton('Accetta', self)
         self.accept_button.setFixedHeight(self.button_fixed_height)
         self.accept_button.setFixedWidth(self.button_fixed_width)
-        self.accept_button.move(self.horizontalLabelDistance, self.impugnatura_label.y() + self.verticalDistance)
+        self.accept_button.move(self.horizontalLabelDistance, 475)
         self.accept_button.setStyleSheet("background: rgb(140,255,70);")
 
         self.back_button = self.accept_button = QPushButton('Indietro', self)
         self.back_button.setFixedHeight(self.button_fixed_height)
         self.back_button.setFixedWidth(self.button_fixed_width)
-        self.back_button.move(self.horizontalTextDistance, self.impugnatura_label.y() + self.verticalDistance)
+        self.back_button.move(self.horizontalTextDistance, 475)
         self.back_button.setStyleSheet("background: rgb(255,70,70);")
 
     def instruction(self):
