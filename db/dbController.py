@@ -60,40 +60,31 @@ def event_by_id(id):
     val = cur.execute(query).fetchall()
     return val[0]
 
+def idu(query):
+    con = sqlite3.connect('..\db\dbProject.db')
+    cur = con.cursor()
+    cur.execute(query)
+    con.commit()
 
 def insert_event(name, date, location, time, organizer, description):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
     query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
-    cur.execute(query)
-    con.commit()
-
+    idu(query)
 
 def remove_event(event_id):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
     query = f"DELETE FROM tasks WHERE id='{event_id}';"
-    cur.execute(query)
-    con.commit()
+    idu(query)
 
 
 def update_event(event_id, name, location, time, organizer, description):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
     query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
             f"description = '{description}' WHERE id='{event_id}' "
-    cur.execute(query)
-    con.commit()
+    idu(query)
 
 
 # Funzione update dello user
 def update_user(name,surname, born_data, email, phone, user_type, username):
-    con = sqlite3.connect('..\db\dbProject.db')
-    cur = con.cursor()
     query= f"UPDATE utente SET nome= '{name}', cognome = '{surname}', data_nascita = '{born_data}', email = '{email}', telefono= '{phone}', utente_tipo= '{user_type}' WHERE username='{username}';"
-    cur.execute(query)
-    con.commit()
-
+    idu(query)
 
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
