@@ -244,7 +244,6 @@ class ProfileView(QWidget):
                 db.update_user(self.new_name.text(), self.new_surname.text(),
                                self.new_born_data.date().toString('yyyy-MM-dd'),
                                self.new_email.text(), self.new_phone.text(), self.new_user_type.text(), self.username)
-                print('inserted values')
                 for elem in range(len(self.new_line_obj)):
                     self.new_line_obj[elem].hide()
                 for elem in range(len(self.elem_to_show)):
