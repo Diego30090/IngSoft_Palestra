@@ -75,12 +75,12 @@ class ProfileView(QWidget):
                              self.new_phone, self.new_user_type]
 
         # item initializers and item commands
-        self.profile_view_settings()
+        self.profile_view_geometry()
         self.profile_item_def()
         self.instruction()
         self.edit_profile_item_def()
 
-    def profile_view_settings(self):
+    def profile_view_geometry(self):
         self.setWindowTitle('Profilo')
         self.setFixedWidth(400)
         self.setFixedHeight(350)
@@ -105,11 +105,10 @@ class ProfileView(QWidget):
         for label in range(len(self.field_labels_obj)):
             if label == 0:
                 self.field_labels_obj[label].move(self.fixed_left_distance, self.starting_height_distance)
-                self.field_labels_obj[label].show()
             else:
                 self.field_labels_obj[label].move(self.fixed_left_distance,
                                                   self.field_labels_obj[label - 1].y() + self.fixed_height_distance)
-                self.field_labels_obj[label].show()
+            self.field_labels_obj[label].show()
 
         # set position of info elem
         for elem in range(len(self.field_line_obj)):
@@ -201,7 +200,7 @@ class ProfileView(QWidget):
 
     def profile_data_init(self, name):
         val = db.user_info(name)
-        to_substitute = [val[1], val[2], val[3], val[8], val[9], val[6]]
+        to_substitute = [val[1], val[2], val[3], val[7], val[8], val[6]]
         for elem in range(len(to_substitute)):
             if elem != 2:
                 self.field_line_obj[elem].setText(to_substitute[elem])
@@ -248,7 +247,7 @@ class ProfileView(QWidget):
                     self.new_line_obj[elem].hide()
                 for elem in range(len(self.elem_to_show)):
                     self.elem_to_show[elem].hide()
-                self.profile_view_settings()
+                self.profile_view_geometry()
                 self.prof_item_geometry()
 
     def toMainMenu(self):
