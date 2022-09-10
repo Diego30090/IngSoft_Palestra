@@ -94,6 +94,13 @@ def update_user(name, surname, born_data, email, phone, user_type, username):
     idu(query)
 
 
+def select_utente(user_type):
+    cur = connect()
+    query = f"SELECT * from utente WHERE utente_tipo = '{user_type}';"
+    val = cur.execute(query).fetchall()
+    return val
+
+
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
     cur = connect()
@@ -108,4 +115,4 @@ def select_inventario(tab_type):
 
 
 if __name__ == "__main__":
-    print(user_pass('root'))
+    print(select_utente('Admin'))
