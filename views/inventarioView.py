@@ -117,13 +117,13 @@ class inventarioView(QWidget):
         self.display_table.show()
 
     def insert(self):
-        self.insert_window = insertWindow(f'Inserisci {self.tab_name}', self.table_column)
+        self.insert_window = insertWindow(f'Inserisci {self.tab_name}', self.table_column, self.tab_name)
         self.insert_window.show()
         self.hide()
 
 class insertWindow(QWidget):
 
-    def __init__(self, window_title, table_column):
+    def __init__(self, window_title, table_column, tab_name):
         super().__init__()
     # Window settings
         self.title = window_title
@@ -132,6 +132,7 @@ class insertWindow(QWidget):
     # Item settings
         self.labels = []
         self.texts = []
+        self.tab_name = tab_name
 
         self.button_fixed_height = 90
         self.button_fixed_width = 120
@@ -194,14 +195,26 @@ class insertWindow(QWidget):
         self.accept_button.move(self.horizontalLabelDistance, 520)
         self.accept_button.setStyleSheet("background: rgb(140,255,70);")
 
-        self.back_button = self.accept_button = QPushButton('Indietro', self)
+        self.back_button = QPushButton('Indietro', self)
         self.back_button.setFixedHeight(self.button_fixed_height)
         self.back_button.setFixedWidth(self.button_fixed_width)
         self.back_button.move(self.horizontalTextDistance, 520)
         self.back_button.setStyleSheet("background: rgb(255,70,70);")
 
+    def save_infos(self):
+        info = []
+        for i in range(len(self.texts)):
+            print(i)
+            text = self.texts[i].text()
+            print(self.texts[i])
+            info.append(text)
+            print(info[i])
+        db.insert_inventario(self.tab_name, info)
+        self.close_this()
+
     def instruction(self):
         self.back_button.clicked.connect(lambda: self.close_this())
+        self.accept_button.clicked.connect(lambda: self.save_infos())
 
     def close_this(self):
         ex.show()

@@ -101,10 +101,23 @@ def select_inventario(tab_type):
         query = f"SELECT * FROM armi;"
     elif tab_type == 'divise':
         query = f"SELECT * FROM divise;"
-    elif tab_type == 'borsoni':
+    else:
         query = f"SELECT * FROM borsoni;"
     val = cur.execute(query).fetchall()
     return val
+
+def insert_inventario(tab_type, info):
+    if tab_type == 'armi':
+        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, arma, ds, materiale, lunghezza, produttore, " \
+                f"impugnatura, descrizione) VALUES ('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}', " \
+                f"'{info[5]}', '{info[6]}', '{info[7]}', '{info[8]}')"
+    elif tab_type == 'divise':
+        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, elemento, ds, arma, taglia, sesso, " \
+                f"produttore, descrizione) VALUES ('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}', " \
+                f"'{info[5]}', '{info[6]}', '{info[7]}', '{info[8]}')"
+    else:
+        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, elemento, produttore, descrizione) VALUES " \
+                f"('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}','{info[5]}')"
 
 
 if __name__ == "__main__":
