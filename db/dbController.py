@@ -29,6 +29,15 @@ def login(user, pwd):
     else:
         return False
 
+def check_username(user):
+    cur = connect()
+    query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}';"
+    val = cur.execute(query).fetchone()
+    val = str(val[0])
+    if val == '1':
+        return True
+    else:
+        return False
 
 # funzioni user
 def user_info(user):
@@ -94,6 +103,19 @@ def update_user(name, surname, born_data, email, phone, user_type, username):
     idu(query)
 
 
+def insert_user(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono):
+    query = f"INSERT INTO utente(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono) VALUES " \
+            f"('{nome}','{cognome}', '{data_nascita}', '{username}', '{password}', '{utente_tipo}', '{email}', '{telefono}') ; "
+    idu(query)
+
+
+def select_utente(user_type):
+    cur = connect()
+    query = f"SELECT * from utente WHERE utente_tipo = '{user_type}';"
+    val = cur.execute(query).fetchall()
+    return val
+
+
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
     cur = connect()
@@ -121,4 +143,4 @@ def insert_inventario(tab_type, info):
 
 
 if __name__ == "__main__":
-    print(user_pass('root'))
+    print(check_username('root0'))
