@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtCore import Qt
-
+import numpy as np
 from views import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
@@ -87,7 +87,7 @@ class inventarioView(QWidget):
         self.armi_button.clicked.connect(lambda: self.show_tab('armi'))
         self.divise_button.clicked.connect(lambda: self.show_tab('divise'))
         self.borsoni_button.clicked.connect(lambda: self.show_tab('borsoni'))
-        self.create_button.clicked.connect(lambda: self.insert())
+        self.create_button.clicked.connect(lambda: self.insMod(False))
 
     def show_tab(self, tab_type):
         if tab_type == 'armi':
@@ -106,25 +106,39 @@ class inventarioView(QWidget):
         self.display_table.setFixedHeight(self.table_fixed_height)
         self.display_table.setHorizontalHeaderLabels(self.table_column)
 
+        self.id_list = []
         for i in range(len(lista)):
+            id_number = lista[i][0]
             for j in range(len(self.table_column)):
                 item = QTableWidgetItem(str(lista[i][j+1]))
                 item.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
                 self.display_table.setItem(i, j, item)
+            self.id_list.append(id_number)
 
         self.create_button.show()
         self.modify_button.show()
         self.display_table.show()
 
-    def insert(self):
-        self.insert_window = insertWindow(f'Inserisci {self.tab_name}', self.table_column, self.tab_name)
+        self.display_table.cellClicked.connect(self.selectRow)
+
+    def selectRow(self):
+        position = self.display_table.currentRow()
+        item = db.select_inventario_by_id(self.id_list[position], self.tab_name)
+        item.pop(0)
+        print(item)
+        return item
+
+    def insMod(self, info):
+        self.insert_window = insModWindow(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info)
         self.insert_window.show()
         self.hide()
 
-class insertWindow(QWidget):
+#INSertMODifyWINDOW
+class insModWindow(QWidget):
 
-    def __init__(self, window_title, table_column, tab_name):
+    def __init__(self, window_title, table_column, tab_name, info):
         super().__init__()
+        self.item = info
     # Window settings
         self.title = window_title
         self.width = 370
@@ -144,11 +158,11 @@ class insertWindow(QWidget):
         self.horizontalLabelDistance = 50
         self.horizontalTextDistance = 200
 
-        self.insertUI(table_column)
+        self.insModUI(table_column)
         self.instruction()
         self.show()
 
-    def insertUI(self, table_column):
+    def insModUI(self, table_column):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
@@ -174,10 +188,18 @@ class insertWindow(QWidget):
                 new_combo.addItem('/')
                 new_combo.setFixedWidth(133)
                 new_combo.move(self.horizontalTextDistance, self.verticalDistance)
+                if self.item != None:
+                    AllItems = [new_combo.itemText(i) for i in range(new_combo.count())]
+                    for elem in range(len(AllItems)):
+                        if AllItems[elem] == self.item[i]:
+                            new_combo.selected.AllItems[elem]
+
                 self.texts.append(new_combo)
             else:
                 new_text = QLineEdit(self)
                 new_text.move(self.horizontalTextDistance, self.verticalDistance)
+                if self.item != None:
+                    new_text.text(self.item[i])
                 self.texts.append(new_text)
 
             self.verticalDistance += 50
@@ -225,6 +247,13 @@ class insertWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = inventarioView()
+    item = db.select_inventario_by_id(1, 'armi')
+    item = item[1:]
+    item = np.asarray(item)
+    item = item.flatten()
+    print(item)
+    #ex = inventarioView()
+    ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
+                                 'Impugnatura'],'armi', item)
     sys.exit(app.exec_())
 

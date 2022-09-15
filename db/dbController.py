@@ -134,8 +134,14 @@ def insert_inventario(tab_type, info):
                 f"{int(info[5])}, '{info[6]}', '{info[7]}', '{info[8]}')"
     else:
         query = f"INSERT INTO {tab_type}(giacenza, disponibilita, elemento, produttore, descrizione) VALUES " \
-                f"({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}','{info[5]}')"
+                f"({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}')"
     idu(query)
+
+def select_inventario_by_id(id, tab_type):
+    cur = connect()
+    query = f"SELECT * FROM {tab_type} WHERE id = {id};"
+    val = cur.execute(query).fetchone()
+    return val
 
 
 if __name__ == "__main__":
