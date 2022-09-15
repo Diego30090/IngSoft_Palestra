@@ -119,28 +119,25 @@ def select_utente(user_type):
 # Funzioni inventario/mercato
 def select_inventario(tab_type):
     cur = connect()
-    if tab_type == 'armi':
-        query = f"SELECT * FROM armi;"
-    elif tab_type == 'divise':
-        query = f"SELECT * FROM divise;"
-    else:
-        query = f"SELECT * FROM borsoni;"
+    query = f"SELECT * FROM {tab_type};"
     val = cur.execute(query).fetchall()
     return val
 
 def insert_inventario(tab_type, info):
     if tab_type == 'armi':
-        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, arma, ds, materiale, lunghezza, produttore, " \
-                f"impugnatura, descrizione) VALUES ('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}', " \
-                f"'{info[5]}', '{info[6]}', '{info[7]}', '{info[8]}')"
+        query = f"INSERT INTO {tab_type}(giacenza, disponibilita, arma, ds, materiale, lunghezza, produttore, " \
+                f"impugnatura, descrizione) VALUES ({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}', " \
+                f"{int(info[5])}, '{info[6]}', '{info[7]}', '{info[8]}')"
     elif tab_type == 'divise':
-        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, elemento, ds, arma, taglia, sesso, " \
-                f"produttore, descrizione) VALUES ('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}', " \
-                f"'{info[5]}', '{info[6]}', '{info[7]}', '{info[8]}')"
+        query = f"INSERT INTO {tab_type}(giacenza, disponibilita, elemento, ds, arma, taglia, sesso, " \
+                f"produttore, descrizione) VALUES ({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}', " \
+                f"{int(info[5])}, '{info[6]}', '{info[7]}', '{info[8]}')"
     else:
-        query = f"INSERT INTO {tab_type} tasks (giacenza, disponibilita, elemento, produttore, descrizione) VALUES " \
-                f"('{info[0]}', '{info[1]}', '{info[2]}', '{info[3]}', '{info[4]}','{info[5]}')"
+        query = f"INSERT INTO {tab_type}(giacenza, disponibilita, elemento, produttore, descrizione) VALUES " \
+                f"({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}','{info[5]}')"
+    idu(query)
 
 
 if __name__ == "__main__":
     print(check_username('root0'))
+    insert_inventario('armi', [1, 1, 'aaaa', 'S', 'asasa', 666, 'adadewew', 'adefdr', 'ausuauduaususua'])

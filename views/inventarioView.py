@@ -186,8 +186,10 @@ class insertWindow(QWidget):
 
         new_label = QLabel('Descrizione', self)
         new_label.move(self.horizontalLabelDistance, self.verticalDistance)
+        self.labels.append(new_label)
         new_text = QLineEdit(self)
         new_text.move(self.horizontalTextDistance, self.verticalDistance)
+        self.texts.append(new_text)
 
         self.accept_button = QPushButton('Accetta', self)
         self.accept_button.setFixedHeight(self.button_fixed_height)
@@ -204,11 +206,10 @@ class insertWindow(QWidget):
     def save_infos(self):
         info = []
         for i in range(len(self.texts)):
-            print(i)
-            text = self.texts[i].text()
-            print(self.texts[i])
-            info.append(text)
-            print(info[i])
+            if isinstance(self.texts[i], QLineEdit):
+                info.append(self.texts[i].text())
+            elif isinstance(self.texts[i], QComboBox):
+                info.append(self.texts[i].currentText())
         db.insert_inventario(self.tab_name, info)
         self.close_this()
 
@@ -218,6 +219,7 @@ class insertWindow(QWidget):
 
     def close_this(self):
         ex.show()
+        ex.show_tab(tab_type=ex.tab_name)
         self.close()
 
 
