@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidge
 
 class inventarioView(QWidget):
 
-    def __init__(self):
+    def __init__(self, username):
+        self.username = username
         super().__init__()
         # Window settings
         self.title = 'Inventario'
@@ -91,6 +92,7 @@ class inventarioView(QWidget):
         self.create_button.clicked.connect(lambda: self.insMod(False))
         if self.table_on is True:
             self.display_table.cellClicked.connect(lambda: self.selectRow)
+        self.back_button.clicked.connect(self.toMainMenu)
 
 
     def show_tab(self, tab_type):
@@ -140,6 +142,11 @@ class inventarioView(QWidget):
         self.insert_window = insModWindow(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info)
         self.insert_window.show()
         self.hide()
+
+    def toMainMenu(self):
+        self.screen = menu.MainMenu(username=self.username)
+        self.screen.show()
+        self.close()
 
 #INSertMODifyWINDOW
 class insModWindow(QWidget):
@@ -261,7 +268,7 @@ if __name__ == '__main__':
     item = np.asarray(item)
     item = item.flatten()
     print(item)'''
-    ex = inventarioView()
+    ex = inventarioView(username='root0')
     '''ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
                                  'Impugnatura'],'armi', item)'''
     sys.exit(app.exec_())

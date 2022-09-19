@@ -8,9 +8,10 @@ from db import dbController as db
 
 
 class Window(QWidget):
-    def __init__(self):
+    def __init__(self, username):
+        self.username = username
         super(Window, self).__init__()
-        loadUi("mainCalendario.ui", self)
+        loadUi("../Calendario/mainCalendario.ui", self)
         self.calendarWidget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
@@ -76,7 +77,7 @@ class Window2(QWidget):
     def __init__(self, id):
         self.id_event=id
         super(Window2, self).__init__()
-        loadUi("mainCalendarioSelezionato.ui", self)
+        loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
         self.backButton.clicked.connect(self.backWindow)
@@ -125,7 +126,7 @@ class Window3(QWidget):
     def __init__(self, id):
         self.id_event=id
         super(Window3, self).__init__()
-        loadUi("mainCalendarioModifiche.ui", self)
+        loadUi("../Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
         self.negateButton.clicked.connect(self.negate_window)
         self.confirmButton.clicked.connect(self.modify_data)

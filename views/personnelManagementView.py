@@ -10,8 +10,9 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidge
 
 class PersonnelManagementView(QWidget):
 
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
+        self.username = username
         # Window settings
         self.title = 'Gestione Personale'
         self.width = 850
@@ -75,6 +76,7 @@ class PersonnelManagementView(QWidget):
         self.upper_buttons[1].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[1]))
         self.upper_buttons[2].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[2]))
         self.lower_buttons[0].clicked.connect(lambda: self.insert())
+        self.lower_buttons[2].clicked.connect(self.toMainMenu)
 
     def show_tab(self, tab_type):
         print(f'Tab type: {tab_type}')
@@ -109,16 +111,22 @@ class PersonnelManagementView(QWidget):
     def insert(self):
         columns = self.table_column
         columns.pop(0)
-        self.insert_window = insertWindow('Inserisci Utente', columns)
+        self.insert_window = insertWindow('Inserisci Utente', columns, self.username)
         self.insert_window.show()
         self.hide()
         tab = self.tab
 
+    def toMainMenu(self):
+        self.screen = menu.MainMenu(username=self.username)
+        self.screen.show()
+        self.close()
+
 
 class insertWindow(QWidget):
 
-    def __init__(self, window_title, table_column):
+    def __init__(self, window_title, table_column, username):
         super().__init__()
+        self.username= username
         # Window settings
         self.title = window_title
         self.width = 370
@@ -229,5 +237,5 @@ class insertWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = PersonnelManagementView()
+    ex = PersonnelManagementView(username= 'root1')
     sys.exit(app.exec_())

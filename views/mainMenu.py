@@ -1,9 +1,14 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
+
+import Calendario.initializer
 from db import dbController as db
 from views import loginView as lv
 from views import profileView as profile
+from Calendario import initializer as cal
+from views import inventarioView as inv
+from views import personnelManagementView as perman
 
 
 class MainMenu(QWidget):
@@ -123,18 +128,12 @@ class MainMenu(QWidget):
         self.inventory_button.clicked.connect(self.toInventory)
         self.logout_button.clicked.connect(self.toLogout)
     def toCalendar(self):
-        self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova del calendario", self.screen)
-        self.screen.setFixedWidth(300)
-        self.screen.setFixedHeight(200)
+        self.screen = cal.Window(username=self.username)
         self.screen.show()
         self.close()
 
     def toPersonnelManagement(self):
-        self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova della Gestione del Personale", self.screen)
-        self.screen.setFixedWidth(300)
-        self.screen.setFixedHeight(200)
+        self.screen = perman.PersonnelManagementView(username=self.username)
         self.screen.show()
         self.close()
 
@@ -152,10 +151,7 @@ class MainMenu(QWidget):
         self.screen.show()
         self.close()
     def toInventory(self):
-        self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova dell'inventario", self.screen)
-        self.screen.setFixedWidth(300)
-        self.screen.setFixedHeight(200)
+        self.screen = inv.inventarioView(username=self.username)
         self.screen.show()
         self.close()
 
@@ -166,5 +162,5 @@ class MainMenu(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainMenu(username= 'root0')
+    ex = MainMenu(username= 'root1')
     sys.exit(app.exec_())

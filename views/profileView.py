@@ -203,7 +203,7 @@ class ProfileView(QWidget):
         to_substitute = [val[1], val[2], val[3], val[7], val[8], val[6]]
         for elem in range(len(to_substitute)):
             if elem != 2:
-                self.field_line_obj[elem].setText(to_substitute[elem])
+                self.field_line_obj[elem].setText(str(to_substitute[elem]))
             else:
                 if to_substitute[2] is None:
                     self.field_line_obj[elem].setDate(QDate(1000, 1, 1))
