@@ -35,6 +35,7 @@ class inventarioView(QWidget):
         # settings for new windows
         self.tab_name = None
         self.insert_window = None
+        self.table_on = False
         # item initializers and item commands
         self.inventario_UI()
         self.instruction()
@@ -88,8 +89,13 @@ class inventarioView(QWidget):
         self.divise_button.clicked.connect(lambda: self.show_tab('divise'))
         self.borsoni_button.clicked.connect(lambda: self.show_tab('borsoni'))
         self.create_button.clicked.connect(lambda: self.insMod(False))
+        if self.table_on is True:
+            self.display_table.cellClicked.connect(lambda: self.selectRow)
+
 
     def show_tab(self, tab_type):
+        self.table_on = True
+
         if tab_type == 'armi':
             self.table_column = ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
                                  'Impugnatura']
@@ -116,12 +122,14 @@ class inventarioView(QWidget):
             self.id_list.append(id_number)
 
         self.create_button.show()
-        self.modify_button.show()
+        #self.modify_button.show()
         self.display_table.show()
 
-        self.display_table.cellClicked.connect(self.selectRow)
+
 
     def selectRow(self):
+        print('selectrow partita')
+        self.modify_button.show()
         position = self.display_table.currentRow()
         item = db.select_inventario_by_id(self.id_list[position], self.tab_name)
         item.pop(0)
@@ -139,6 +147,7 @@ class insModWindow(QWidget):
     def __init__(self, window_title, table_column, tab_name, info):
         super().__init__()
         self.item = info
+        print(self.item)
     # Window settings
         self.title = window_title
         self.width = 370
@@ -188,18 +197,18 @@ class insModWindow(QWidget):
                 new_combo.addItem('/')
                 new_combo.setFixedWidth(133)
                 new_combo.move(self.horizontalTextDistance, self.verticalDistance)
-                if self.item != None:
+                '''if self.item != None:
                     AllItems = [new_combo.itemText(i) for i in range(new_combo.count())]
                     for elem in range(len(AllItems)):
                         if AllItems[elem] == self.item[i]:
-                            new_combo.selected.AllItems[elem]
+                            new_combo.selected.AllItems[elem]'''
 
                 self.texts.append(new_combo)
             else:
                 new_text = QLineEdit(self)
                 new_text.move(self.horizontalTextDistance, self.verticalDistance)
-                if self.item != None:
-                    new_text.text(self.item[i])
+                '''if self.item != None:
+                    new_text.text(self.item[i])'''
                 self.texts.append(new_text)
 
             self.verticalDistance += 50
@@ -247,13 +256,13 @@ class insModWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    item = db.select_inventario_by_id(1, 'armi')
+    '''item = db.select_inventario_by_id(1, 'armi')
     item = item[1:]
     item = np.asarray(item)
     item = item.flatten()
-    print(item)
-    #ex = inventarioView()
-    ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
-                                 'Impugnatura'],'armi', item)
+    print(item)'''
+    ex = inventarioView()
+    '''ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
+                                 'Impugnatura'],'armi', item)'''
     sys.exit(app.exec_())
 
