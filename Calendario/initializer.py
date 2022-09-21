@@ -133,21 +133,11 @@ class Window3(QWidget):
 
     def init_ui(self):
         event = db.event_by_id(self.id_event)
-        name_event = event[1]
-        location_event = event[3]
-        time_event = event[4]
-        organizer_event = event[5]
-        description_event = event[6]
-        self.widgetName.clear()
-        self.widgetName.addItem(name_event)
-        self.widgetLocation.clear()
-        self.widgetLocation.addItem(location_event)
-        self.widgetTime.clear()
-        self.widgetTime.addItem(time_event)
-        self.widgetOrganizer.clear()
-        self.widgetOrganizer.addItem(organizer_event)
-        self.widgetDesc.clear()
-        self.widgetDesc.addItem(description_event)
+        widget_list = [self.widgetName, self. widgetLocation, self.widgetTime, self.widgetOrganizer, self.widgetDesc]
+        wid_value = [event[1], event[3], event[4], event[5], event[6]]
+        for elem in range(len(wid_value)):
+            wid_value[elem].clear()
+            wid_value.addItem(wid_value[elem])
 
     def negate_window(self):
         self.window = Window2(id=self.id_event)
@@ -167,6 +157,6 @@ class Window3(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Window()
+    window = Window(username='root0')
     window.show()
     sys.exit(app.exec())
