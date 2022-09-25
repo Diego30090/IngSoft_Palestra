@@ -69,12 +69,13 @@ class Window(QWidget):
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId= str(self.event_list[i][0])
-                self.window = Window2(id=selectedId)
+                self.window = Window2(id=selectedId, username=self.username)
                 self.window.show()
                 self.close()
 
 class Window2(QWidget):
-    def __init__(self, id):
+    def __init__(self, id, username):
+        self.username = username
         self.id_event=id
         super(Window2, self).__init__()
         loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
@@ -118,7 +119,7 @@ class Window2(QWidget):
         self.close()
 
     def backWindow(self):
-        self.window = Window()
+        self.window = Window(username=self.username)
         self.window.show()
         self.close()
 
