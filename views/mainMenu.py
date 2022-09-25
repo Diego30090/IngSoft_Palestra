@@ -150,6 +150,7 @@ class MainMenu(QWidget):
         self.screen.setFixedHeight(200)
         self.screen.show()
         self.close()
+
     def toInventory(self):
         self.screen = inv.inventarioView(username=self.username)
         self.screen.show()
