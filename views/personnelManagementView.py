@@ -22,7 +22,7 @@ class PersonnelManagementView(QWidget):
         self.upper_buttons = []
         self.upper_buttons_rgb = ['200,200,200', '200,200,200', '200,200,200']
         # Lower Buttons
-        self.lower_buttons_argument = ['Crea', 'Visualizza', 'Indietro']
+        self.lower_buttons_argument = ['Crea', 'Modifica', 'Indietro']
         self.lower_buttons = []
         self.lower_buttons_rgb = ['140,255,70', '255,255,70', '255,70,70']
         # Button distances
@@ -79,7 +79,6 @@ class PersonnelManagementView(QWidget):
         self.lower_buttons[2].clicked.connect(self.toMainMenu)
 
     def show_tab(self, tab_type):
-        print(f'Tab type: {tab_type}')
         self.table_column = ['Id', 'Nome', 'Cognome', 'Data di Nascita', 'Username', 'Password', 'Tipologia di Utente',
                              'Email', 'Telefono']
 
@@ -159,7 +158,6 @@ class insertWindow(QWidget):
             new_label = QLabel(table_column[i], self)
             new_label.move(self.horizontalLabelDistance, self.verticalDistance)
             self.labels.append(new_label)
-            # print(table_column[i])
             if table_column[i] == 'Data di Nascita':
                 new_text = QDateEdit(self)
                 new_text.setDate(QDate(1900, 1, 1))

@@ -79,7 +79,7 @@ class inventarioView(QWidget):
         self.create_button.move(100, 580)
         self.create_button.setStyleSheet("background: rgb(140,255,70);")
 
-        self.modify_button = QPushButton('Visualizza', self)
+        self.modify_button = QPushButton('Modifica', self)
         self.modify_button.setFixedHeight(self.button_fixed_height)
         self.modify_button.setFixedWidth(self.button_fixed_width)
         self.modify_button.move(self.armi_button.x() + self.button_horizontal_distance, 580)
@@ -93,7 +93,6 @@ class inventarioView(QWidget):
         if self.table_on is True:
             self.display_table.cellClicked.connect(lambda: self.selectRow)
         self.back_button.clicked.connect(self.toMainMenu)
-
 
     def show_tab(self, tab_type):
         self.table_on = True
@@ -124,8 +123,9 @@ class inventarioView(QWidget):
             self.id_list.append(id_number)
 
         self.create_button.show()
-        #self.modify_button.show()
+        self.modify_button.show()
         self.display_table.show()
+
 
 
 
