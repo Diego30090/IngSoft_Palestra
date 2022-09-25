@@ -136,8 +136,8 @@ class Window3(QWidget):
         widget_list = [self.widgetName, self. widgetLocation, self.widgetTime, self.widgetOrganizer, self.widgetDesc]
         wid_value = [event[1], event[3], event[4], event[5], event[6]]
         for elem in range(len(wid_value)):
-            wid_value[elem].clear()
-            wid_value.addItem(wid_value[elem])
+            widget_list[elem].clear()
+            widget_list[elem].addItem(wid_value[elem])
 
     def negate_window(self):
         self.window = Window2(id=self.id_event)
