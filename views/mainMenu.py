@@ -81,45 +81,35 @@ class MainMenu(QWidget):
         self.show()
 
     def control_check(self):
+        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.market_button, self.inventory_button]
+        atleta_opt = [False, True, False, False, False]
+        istruttore_opt = [False, True, False, True, False]
+        admin_opt = [False, False, False, False, False]
+        disabled_opt = [True, True, True, True, True]
         #In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
         if self.flag is False:
-            self.calendar_button.setDisabled(True)
-            self.personnelManagement_button.setDisabled(True)
-            self.profile_button.setDisabled(True)
-            self.market_button.setDisabled(True)
-            self.inventory_button.setDisabled(True)
+            self.disabler(buttons=self.buttons, opt= disabled_opt)
         elif self.user_type == 'Atleta':
-            self.calendar_button.setDisabled(False)
-            self.personnelManagement_button.setDisabled(True)
-            self.profile_button.setDisabled(False)
-            self.market_button.setDisabled(False)
-            self.inventory_button.setDisabled(False)
+            self.disabler(buttons=self.buttons, opt=atleta_opt)
             self.personnelManagement_button.hide()
         elif self.user_type == "Istruttore":
-            self.calendar_button.setDisabled(False)
-            self.personnelManagement_button.setDisabled(True)
-            self.profile_button.setDisabled(False)
-            self.market_button.setDisabled(True)
-            self.inventory_button.setDisabled(False)
+            self.disabler(buttons=self.buttons, opt=istruttore_opt)
             self.personnelManagement_button.hide()
             self.market_button.hide()
         elif self.user_type == "Admin":
-            self.calendar_button.setDisabled(False)
-            self.personnelManagement_button.setDisabled(False)
-            self.profile_button.setDisabled(False)
-            self.market_button.setDisabled(False)
-            self.inventory_button.setDisabled(False)
+            self.disabler(buttons=self.buttons, opt=admin_opt)
         else:
-            self.calendar_button.setDisabled(True)
-            self.personnelManagement_button.setDisabled(True)
-            self.profile_button.setDisabled(True)
-            self.market_button.setDisabled(True)
-            self.inventory_button.setDisabled(True)
+            self.disabler(buttons=self.buttons, opt=disabled_opt)
             self.calendar_button.hide()
             self.personnelManagement_button.hide()
             self.profile_button.hide()
             self.market_button.hide()
             self.inventory_button.hide()
+
+    def disabler(self, buttons, opt):
+        for elem in range(len(buttons)):
+            buttons[elem].setDisabled(opt[elem])
+
     def instruction(self):
         self.calendar_button.clicked.connect(self.toCalendar)
         self.personnelManagement_button.clicked.connect(self.toPersonnelManagement)
@@ -127,6 +117,7 @@ class MainMenu(QWidget):
         self.market_button.clicked.connect(self.toMarket)
         self.inventory_button.clicked.connect(self.toInventory)
         self.logout_button.clicked.connect(self.toLogout)
+
     def toCalendar(self):
         self.screen = cal.Window(username=self.username)
         self.screen.show()
