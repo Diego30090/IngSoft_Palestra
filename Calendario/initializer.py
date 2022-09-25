@@ -4,6 +4,7 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem, QMessageBox
 from PyQt5.uic import loadUi
 from db import dbController as db
+from views import mainMenu as menu
 
 
 
@@ -17,6 +18,7 @@ class Window(QWidget):
         self.calendarDateChanged()
         self.addButton.clicked.connect(self.addNewTask)
         self.tasksListWidget.clicked.connect(self.openWindow)
+        self.back_button.clicked.connect(self.toMainMenu)
 
     def calendarDateChanged(self):
         self.dateSelected = self.calendarWidget.selectedDate().toPyDate()  # funzione di QCalendarWidget che indica la data selezionata, in forma di stringa PyDate e strftime che lo mette in giorno mese anno
@@ -32,6 +34,7 @@ class Window(QWidget):
             self.tasksListWidget.addItem(item)
             self.event_list.append([str(events[event][0]),str(id(self.tasksListWidget.item(event)))])
 
+    '''
     def saveChanges(self):
         cursor= db.connect()
         date = self.calendarWidget.selectedDate().toPyDate()
@@ -51,6 +54,7 @@ class Window(QWidget):
         messageBox.setText("Changes saved.")
         messageBox.setStandardButtons(QMessageBox.Ok)
         messageBox.exec()
+        '''
 
     def addNewTask(self):
         name_event = str(self.taskLineEdit.text())
@@ -72,6 +76,11 @@ class Window(QWidget):
                 self.window = Window2(id=selectedId, username=self.username)
                 self.window.show()
                 self.close()
+
+    def toMainMenu(self):
+        self.screen = menu.MainMenu(username=self.username)
+        self.screen.show()
+        self.close()
 
 class Window2(QWidget):
     def __init__(self, id, username):
@@ -114,7 +123,7 @@ class Window2(QWidget):
         self.backWindow()
 
     def openWindow(self):
-        self.window = Window3(id=self.id_event)
+        self.window = Window3(id=self.id_event, username= self.username)
         self.window.show()
         self.close()
 
@@ -124,7 +133,8 @@ class Window2(QWidget):
         self.close()
 
 class Window3(QWidget):
-    def __init__(self, id):
+    def __init__(self, id, username):
+        self.username = username
         self.id_event=id
         super(Window3, self).__init__()
         loadUi("../Calendario/mainCalendarioModifiche.ui", self)
@@ -141,7 +151,7 @@ class Window3(QWidget):
             widget_list[elem].addItem(wid_value[elem])
 
     def negate_window(self):
-        self.window = Window2(id=self.id_event)
+        self.window = Window2(id=self.id_event, username=self.username)
         self.window.show()
         self.close()
 
