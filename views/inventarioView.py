@@ -139,7 +139,7 @@ class inventarioView(QWidget):
         return item
 
     def insMod(self, info):
-        self.insert_window = insModWindow(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info)
+        self.insert_window = InventarioCrudView(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info)
         self.insert_window.show()
         self.hide()
 
@@ -150,7 +150,7 @@ class inventarioView(QWidget):
 
 
 #INSertMODifyWINDOW
-class insModWindow(QWidget):
+class InventarioCrudView(QWidget):
 
     def __init__(self, window_title, table_column, tab_name, info):
         super().__init__()
