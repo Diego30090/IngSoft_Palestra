@@ -61,9 +61,7 @@ class LoginView(QWidget):
         pwd = self.pass_text.text()
         if user != '' and pwd != '':
             flag = db.login(user, pwd)
-            print(flag)
             if flag:
-                print(f'User: {user}, password: {pwd} \nCredenziali corrette!\n')
                 self.toMainMenu(user)
 
             else:

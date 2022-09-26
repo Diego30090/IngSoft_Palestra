@@ -211,7 +211,6 @@ class ProfileView(QWidget):
                     self.field_line_obj[elem].setDate(dat.str_to_date(to_substitute[2]))
 
     def edit_profile_data_init(self):
-        print('init profile data')
         # get from db
         for i in range(len(self.field_line_obj)):
             if i != 2:
