@@ -24,7 +24,6 @@ class MainMenu(QWidget):
             self.username = username
             self.flag = True
             self.user_type = db.user_type(self.username)
-        print(self.user_type)
         self.starting_label = None
         self.title = 'Main Menu'
         self.width = 450
@@ -43,8 +42,6 @@ class MainMenu(QWidget):
         # Manda al login
         self.logout_button = None
 
-        #Label di prova
-        self.trial_label = None
         self.init_ui()
         self.control_check()
         self.instruction()
@@ -71,12 +68,6 @@ class MainMenu(QWidget):
 
         self.logout_button = QPushButton('Logout', self)
         self.logout_button.move(200, 50)
-
-        self.trial_label = QLabel('prova1', self)
-        self.trial_label.setText(self.username)
-        self.trial_label.move(300, 200)
-
-
 
         self.show()
 
