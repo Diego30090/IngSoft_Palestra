@@ -4,7 +4,7 @@ from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
 
 
-class MainView(QWidget):
+class LoginView(QWidget):
 
     def __init__(self):
         super().__init__()
@@ -62,7 +62,6 @@ class MainView(QWidget):
         if user != '' and pwd != '':
             flag = db.login(user, pwd)
             if flag:
-                print(f'User: {user}, password: {pwd} \nCredenziali corrette!\n')
                 self.toMainMenu(user)
 
             else:
@@ -80,5 +79,5 @@ class MainView(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainView()
+    ex = LoginView()
     sys.exit(app.exec_())
