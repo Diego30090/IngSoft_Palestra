@@ -17,8 +17,8 @@ class Window(QWidget):
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
         self.addButton.clicked.connect(self.addNewTask)
-        self.tasksListWidget.clicked.connect(self.openWindow)
-        self.back_button.clicked.connect(self.toMainMenu)
+        self.eventList.clicked.connect(self.openWindow)
+        self.backButton.clicked.connect(self.toMainMenu)
 
     def calendarDateChanged(self):
         self.dateSelected = self.calendarWidget.selectedDate().toPyDate()  # funzione di QCalendarWidget che indica la data selezionata, in forma di stringa PyDate e strftime che lo mette in giorno mese anno
@@ -26,50 +26,28 @@ class Window(QWidget):
         self.updateTaskList(self.dateSelected)
 
     def updateTaskList(self, date):
-        self.tasksListWidget.clear()
+        self.eventList.clear()
         events = db.event_name_by_date(date)
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
-            self.tasksListWidget.addItem(item)
-            self.event_list.append([str(events[event][0]),str(id(self.tasksListWidget.item(event)))])
-
-    '''
-    def saveChanges(self):
-        cursor= db.connect()
-        date = self.calendarWidget.selectedDate().toPyDate()
-
-        for i in range(self.tasksListWidget.count()):
-            item = self.tasksListWidget.item(i)
-            task = item.text()
-            if item.checkState() == QtCore.Qt.Checked:
-                query = "UPDATE tasks SET completed = 'YES' WHERE name = ? AND date = ?"
-            else:
-                query = "UPDATE tasks SET completed = 'NO' WHERE name = ? AND date = ?"
-            row = (name, date,)
-            cursor.execute(query, row)
-        db.commit()
-
-        messageBox = QMessageBox()
-        messageBox.setText("Changes saved.")
-        messageBox.setStandardButtons(QMessageBox.Ok)
-        messageBox.exec()
-        '''
+            self.eventList.addItem(item)
+            self.event_list.append([str(events[event][0]),str(id(self.eventList.item(event)))])
 
     def addNewTask(self):
-        name_event = str(self.taskLineEdit.text())
+        name_event = str(self.lineEditName.text())
         date_event = self.calendarWidget.selectedDate().toPyDate()
-        location_event = str(self.taskLineEdit1.text())
-        time_event = str(self.taskLineEdit2.text())
-        organizer_event = str(self.taskLineEdit3.text())
-        description_event = str(self.taskLineEdit4.text())
+        location_event = str(self.lineEditLocation.text())
+        time_event = str(self.lineEditTime.text())
+        organizer_event = str(self.lineEditOrganizer.text())
+        description_event = str(self.lineEditDescription.text())
 
         db.insert_event(name_event, date_event, location_event, time_event, organizer_event, description_event)
         self.updateTaskList(date_event)
-        self.taskLineEdit.clear()
+        self.lineEditName.clear()
 
     def openWindow(self):
-        item = id(self.tasksListWidget.currentItem())
+        item = id(self.eventList.currentItem())
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId= str(self.event_list[i][0])
@@ -95,15 +73,15 @@ class Window2(QWidget):
         self.modifyButton.clicked.connect(self.openWindow)
 
     def init_list(self, id):
-        self.tasksListWidget.clear()
+        self.eventList.clear()
         events = db.event_by_id(id)
         events = db.event_name_by_date(events[2])
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
-            self.tasksListWidget.addItem(item)
+            self.eventList.addItem(item)
             #funzione da finire
-        self.tasksListWidget.setDisabled(True)
+        self.eventList.setDisabled(True)
 
     def dataUpdate(self):
         event = db.event_by_id(self.id_event)
@@ -156,11 +134,11 @@ class Window3(QWidget):
         self.close()
 
     def modify_data(self):
-        new_name = self.taskLineEdit.text()
-        new_location = self.taskLineEdit1.text()
-        new_time = self.taskLineEdit2.text()
-        new_organizer = self.taskLineEdit3.text()
-        new_description = self.taskLineEdit4.text()
+        new_name = self.lineEditName.text()
+        new_location = self.lineEditLocation.text()
+        new_time = self.lineEditTime.text()
+        new_organizer = self.lineEditOrganizer.text()
+        new_description = self.lineEditDescription.text()
         db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
         self.init_ui()
 

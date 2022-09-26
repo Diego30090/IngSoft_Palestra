@@ -2,11 +2,9 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
 
-import Calendario.initializer
 from db import dbController as db
-from views import loginView as lv
+from views import loginView as lv, calendarioView as cal
 from views import profileView as profile
-from Calendario import initializer as cal
 from views import inventarioView as inv
 from views import personnelManagementView as perman
 

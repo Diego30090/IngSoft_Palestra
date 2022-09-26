@@ -57,7 +57,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="tasksListWidget">
+  <widget class="QListWidget" name="eventList">
    <property name="geometry">
     <rect>
      <x>510</x>

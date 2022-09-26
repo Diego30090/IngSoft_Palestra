@@ -32,7 +32,7 @@ font: 12pt;
 </string>
    </property>
   </widget>
-  <widget class="QListWidget" name="tasksListWidget">
+  <widget class="QListWidget" name="eventList">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -105,7 +105,7 @@ font: 12pt;
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit">
+  <widget class="QLineEdit" name="lineEditName">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -118,7 +118,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit1">
+  <widget class="QLineEdit" name="lineEditLocation">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -131,7 +131,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit2">
+  <widget class="QLineEdit" name="lineEditTime">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -144,7 +144,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit4">
+  <widget class="QLineEdit" name="lineEditDescription">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -157,7 +157,7 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit3">
+  <widget class="QLineEdit" name="lineEditOrganizer">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -248,7 +248,7 @@ font: 12pt;
     <string>Seleziona Evento da Modificare</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="back_button">
+  <widget class="QPushButton" name="backButton">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -267,20 +267,20 @@ font: 12pt;
   <zorder>label</zorder>
   <zorder>label_2</zorder>
   <zorder>calendarWidget</zorder>
-  <zorder>tasksListWidget</zorder>
+  <zorder>eventList</zorder>
   <zorder>addButton</zorder>
-  <zorder>taskLineEdit</zorder>
-  <zorder>taskLineEdit1</zorder>
-  <zorder>taskLineEdit2</zorder>
-  <zorder>taskLineEdit4</zorder>
-  <zorder>taskLineEdit3</zorder>
+  <zorder>lineEditName</zorder>
+  <zorder>lineEditLocation</zorder>
+  <zorder>lineEditTime</zorder>
+  <zorder>lineEditDescription</zorder>
+  <zorder>lineEditOrganizer</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
   <zorder>label_8</zorder>
   <zorder>label_7</zorder>
-  <zorder>back_button</zorder>
+  <zorder>backButton</zorder>
  </widget>
  <resources/>
  <connections/>
