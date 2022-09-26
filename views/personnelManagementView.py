@@ -110,7 +110,7 @@ class PersonnelManagementView(QWidget):
     def insert(self):
         columns = self.table_column
         columns.pop(0)
-        self.insert_window = insertWindow('Inserisci Utente', columns, self.username)
+        self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.username)
         self.insert_window.show()
         self.hide()
         tab = self.tab
@@ -121,7 +121,7 @@ class PersonnelManagementView(QWidget):
         self.close()
 
 
-class insertWindow(QWidget):
+class PersonnelManagementCrudView(QWidget):
 
     def __init__(self, window_title, table_column, username):
         super().__init__()
