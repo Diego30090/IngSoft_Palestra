@@ -148,7 +148,7 @@ class MainMenu(QWidget):
         self.close()
 
     def toLogout(self):
-        self.screen = lv.MainView()
+        self.screen = lv.LoginView()
         self.screen.show()
         self.close()
 

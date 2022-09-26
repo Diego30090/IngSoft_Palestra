@@ -148,6 +148,7 @@ class inventarioView(QWidget):
         self.screen.show()
         self.close()
 
+
 #INSertMODifyWINDOW
 class insModWindow(QWidget):
 
