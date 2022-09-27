@@ -59,6 +59,7 @@ class ProfileView(QWidget):
         self.new_user_type = QLineEdit(self)
         # Pulsanti
         self.confirm_button = QPushButton(self)
+        self.back_button = QPushButton(self)
         self.confirm_password_label = None
         self.confirm_password_info = None
         self.confirm_password_info2 = QLineEdit(self)
@@ -149,6 +150,7 @@ class ProfileView(QWidget):
 
         # Pulsante salvataggio dati
         self.confirm_button.setText("Salva")
+        self.back_button.setText('Indietro')
 
     def edit_prof_item_geometry(self):
         for elem in range(len(self.new_line_obj)):
@@ -168,7 +170,9 @@ class ProfileView(QWidget):
                             self.confirm_password_label.y() + self.fixed_height_distance)
 
         # Pulsante di Conferma
-        self.confirm_button.move(self.left_line_distance, self.err_label.y() + self.fixed_height_distance)
+        self.confirm_button.move(int((self.width()/2) - self.confirm_button.width() - 15)
+                                 , self.err_label.y() + self.fixed_height_distance)
+        self.back_button.move(self.confirm_button.width() + self.confirm_button.x() + 30, self.confirm_button.y())
         # Label Nome Profilo
         self.profile_name_label.move(int((self.width() - self.profile_name_label.width()) / 2), 20)
 
@@ -181,6 +185,15 @@ class ProfileView(QWidget):
         self.edit_profile_button.clicked.connect(self.edit_profile)
         self.confirm_button.clicked.connect(self.salva)
         self.menu_button.clicked.connect(self.toMainMenu)
+        self.back_button.clicked.connect(self.return_to_profile)
+
+    def return_to_profile(self):
+        for elem in range(len(self.new_line_obj)):
+            self.new_line_obj[elem].hide()
+        for elem in range(len(self.elem_to_show)):
+            self.elem_to_show[elem].hide()
+        self.profile_view_geometry()
+        self.prof_item_geometry()
 
     def edit_profile(self):
         self.edit_profile_view_geometry()
@@ -193,7 +206,7 @@ class ProfileView(QWidget):
             self.new_line_obj[elem].show()
         # elem_to_show
         self.elem_to_show = [self.confirm_password_label, self.confirm_password_info,
-                             self.confirm_password_info2, self.confirm_button]
+                             self.confirm_password_info2, self.confirm_button, self.back_button]
         for i in range(len(self.elem_to_show)):
             self.elem_to_show[i].show()
         self.edit_profile_data_init()
@@ -242,12 +255,7 @@ class ProfileView(QWidget):
                 db.update_user(self.new_name.text(), self.new_surname.text(),
                                self.new_born_data.date().toString('yyyy-MM-dd'),
                                self.new_email.text(), self.new_phone.text(), self.new_user_type.text(), self.username)
-                for elem in range(len(self.new_line_obj)):
-                    self.new_line_obj[elem].hide()
-                for elem in range(len(self.elem_to_show)):
-                    self.elem_to_show[elem].hide()
-                self.profile_view_geometry()
-                self.prof_item_geometry()
+                self.return_to_profile()
 
     def toMainMenu(self):
         self.screen = menu.MainMenu(username=self.username)
