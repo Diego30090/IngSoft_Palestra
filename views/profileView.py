@@ -172,7 +172,7 @@ class ProfileView(QWidget):
         # Pulsante di Conferma
         self.confirm_button.move(int((self.width()/2) - self.confirm_button.width() - 15)
                                  , self.err_label.y() + self.fixed_height_distance)
-        self.back_button.move(self.confirm_button.width() + self.confirm_button.x() + 30, self.confirm_button.y())
+        self.back_button.move(self.confirm_button.width() + self.confirm_button.x() + 25, self.confirm_button.y())
         # Label Nome Profilo
         self.profile_name_label.move(int((self.width() - self.profile_name_label.width()) / 2), 20)
 
