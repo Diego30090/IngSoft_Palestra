@@ -32,7 +32,7 @@ font: 12pt;
 </string>
    </property>
   </widget>
-  <widget class="QListWidget" name="tasksListWidget">
+  <widget class="QListWidget" name="eventList">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -51,7 +51,7 @@ font: 12pt;
      <x>510</x>
      <y>250</y>
      <width>211</width>
-     <height>81</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -105,11 +105,11 @@ font: 12pt;
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit">
+  <widget class="QLineEdit" name="lineEditName">
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>340</y>
+     <y>320</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -118,11 +118,11 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit1">
+  <widget class="QLineEdit" name="lineEditLocation">
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>370</y>
+     <y>350</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -131,11 +131,11 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit2">
+  <widget class="QLineEdit" name="lineEditTime">
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>400</y>
+     <y>380</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -144,11 +144,11 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit4">
+  <widget class="QLineEdit" name="lineEditDescription">
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>460</y>
+     <y>440</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -157,11 +157,11 @@ font: 12pt;
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="taskLineEdit3">
+  <widget class="QLineEdit" name="lineEditOrganizer">
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>430</y>
+     <y>410</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -174,7 +174,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>340</y>
+     <y>320</y>
      <width>71</width>
      <height>20</height>
     </rect>
@@ -187,7 +187,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>370</y>
+     <y>350</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -200,7 +200,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>540</x>
-     <y>400</y>
+     <y>380</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -213,7 +213,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>460</y>
+     <y>440</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -226,7 +226,7 @@ font: 12pt;
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>430</y>
+     <y>410</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -235,21 +235,52 @@ font: 12pt;
     <string>Organizzatore</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>110</y>
+     <width>161</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Seleziona Evento da Modificare</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>470</y>
+     <width>211</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(200,200,200)</string>
+   </property>
+   <property name="text">
+    <string>INDIETRO</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>label_2</zorder>
   <zorder>calendarWidget</zorder>
-  <zorder>tasksListWidget</zorder>
+  <zorder>eventList</zorder>
   <zorder>addButton</zorder>
-  <zorder>taskLineEdit</zorder>
-  <zorder>taskLineEdit1</zorder>
-  <zorder>taskLineEdit2</zorder>
-  <zorder>taskLineEdit4</zorder>
-  <zorder>taskLineEdit3</zorder>
+  <zorder>lineEditName</zorder>
+  <zorder>lineEditLocation</zorder>
+  <zorder>lineEditTime</zorder>
+  <zorder>lineEditDescription</zorder>
+  <zorder>lineEditOrganizer</zorder>
   <zorder>label_3</zorder>
   <zorder>label_4</zorder>
   <zorder>label_5</zorder>
   <zorder>label_6</zorder>
   <zorder>label_8</zorder>
+  <zorder>label_7</zorder>
+  <zorder>backButton</zorder>
  </widget>
  <resources/>
  <connections/>

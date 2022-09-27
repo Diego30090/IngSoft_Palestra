@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/IngSoft_Palestra.iml" filepath="$PROJECT_DIR$/.idea/IngSoft_Palestra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IngSoft_Palestra-main.iml" filepath="$PROJECT_DIR$/.idea/IngSoft_Palestra-main.iml" />
     </modules>
   </component>
 </project>
