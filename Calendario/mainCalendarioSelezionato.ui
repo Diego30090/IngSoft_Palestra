@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_background">
    <property name="geometry">
     <rect>
      <x>-60</x>
@@ -35,7 +35,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_title">
    <property name="geometry">
     <rect>
      <x>-50</x>
@@ -57,7 +57,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="eventList">
+  <widget class="QListWidget" name="event_list_widget">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -70,7 +70,7 @@
     <string notr="true">font:16pt</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="modifyButton">
+  <widget class="QPushButton" name="modify_button">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -86,7 +86,7 @@
     <string>MODIFICA</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="deleteButton">
+  <widget class="QPushButton" name="delete_button">
    <property name="geometry">
     <rect>
      <x>620</x>
@@ -102,7 +102,7 @@
     <string>ELIMINA</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="backButton">
+  <widget class="QPushButton" name="back_button">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -118,7 +118,7 @@
     <string>INDIETRO</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelReceiver">
+  <widget class="QLabel" name="label_outline">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -134,7 +134,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_name">
    <property name="geometry">
     <rect>
      <x>146</x>
@@ -150,7 +150,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_location">
    <property name="geometry">
     <rect>
      <x>356</x>
@@ -166,7 +166,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_time">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -182,7 +182,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="label_organizer">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -198,7 +198,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="label_description">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -214,7 +214,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetName">
+  <widget class="QListWidget" name="widget_name">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -230,7 +230,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetTime">
+  <widget class="QListWidget" name="widget_time">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -247,7 +247,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetLocation">
+  <widget class="QListWidget" name="widget_location">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -264,7 +264,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetOrganizer">
+  <widget class="QListWidget" name="widget_organizer">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -281,7 +281,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetDesc">
+  <widget class="QListWidget" name="widget_description">
    <property name="geometry">
     <rect>
      <x>100</x>

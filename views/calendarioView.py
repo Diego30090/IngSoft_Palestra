@@ -13,41 +13,40 @@ class Window(QWidget):
         self.username = username
         super(Window, self).__init__()
         loadUi("../Calendario/mainCalendario.ui", self)
-        self.calendarWidget.selectionChanged.connect(
-            self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
+        self.calendar_widget.selectionChanged.connect(self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
-        self.addButton.clicked.connect(self.addNewTask)
-        self.eventList.clicked.connect(self.openWindow)
-        self.backButton.clicked.connect(self.toMainMenu)
+        self.add_button.clicked.connect(self.addNewTask)
+        self.event_list_widget.clicked.connect(self.openWindow)
+        self.back_button.clicked.connect(self.toMainMenu)
 
     def calendarDateChanged(self):
-        self.dateSelected = self.calendarWidget.selectedDate().toPyDate()  # funzione di QCalendarWidget che indica la data selezionata, in forma di stringa PyDate e strftime che lo mette in giorno mese anno
+        self.dateSelected = self.calendar_widget.selectedDate().toPyDate()  # funzione di QCalendarWidget che indica la data selezionata, in forma di stringa PyDate e strftime che lo mette in giorno mese anno
         print("Data selezionata: ", self.dateSelected)
         self.updateTaskList(self.dateSelected)
 
     def updateTaskList(self, date):
-        self.eventList.clear()
+        self.event_list_widget.clear()
         events = db.event_name_by_date(date)
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
-            self.eventList.addItem(item)
-            self.event_list.append([str(events[event][0]),str(id(self.eventList.item(event)))])
+            self.event_list_widget.addItem(item)
+            self.event_list.append([str(events[event][0]),str(id(self.event_list_widget.item(event)))])
 
     def addNewTask(self):
-        name_event = str(self.lineEditName.text())
-        date_event = self.calendarWidget.selectedDate().toPyDate()
-        location_event = str(self.lineEditLocation.text())
-        time_event = str(self.lineEditTime.text())
-        organizer_event = str(self.lineEditOrganizer.text())
-        description_event = str(self.lineEditDescription.text())
+        name_event = str(self.line_edit_name.text())
+        date_event = self.calendar_widget.selectedDate().toPyDate()
+        location_event = str(self.line_edit_location.text())
+        time_event = str(self.line_edit_time.text())
+        organizer_event = str(self.line_edit_organizer.text())
+        description_event = str(self.line_edit_description.text())
 
         db.insert_event(name_event, date_event, location_event, time_event, organizer_event, description_event)
         self.updateTaskList(date_event)
-        self.lineEditName.clear()
+        self.line_edit_name.clear()
 
     def openWindow(self):
-        item = id(self.eventList.currentItem())
+        item = id(self.event_list_widget.currentItem())
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId= str(self.event_list[i][0])
@@ -68,20 +67,20 @@ class Window2(QWidget):
         loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
-        self.backButton.clicked.connect(self.backWindow)
-        self.deleteButton.clicked.connect(self.event_delete)
-        self.modifyButton.clicked.connect(self.openWindow)
+        self.back_button.clicked.connect(self.backWindow)
+        self.delete_button.clicked.connect(self.event_delete)
+        self.modify_button.clicked.connect(self.openWindow)
 
     def init_list(self, id):
-        self.eventList.clear()
+        self.event_list_widget.clear()
         events = db.event_by_id(id)
         events = db.event_name_by_date(events[2])
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
-            self.eventList.addItem(item)
+            self.event_list_widget.addItem(item)
             #funzione da finire
-        self.eventList.setDisabled(True)
+        self.event_list_widget.setDisabled(True)
 
     def dataUpdate(self):
         event = db.event_by_id(self.id_event)
@@ -90,11 +89,11 @@ class Window2(QWidget):
         time_event = event[4]
         organizer_event = event[5]
         description_event = event[6]
-        self.widgetName.addItem(name_event)
-        self.widgetLocation.addItem(location_event)
-        self.widgetTime.addItem(time_event)
-        self.widgetOrganizer.addItem(organizer_event)
-        self.widgetDesc.addItem(description_event)
+        self.widget_name.addItem(name_event)
+        self.widget_location.addItem(location_event)
+        self.widget_time.addItem(time_event)
+        self.widget_organizer.addItem(organizer_event)
+        self.widget_description.addItem(description_event)
 
     def event_delete(self):
         db.remove_event(self.id_event)
@@ -117,12 +116,12 @@ class Window3(QWidget):
         super(Window3, self).__init__()
         loadUi("../Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
-        self.negateButton.clicked.connect(self.negate_window)
-        self.confirmButton.clicked.connect(self.modify_data)
+        self.negate_button.clicked.connect(self.negate_window)
+        self.confirm_button.clicked.connect(self.modify_data)
 
     def init_ui(self):
         event = db.event_by_id(self.id_event)
-        widget_list = [self.widgetName, self. widgetLocation, self.widgetTime, self.widgetOrganizer, self.widgetDesc]
+        widget_list = [self.widget_name, self. widget_location, self.widget_time, self.widget_organizer, self.widget_description]
         wid_value = [event[1], event[3], event[4], event[5], event[6]]
         for elem in range(len(wid_value)):
             widget_list[elem].clear()
@@ -134,11 +133,11 @@ class Window3(QWidget):
         self.close()
 
     def modify_data(self):
-        new_name = self.lineEditName.text()
-        new_location = self.lineEditLocation.text()
-        new_time = self.lineEditTime.text()
-        new_organizer = self.lineEditOrganizer.text()
-        new_description = self.lineEditDescription.text()
+        new_name = self.line_edit_name.text()
+        new_location = self.line_edit_location.text()
+        new_time = self.line_edit_time.text()
+        new_organizer = self.line_edit_organizer.text()
+        new_description = self.line_edit_description.text()
         db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
         self.init_ui()
 

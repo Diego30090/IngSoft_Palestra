@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label_9">
+  <widget class="QLabel" name="label_title">
    <property name="geometry">
     <rect>
      <x>-50</x>
@@ -35,7 +35,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="label_background">
    <property name="geometry">
     <rect>
      <x>-60</x>
@@ -57,7 +57,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelReceiver">
+  <widget class="QLabel" name="label_outline">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -73,7 +73,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetName">
+  <widget class="QListWidget" name="widget_name">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -89,7 +89,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetLocation">
+  <widget class="QListWidget" name="widget_location">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -105,7 +105,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetTime">
+  <widget class="QListWidget" name="widget_time">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -122,7 +122,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetOrganizer">
+  <widget class="QListWidget" name="widget_organizer">
    <property name="geometry">
     <rect>
      <x>290</x>
@@ -139,7 +139,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="label_name">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -155,7 +155,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="label_location">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -171,7 +171,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_time">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -187,7 +187,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="label_organizer">
    <property name="geometry">
     <rect>
      <x>340</x>
@@ -203,7 +203,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QListWidget" name="widgetDesc">
+  <widget class="QListWidget" name="widget_description">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -220,7 +220,7 @@
     <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="label_description">
    <property name="geometry">
     <rect>
      <x>250</x>
@@ -236,7 +236,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="labelReceiver_2">
+  <widget class="QLabel" name="label_outline_data">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -252,7 +252,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_modify_select">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -265,7 +265,7 @@
     <string>Inserisci nuovi dati:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditName">
+  <widget class="QLineEdit" name="line_edit_name">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -281,7 +281,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditLocation">
+  <widget class="QLineEdit" name="line_edit_location">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -294,7 +294,7 @@
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditTime">
+  <widget class="QLineEdit" name="line_edit_time">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -307,7 +307,7 @@
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditOrganizer">
+  <widget class="QLineEdit" name="line_edit_organizer">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -320,7 +320,7 @@
     <string notr="true">font: 12;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEditDescription">
+  <widget class="QLineEdit" name="line_edit_description">
    <property name="geometry">
     <rect>
      <x>580</x>
@@ -334,7 +334,7 @@
 </string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_8">
+  <widget class="QLabel" name="label_name_modify">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -347,7 +347,7 @@
     <string>Nome Evento</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_10">
+  <widget class="QLabel" name="label_location_modify">
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -360,7 +360,7 @@
     <string>Luogo</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_11">
+  <widget class="QLabel" name="label_time_modify">
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -373,7 +373,7 @@
     <string>Orario</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_12">
+  <widget class="QLabel" name="label_organizer_modify">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -386,7 +386,7 @@
     <string>Organizzatore</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_13">
+  <widget class="QLabel" name="label_description_modify">
    <property name="geometry">
     <rect>
      <x>520</x>
@@ -399,7 +399,7 @@
     <string>Descrizione</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="confirmButton">
+  <widget class="QPushButton" name="confirm_button">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -415,7 +415,7 @@
     <string>Conferma</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="negateButton">
+  <widget class="QPushButton" name="negate_button">
    <property name="geometry">
     <rect>
      <x>510</x>
