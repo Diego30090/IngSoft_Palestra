@@ -8,7 +8,7 @@ from views import mainMenu as menu
 
 
 
-class Window(QWidget):
+class mainWindow(QWidget):
     def __init__(self, username):
         self.username = username
         super(Window, self).__init__()
@@ -59,7 +59,7 @@ class Window(QWidget):
         self.screen.show()
         self.close()
 
-class Window2(QWidget):
+class selectedWindow(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
@@ -109,7 +109,7 @@ class Window2(QWidget):
         self.window.show()
         self.close()
 
-class Window3(QWidget):
+class modifyDataWindow(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
