@@ -26,19 +26,18 @@ class MainMenu(QWidget):
         self.title = 'Main Menu'
         self.width = 450
         self.height = 300
+        self.starting_distance = 50
 
         # Manda alla view del calendario
-        self.calendar_button= None
+        self.calendar_button= QPushButton(self)
         # Manda alla gestione personale
-        self.personnelManagement_button = None
+        self.personnelManagement_button = QPushButton(self)
         # Manda alla view del profilo
-        self.profile_button = None
-        # Manda al Mercato
-        self.market_button = None
+        self.profile_button = QPushButton(self)
         # Manda all'inventario
-        self.inventory_button = None
+        self.inventory_button = QPushButton(self)
         # Manda al login
-        self.logout_button = None
+        self.logout_button = QPushButton(self)
 
         self.init_ui()
         self.control_check()
@@ -46,35 +45,43 @@ class MainMenu(QWidget):
 
     def init_ui(self):
         self.setWindowTitle(self.title)
+
+
+        local_buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.inventory_button, self.logout_button]
+        local_buttons_name = ['Calendario', 'Gestione Personale', 'Profilo', 'Inventario', 'Logout']
+        btn_dim = [120, 90]
+        for elem in range(len(local_buttons)):
+            local_buttons[elem].setText(local_buttons_name[elem])
+            local_buttons[elem].resize(*btn_dim)
+        row1 = [self.calendar_button, self.inventory_button, self.profile_button]
+        row2 = [self.personnelManagement_button, self.logout_button]
+
+        self.positioning(row1, self.starting_distance)
+
+        self.positioning(row2, self.starting_distance + btn_dim[1] + 30)
+
         self.setFixedWidth(self.width)
-        self.setFixedHeight(self.height)
-
-        self.calendar_button = QPushButton('Calendario', self)
-        self.calendar_button.move(0, 0)
-
-        self.personnelManagement_button = QPushButton('Gestione Personale', self)
-        self.personnelManagement_button.move(100, 0)
-
-        self.profile_button = QPushButton('Profilo', self)
-        self.profile_button.move(200, 0)
-
-        self.market_button = QPushButton('Mercato', self)
-        self.market_button.move(0, 50)
-
-        self.inventory_button = QPushButton('Inventario', self)
-        self.inventory_button.move(100, 50)
-
-        self.logout_button = QPushButton('Logout', self)
-        self.logout_button.move(200, 50)
+        self.setFixedHeight(row2[0].y() + row2[0].height() + self.starting_distance)
 
         self.show()
 
+    def positioning(self, element, selected_height):
+        lenght_sum = 0
+        for elem in range(len(element)):
+            if elem ==0:
+                lenght_sum +=50
+            element[elem].move(lenght_sum, selected_height)
+            lenght_sum +=element[elem].width() + 30
+        if lenght_sum +20 > self.width:
+            self.width = lenght_sum +20
+
+        print(lenght_sum)
     def control_check(self):
-        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.market_button, self.inventory_button]
-        atleta_opt = [False, True, False, False, False]
-        istruttore_opt = [False, True, False, True, False]
-        admin_opt = [False, False, False, False, False]
-        disabled_opt = [True, True, True, True, True]
+        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.inventory_button]
+        atleta_opt = [False, True, False, False]
+        istruttore_opt = [False, True, False, False]
+        admin_opt = [False, False, False, False]
+        disabled_opt = [True, True, True, True]
         #In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
         if self.flag is False:
             self.disabler(buttons=self.buttons, opt= disabled_opt)
@@ -103,12 +110,11 @@ class MainMenu(QWidget):
         self.calendar_button.clicked.connect(self.toCalendar)
         self.personnelManagement_button.clicked.connect(self.toPersonnelManagement)
         self.profile_button.clicked.connect(self.toProfile)
-        self.market_button.clicked.connect(self.toMarket)
         self.inventory_button.clicked.connect(self.toInventory)
         self.logout_button.clicked.connect(self.toLogout)
 
     def toCalendar(self):
-        self.screen = cal.Window(username=self.username)
+        self.screen = cal.mainWindow(username=self.username)
         self.screen.show()
         self.close()
 
@@ -119,15 +125,6 @@ class MainMenu(QWidget):
 
     def toProfile(self):
         self.screen = profile.ProfileView(profile_name=self.username)
-        self.screen.show()
-        self.close()
-
-
-    def toMarket(self):
-        self.screen = QWidget()
-        self.screen.trial_label = QLabel("View di prova del Mercato", self.screen)
-        self.screen.setFixedWidth(300)
-        self.screen.setFixedHeight(200)
         self.screen.show()
         self.close()
 
