@@ -11,7 +11,7 @@ from views import mainMenu as menu
 class mainWindow(QWidget):
     def __init__(self, username):
         self.username = username
-        super(Window, self).__init__()
+        super(mainWindow, self).__init__()
         loadUi("../Calendario/mainCalendario.ui", self)
         self.calendar_widget.selectionChanged.connect(self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
@@ -50,7 +50,7 @@ class mainWindow(QWidget):
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId= str(self.event_list[i][0])
-                self.window = Window2(id=selectedId, username=self.username)
+                self.window = selectedWindow(id=selectedId, username=self.username)
                 self.window.show()
                 self.close()
 
@@ -63,7 +63,7 @@ class selectedWindow(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
-        super(Window2, self).__init__()
+        super(selectedWindow, self).__init__()
         loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
@@ -100,12 +100,12 @@ class selectedWindow(QWidget):
         self.backWindow()
 
     def openWindow(self):
-        self.window = Window3(id=self.id_event, username= self.username)
+        self.window = modifyDataWindow(id=self.id_event, username= self.username)
         self.window.show()
         self.close()
 
     def backWindow(self):
-        self.window = Window(username=self.username)
+        self.window = mainWindow(username=self.username)
         self.window.show()
         self.close()
 
@@ -113,7 +113,7 @@ class modifyDataWindow(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
-        super(Window3, self).__init__()
+        super(modifyDataWindow, self).__init__()
         loadUi("../Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
         self.negate_button.clicked.connect(self.negate_window)
@@ -128,7 +128,7 @@ class modifyDataWindow(QWidget):
             widget_list[elem].addItem(wid_value[elem])
 
     def negate_window(self):
-        self.window = Window2(id=self.id_event, username=self.username)
+        self.window = selectedWindow(id=self.id_event, username=self.username)
         self.window.show()
         self.close()
 
@@ -145,6 +145,6 @@ class modifyDataWindow(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Window(username='root0')
+    window = mainWindow(username='root0')
     window.show()
     sys.exit(app.exec())
