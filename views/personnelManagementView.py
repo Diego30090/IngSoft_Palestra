@@ -110,10 +110,9 @@ class PersonnelManagementView(QWidget):
     def insert(self):
         columns = self.table_column
         columns.pop(0)
-        self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.username)
+        self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.username, self.tab)
         self.insert_window.show()
         self.hide()
-        tab = self.tab
 
     def toMainMenu(self):
         self.screen = menu.MainMenu(username=self.username)
@@ -123,8 +122,9 @@ class PersonnelManagementView(QWidget):
 
 class PersonnelManagementCrudView(QWidget):
 
-    def __init__(self, window_title, table_column, username):
+    def __init__(self, window_title, table_column, username, tab_type):
         super().__init__()
+        self.tab_type = tab_type
         self.username= username
         # Window settings
         self.title = window_title
@@ -228,8 +228,9 @@ class PersonnelManagementCrudView(QWidget):
             self.close_this()
 
     def close_this(self):
-        ex.show()
-        ex.show_tab(tab_type=ex.tab)
+        self.screen = PersonnelManagementView(username=self.username)
+        self.screen.show()
+        self.screen.show_tab(tab_type=self.tab_type)
         self.close()
 
 
