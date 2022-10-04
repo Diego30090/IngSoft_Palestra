@@ -53,15 +53,15 @@ class MainMenu(QWidget):
         for elem in range(len(local_buttons)):
             local_buttons[elem].setText(local_buttons_name[elem])
             local_buttons[elem].resize(*btn_dim)
-        row1 = [self.calendar_button, self.inventory_button, self.profile_button]
-        row2 = [self.personnelManagement_button, self.logout_button]
+        btn_row1 = [self.calendar_button, self.inventory_button, self.profile_button]
+        btn_row2 = [self.personnelManagement_button, self.logout_button]
 
-        self.positioning(row1, self.starting_distance)
+        self.positioning(btn_row1, self.starting_distance)
 
-        self.positioning(row2, self.starting_distance + btn_dim[1] + 30)
+        self.positioning(btn_row2, self.starting_distance + btn_dim[1] + 30)
 
         self.setFixedWidth(self.width)
-        self.setFixedHeight(row2[0].y() + row2[0].height() + self.starting_distance)
+        self.setFixedHeight(btn_row2[0].y() + btn_row2[0].height() + self.starting_distance)
 
         self.show()
 
