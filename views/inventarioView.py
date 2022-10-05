@@ -139,7 +139,7 @@ class inventarioView(QWidget):
         return item
 
     def insMod(self, info):
-        self.insert_window = InventarioCrudView(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info)
+        self.insert_window = InventarioCrudView(f'Inserisci {self.tab_name}', self.table_column, self.tab_name, info, self.username)
         self.insert_window.show()
         self.hide()
 
@@ -152,10 +152,10 @@ class inventarioView(QWidget):
 #INSertMODifyWINDOW
 class InventarioCrudView(QWidget):
 
-    def __init__(self, window_title, table_column, tab_name, info):
+    def __init__(self, window_title, table_column, tab_name, info, username):
         super().__init__()
         self.item = info
-        print(self.item)
+        self.username=username
     # Window settings
         self.title = window_title
         self.width = 370
@@ -257,8 +257,9 @@ class InventarioCrudView(QWidget):
         self.accept_button.clicked.connect(lambda: self.save_infos())
 
     def close_this(self):
-        ex.show()
-        ex.show_tab(tab_type=ex.tab_name)
+        self.screen = inventarioView(username=self.username)
+        self.screen.show()
+        self.screen.show_tab(tab_type=self.tab_name)
         self.close()
 
 
