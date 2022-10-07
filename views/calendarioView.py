@@ -68,7 +68,7 @@ class selectedWindow(QWidget):
         self.init_list(id=self.id_event)
         self.dataUpdate()
         self.back_button.clicked.connect(self.backWindow)
-        self.delete_button.clicked.connect(self.event_delete)
+        self.delete_button.clicked.connect(self.eventDelete)
         self.modify_button.clicked.connect(self.openWindow)
 
     def init_list(self, id):
@@ -95,7 +95,7 @@ class selectedWindow(QWidget):
         self.widget_organizer.addItem(organizer_event)
         self.widget_description.addItem(description_event)
 
-    def event_delete(self):
+    def eventDelete(self):
         db.remove_event(self.id_event)
         self.backWindow()
 
@@ -116,8 +116,8 @@ class modifyDataWindow(QWidget):
         super(modifyDataWindow, self).__init__()
         loadUi("../Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
-        self.negate_button.clicked.connect(self.negate_window)
-        self.confirm_button.clicked.connect(self.modify_data)
+        self.negate_button.clicked.connect(self.negateWindow)
+        self.confirm_button.clicked.connect(self.modifyData)
 
     def init_ui(self):
         event = db.event_by_id(self.id_event)
@@ -127,12 +127,12 @@ class modifyDataWindow(QWidget):
             widget_list[elem].clear()
             widget_list[elem].addItem(wid_value[elem])
 
-    def negate_window(self):
+    def negateWindow(self):
         self.window = selectedWindow(id=self.id_event, username=self.username)
         self.window.show()
         self.close()
 
-    def modify_data(self):
+    def modifyData(self):
         new_name = self.line_edit_name.text()
         new_location = self.line_edit_location.text()
         new_time = self.line_edit_time.text()
