@@ -131,8 +131,8 @@ class PersonnelManagementCrudView(QWidget):
         self.width = 370
         self.height = 610
         # Item settings
-        self.labels = []
-        self.texts = []
+        self.info_labels = []
+        self.info_texts = []
         self.err_label = QLabel(self)
 
         self.button_fixed_height = 90
@@ -157,11 +157,11 @@ class PersonnelManagementCrudView(QWidget):
         for i in range(len(table_column)):
             new_label = QLabel(table_column[i], self)
             new_label.move(self.horizontalLabelDistance, self.verticalDistance)
-            self.labels.append(new_label)
+            self.info_labels.append(new_label)
             if table_column[i] == 'Data di Nascita':
                 new_text = QDateEdit(self)
                 new_text.setDate(QDate(1900, 1, 1))
-            elif self.labels[i].text() == 'Tipologia di Utente':
+            elif self.info_labels[i].text() == 'Tipologia di Utente':
                 new_text = QComboBox(self)
                 new_text.addItem('Atleta')
                 new_text.addItem('Istruttore')
@@ -170,11 +170,11 @@ class PersonnelManagementCrudView(QWidget):
                 new_text = QLineEdit(self)
             new_text.move(self.horizontalTextDistance, self.verticalDistance)
             new_text.setFixedWidth(135)
-            self.texts.append(new_text)
+            self.info_texts.append(new_text)
 
             self.verticalDistance += 50
-            self.labels[i].show()
-            self.texts[i].show()
+            self.info_labels[i].show()
+            self.info_texts[i].show()
 
         self.accept_button = QPushButton('Accetta', self)
         self.accept_button.setFixedHeight(self.button_fixed_height)
@@ -202,13 +202,13 @@ class PersonnelManagementCrudView(QWidget):
     def recordCreate(self):
         flag = True
         values = []
-        for i in range(len(self.texts)):
-            if isinstance(self.texts[i], QLineEdit) and self.texts[i].text() == '':
+        for i in range(len(self.info_texts)):
+            if isinstance(self.info_texts[i], QLineEdit) and self.info_texts[i].text() == '':
                 error = 'Inserire tutti i campi'
                 self.errorHandle(error=error)
                 flag = False
-            if self.labels[i].text() == 'Username':
-                user = self.texts[i].text()
+            if self.info_labels[i].text() == 'Username':
+                user = self.info_texts[i].text()
                 check_flag = db.check_username(user)
                 if check_flag:
                     error = 'Username già esistente'
@@ -217,13 +217,13 @@ class PersonnelManagementCrudView(QWidget):
 
         if flag:
             values.clear()
-            for i in range(len(self.texts)):
-                if isinstance(self.texts[i], QLineEdit):
-                    values.append(str(self.texts[i].text()))
-                elif isinstance(self.texts[i], QDateEdit):
-                    values.append(str(self.texts[i].date().toString('yyyy-MM-dd')))
-                elif isinstance(self.texts[i], QComboBox):
-                    values.append(self.texts[i].currentText())
+            for i in range(len(self.info_texts)):
+                if isinstance(self.info_texts[i], QLineEdit):
+                    values.append(str(self.info_texts[i].text()))
+                elif isinstance(self.info_texts[i], QDateEdit):
+                    values.append(str(self.info_texts[i].date().toString('yyyy-MM-dd')))
+                elif isinstance(self.info_texts[i], QComboBox):
+                    values.append(self.info_texts[i].currentText())
             db.insert_user(*values)
             self.closeThis()
 
