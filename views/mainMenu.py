@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
 from db import dbController as db
 from views import loginView as lv, calendarioView as cal
 from views import profileView as profile
-from views import inventarioView as inv
+from views import InventarioView as inv
 from views import personnelManagementView as perman
 
 
@@ -131,7 +131,7 @@ class MainMenu(QWidget):
         self.close()
 
     def toInventory(self):
-        self.screen = inv.inventarioView(username=self.username)
+        self.screen = inv.InventarioView(username=self.username)
         self.screen.show()
         self.close()
 
