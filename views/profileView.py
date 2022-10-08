@@ -76,17 +76,17 @@ class ProfileView(QWidget):
                              self.new_phone, self.new_user_type]
 
         # item initializers and item commands
-        self.profile_view_geometry()
-        self.profile_item_def()
+        self.profileViewGeometry()
+        self.profileItemDefinition()
         self.instruction()
-        self.edit_profile_item_def()
+        self.editProfileItemDefinition()
 
-    def profile_view_geometry(self):
+    def profileViewGeometry(self):
         self.setWindowTitle('Profilo')
         self.setFixedWidth(400)
         self.setFixedHeight(350)
 
-    def profile_item_def(self):
+    def profileItemDefinition(self):
         # Setting Nome della label
         for label in range(len(self.field_labels_obj)):
             self.field_labels_obj[label].setText(self.field_labels_name[label])
@@ -98,10 +98,10 @@ class ProfileView(QWidget):
         self.edit_profile_button = QPushButton('Modifica Profilo', self)
         self.menu_button = QPushButton('Torna al Menu', self)
 
-        self.prof_item_geometry()
-        self.profile_data_init(name=self.username)
+        self.profileItemGeometry()
+        self.profileDataInitializer(name=self.username)
 
-    def prof_item_geometry(self):
+    def profileItemGeometry(self):
         # set position of labels
         for label in range(len(self.field_labels_obj)):
             if label == 0:
@@ -129,12 +129,12 @@ class ProfileView(QWidget):
         self.edit_profile_button.show()
         self.menu_button.show()
 
-    def edit_profile_view_geometry(self):
+    def editProfileViewGeometry(self):
         self.setWindowTitle('Modifica Profilo')
         self.setFixedWidth(510)
         self.setFixedHeight(360)
 
-    def edit_profile_item_def(self):
+    def editProfileItemDefinition(self):
         # Conferma password per salvare i dati
         self.confirm_password_label = QLabel('Conferma la Password', self)
         self.confirm_password_label.setStyleSheet("font: bold")
@@ -152,7 +152,7 @@ class ProfileView(QWidget):
         self.confirm_button.setText("Salva")
         self.back_button.setText('Indietro')
 
-    def edit_prof_item_geometry(self):
+    def editProfileItemGeometry(self):
         for elem in range(len(self.new_line_obj)):
             self.new_line_obj[elem].setGeometry(self.starting_confirm_distance, self.field_line_obj[elem].y(),
                                                 self.standard_line_width, self.standard_line_height)
@@ -182,23 +182,23 @@ class ProfileView(QWidget):
             self.new_user_type.setDisabled(True)
 
     def instruction(self):
-        self.edit_profile_button.clicked.connect(self.edit_profile)
+        self.edit_profile_button.clicked.connect(self.editProfile)
         self.confirm_button.clicked.connect(self.salva)
         self.menu_button.clicked.connect(self.toMainMenu)
-        self.back_button.clicked.connect(self.return_to_profile)
+        self.back_button.clicked.connect(self.returnToProfile)
 
-    def return_to_profile(self):
+    def returnToProfile(self):
         for elem in range(len(self.new_line_obj)):
             self.new_line_obj[elem].hide()
         for elem in range(len(self.elem_to_show)):
             self.elem_to_show[elem].hide()
-        self.profile_view_geometry()
-        self.prof_item_geometry()
+        self.profileViewGeometry()
+        self.profileItemGeometry()
 
-    def edit_profile(self):
-        self.edit_profile_view_geometry()
-        self.edit_profile_item_def()
-        self.edit_prof_item_geometry()
+    def editProfile(self):
+        self.editProfileViewGeometry()
+        self.editProfileItemDefinition()
+        self.editProfileItemGeometry()
         elem_to_hide = [self.edit_profile_button, self.menu_button]
         for i in range(len(elem_to_hide)):
             elem_to_hide[i].hide()
@@ -209,9 +209,9 @@ class ProfileView(QWidget):
                              self.confirm_password_info2, self.confirm_button, self.back_button]
         for i in range(len(self.elem_to_show)):
             self.elem_to_show[i].show()
-        self.edit_profile_data_init()
+        self.editProfileDataInitializer()
 
-    def profile_data_init(self, name):
+    def profileDataInitializer(self, name):
         val = db.user_info(name)
         to_substitute = [val[1], val[2], val[3], val[7], val[8], val[6]]
         for elem in range(len(to_substitute)):
@@ -223,7 +223,7 @@ class ProfileView(QWidget):
                 else:
                     self.field_line_obj[elem].setDate(dat.str_to_date(to_substitute[2]))
 
-    def edit_profile_data_init(self):
+    def editProfileDataInitializer(self):
         # get from db
         for i in range(len(self.field_line_obj)):
             if i != 2:
@@ -255,7 +255,7 @@ class ProfileView(QWidget):
                 db.update_user(self.new_name.text(), self.new_surname.text(),
                                self.new_born_data.date().toString('yyyy-MM-dd'),
                                self.new_email.text(), self.new_phone.text(), self.new_user_type.text(), self.username)
-                self.return_to_profile()
+                self.returnToProfile()
 
     def toMainMenu(self):
         self.screen = menu.MainMenu(username=self.username)

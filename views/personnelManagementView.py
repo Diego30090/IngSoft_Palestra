@@ -190,29 +190,29 @@ class PersonnelManagementCrudView(QWidget):
 
         self.err_label.setStyleSheet('color: red')
 
-    def err_handle(self, error):
+    def errorHandle(self, error):
         self.err_label.setText(f'Error: {error}')
         self.err_label.adjustSize()
         self.err_label.move(int((self.width - self.err_label.width()) / 2), self.verticalDistance - 10)
 
     def instruction(self):
-        self.back_button.clicked.connect(lambda: self.close_this())
-        self.accept_button.clicked.connect(self.record_create)
+        self.back_button.clicked.connect(lambda: self.closeThis())
+        self.accept_button.clicked.connect(self.recordCreate)
 
-    def record_create(self):
+    def recordCreate(self):
         flag = True
         values = []
         for i in range(len(self.texts)):
             if isinstance(self.texts[i], QLineEdit) and self.texts[i].text() == '':
                 error = 'Inserire tutti i campi'
-                self.err_handle(error=error)
+                self.errorHandle(error=error)
                 flag = False
             if self.labels[i].text() == 'Username':
                 user = self.texts[i].text()
                 check_flag = db.check_username(user)
                 if check_flag:
                     error = 'Username già esistente'
-                    self.err_handle(error=error)
+                    self.errorHandle(error=error)
                     flag = False
 
         if flag:
@@ -225,9 +225,9 @@ class PersonnelManagementCrudView(QWidget):
                 elif isinstance(self.texts[i], QComboBox):
                     values.append(self.texts[i].currentText())
             db.insert_user(*values)
-            self.close_this()
+            self.closeThis()
 
-    def close_this(self):
+    def closeThis(self):
         self.screen = PersonnelManagementView(username=self.username)
         self.screen.show()
         self.screen.show_tab(tab_type=self.tab_type)
