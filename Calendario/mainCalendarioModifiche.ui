@@ -428,7 +428,7 @@
     <string notr="true">background-color: rgb(200,200,200)</string>
    </property>
    <property name="text">
-    <string>ANNULLA</string>
+    <string>INDIETRO</string>
    </property>
   </widget>
  </widget>
