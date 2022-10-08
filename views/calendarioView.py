@@ -8,10 +8,10 @@ from views import mainMenu as menu
 
 
 
-class calendarView(QWidget):
+class CalendarView(QWidget):
     def __init__(self, username):
         self.username = username
-        super(calendarView, self).__init__()
+        super(CalendarView, self).__init__()
         loadUi("../Calendario/mainCalendario.ui", self)
         self.calendar_widget.selectionChanged.connect(self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
@@ -50,7 +50,7 @@ class calendarView(QWidget):
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId= str(self.event_list[i][0])
-                self.window = selectedTaskView(id=selectedId, username=self.username)
+                self.window = SelectedTaskView(id=selectedId, username=self.username)
                 self.window.show()
                 self.close()
 
@@ -59,11 +59,11 @@ class calendarView(QWidget):
         self.screen.show()
         self.close()
 
-class selectedTaskView(QWidget):
+class SelectedTaskView(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
-        super(selectedTaskView, self).__init__()
+        super(SelectedTaskView, self).__init__()
         loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
@@ -100,20 +100,20 @@ class selectedTaskView(QWidget):
         self.closeThis()
 
     def openWindow(self):
-        self.window = modifyView(id=self.id_event, username= self.username)
+        self.window = ModifyView(id=self.id_event, username= self.username)
         self.window.show()
         self.close()
 
     def closeThis(self):
-        self.window = calendarView(username=self.username)
+        self.window = CalendarView(username=self.username)
         self.window.show()
         self.close()
 
-class modifyView(QWidget):
+class ModifyView(QWidget):
     def __init__(self, id, username):
         self.username = username
         self.id_event=id
-        super(modifyView, self).__init__()
+        super(ModifyView, self).__init__()
         loadUi("../Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
         self.negate_button.clicked.connect(self.closeThis)
@@ -128,7 +128,7 @@ class modifyView(QWidget):
             widget_list[elem].addItem(wid_value[elem])
 
     def closeThis(self):
-        self.window = selectedTaskView(id=self.id_event, username=self.username)
+        self.window = SelectedTaskView(id=self.id_event, username=self.username)
         self.window.show()
         self.close()
 
@@ -145,6 +145,6 @@ class modifyView(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = calendarView(username='root0')
+    window = CalendarView(username='root0')
     window.show()
     sys.exit(app.exec())
