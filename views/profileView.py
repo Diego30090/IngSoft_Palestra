@@ -204,6 +204,7 @@ class ProfileView(QWidget):
             elem_to_hide[i].hide()
         for elem in range(len(self.new_line_obj)):
             self.new_line_obj[elem].show()
+        self.new_user_type.setDisabled(True)
         # elem_to_show
         self.elem_to_show = [self.confirm_password_label, self.confirm_password_info,
                              self.confirm_password_info2, self.confirm_button, self.back_button]
