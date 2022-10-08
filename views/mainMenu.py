@@ -13,7 +13,7 @@ class MainMenu(QWidget):
 
     def __init__(self, username):
         super().__init__()
-        #login check
+        # login check
         if username is None:
             self.username = None
             self.flag = False
@@ -29,7 +29,7 @@ class MainMenu(QWidget):
         self.starting_distance = 50
 
         # Manda alla view del calendario
-        self.calendar_button= QPushButton(self)
+        self.calendar_button = QPushButton(self)
         # Manda alla gestione personale
         self.personnelManagement_button = QPushButton(self)
         # Manda alla view del profilo
@@ -39,15 +39,15 @@ class MainMenu(QWidget):
         # Manda al login
         self.logout_button = QPushButton(self)
 
-        self.init_ui()
-        self.control_check()
+        self.initUi()
+        self.controlCheck()
         self.instruction()
 
-    def init_ui(self):
+    def initUi(self):
         self.setWindowTitle(self.title)
 
-
-        local_buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.inventory_button, self.logout_button]
+        local_buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button,
+                         self.inventory_button, self.logout_button]
         local_buttons_name = ['Calendario', 'Gestione Personale', 'Profilo', 'Inventario', 'Logout']
         btn_dim = [120, 90]
         for elem in range(len(local_buttons)):
@@ -57,43 +57,43 @@ class MainMenu(QWidget):
         btn_row1_rgb = ['200,200,200', '200,200,200', '200,200,200']
         btn_row2 = [self.personnelManagement_button, self.logout_button]
         btn_row2_rgb = ['200,200,200', '255,70,70']
-        self.positioning(btn_row1, self.starting_distance, btn_row1_rgb)
+        self.itemPositioning(btn_row1, self.starting_distance, btn_row1_rgb)
 
-        self.positioning(btn_row2, self.starting_distance + btn_dim[1] + 30, btn_row2_rgb)
+        self.itemPositioning(btn_row2, self.starting_distance + btn_dim[1] + 30, btn_row2_rgb)
 
         self.setFixedWidth(self.width)
         self.setFixedHeight(btn_row2[0].y() + btn_row2[0].height() + self.starting_distance)
 
         self.show()
 
-    def positioning(self, element, selected_height, rgb):
+    def itemPositioning(self, element, selected_height, rgb):
         lenght_sum = 0
         for elem in range(len(element)):
-            if elem ==0:
-                lenght_sum +=50
+            if elem == 0:
+                lenght_sum += 50
             element[elem].move(lenght_sum, selected_height)
-            lenght_sum +=element[elem].width() + 30
+            lenght_sum += element[elem].width() + 30
             element[elem].setStyleSheet(f"background: rgb({rgb[elem]});")
-        if lenght_sum +20 > self.width:
-            self.width = lenght_sum +20
+        if lenght_sum + 20 > self.width:
+            self.width = lenght_sum + 20
 
-
-    def control_check(self):
-        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button, self.inventory_button]
+    def controlCheck(self):
+        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button,
+                        self.inventory_button]
         atleta_opt = [False, True, False, False]
         istruttore_opt = [False, True, False, False]
         admin_opt = [False, False, False, False]
         disabled_opt = [True, True, True, True]
-        #In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
+        # In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
         if self.flag is False:
-            self.disabler(buttons=self.buttons, opt= disabled_opt)
+            self.disabler(buttons=self.buttons, opt=disabled_opt)
         elif self.user_type == 'Atleta':
             self.disabler(buttons=self.buttons, opt=atleta_opt)
             self.personnelManagement_button.hide()
         elif self.user_type == "Istruttore":
             self.disabler(buttons=self.buttons, opt=istruttore_opt)
             self.personnelManagement_button.hide()
-            #self.market_button.hide()
+            # self.market_button.hide()
         elif self.user_type == "Admin":
             self.disabler(buttons=self.buttons, opt=admin_opt)
         else:
@@ -101,7 +101,7 @@ class MainMenu(QWidget):
             self.calendar_button.hide()
             self.personnelManagement_button.hide()
             self.profile_button.hide()
-            #self.market_button.hide()
+            # self.market_button.hide()
             self.inventory_button.hide()
 
     def disabler(self, buttons, opt):
@@ -140,7 +140,8 @@ class MainMenu(QWidget):
         self.screen.show()
         self.close()
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainMenu(username= 'root1')
+    ex = MainMenu(username='root1')
     sys.exit(app.exec_())

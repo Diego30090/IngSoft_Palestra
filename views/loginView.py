@@ -20,10 +20,10 @@ class LoginView(QWidget):
         self.user_label = None
         self.error_label = None
         # item initializers and item commands
-        self.login_ui()
+        self.loginUi()
         self.instruction()
 
-    def login_ui(self):
+    def loginUi(self):
         self.setWindowTitle(self.title)
         self.setFixedWidth(self.width)
         self.setFixedHeight(self.height)
@@ -54,9 +54,9 @@ class LoginView(QWidget):
         self.show()
 
     def instruction(self):
-        self.login_button.clicked.connect(self.login_butt_clicked)
+        self.login_button.clicked.connect(self.loginButtonClicked)
 
-    def login_butt_clicked(self):
+    def loginButtonClicked(self):
         user = self.user_text.text()
         pwd = self.pass_text.text()
         if user != '' and pwd != '':
