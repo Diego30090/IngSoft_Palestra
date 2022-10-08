@@ -75,7 +75,7 @@ class PersonnelManagementView(QWidget):
         self.upper_buttons[0].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[0]))
         self.upper_buttons[1].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[1]))
         self.upper_buttons[2].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[2]))
-        self.lower_buttons[0].clicked.connect(lambda: self.insert())
+        self.lower_buttons[0].clicked.connect(lambda: self.toCrudView())
         self.lower_buttons[2].clicked.connect(self.toMainMenu)
 
     def show_tab(self, tab_type):
@@ -107,7 +107,7 @@ class PersonnelManagementView(QWidget):
         self.lower_buttons[0].show()
         self.lower_buttons[1].show()
 
-    def insert(self):
+    def toCrudView(self):
         columns = self.table_column
         columns.pop(0)
         self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.username, self.tab)
