@@ -9,7 +9,7 @@ class CalendarView(QWidget):
     def __init__(self, username):
         self.username = username
         super(CalendarView, self).__init__()
-        loadUi("../Calendario/mainCalendario.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendario.ui", self)
         self.calendar_widget.selectionChanged.connect(self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
         self.add_button.clicked.connect(self.addNewTask)
@@ -61,7 +61,7 @@ class SelectedTaskView(QWidget):
         self.username = username
         self.id_event=id
         super(SelectedTaskView, self).__init__()
-        loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
         self.back_button.clicked.connect(self.closeThis)
@@ -111,7 +111,7 @@ class ModifyView(QWidget):
         self.username = username
         self.id_event=id
         super(ModifyView, self).__init__()
-        loadUi("../Calendario/mainCalendarioModifiche.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
         self.negate_button.clicked.connect(self.closeThis)
         self.confirm_button.clicked.connect(self.saveChanges)

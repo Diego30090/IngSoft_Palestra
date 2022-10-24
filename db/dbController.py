@@ -1,17 +1,16 @@
 import sqlite3
-import Calendario
 
 
 # It sets the connection to the db, from any folder
 def connect():
-    con = sqlite3.connect('..\db\dbProject.db')
+    con = sqlite3.connect('..\..\db\dbProject.db')
     cursor = con.cursor()
     return cursor
 
 
 # Funzione universale per insert/delete/update
 def idu(query):
-    con = sqlite3.connect('..\db\dbProject.db')
+    con = sqlite3.connect('..\..\db\dbProject.db')
     cur = con.cursor()
     cur.execute(query)
     con.commit()
