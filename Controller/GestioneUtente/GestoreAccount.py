@@ -1,4 +1,4 @@
-from models.GestioneUtente.Utente import UtenteModel as Model
+from Model.GestioneUtente.Utente import UtenteModel as Model
 import sqlite3
 
 class GestioneAccount(object):
