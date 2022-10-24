@@ -1,10 +1,10 @@
-from Utente import UtenteModel as Model
+from models.GestioneUtente.Utente import UtenteModel as Model
 import sqlite3
 
 class GestioneAccount(object):
     def __init__(self, username, password):
         self.__utente = Model(None, None, None, None, username, password, None, None, None)
-        self.__db = sqlite3.connect('..\db\dbProject.db')
+        self.__db = sqlite3.connect('../../db/dbProject.db')
         self.__cursor = self.__db.cursor()
 
     def login(self):

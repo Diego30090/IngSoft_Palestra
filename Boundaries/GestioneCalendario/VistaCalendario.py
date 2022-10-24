@@ -1,10 +1,9 @@
-import sqlite3
 import sys
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem
 from PyQt5.uic import loadUi
 from db import dbController as db
-from Boundaries import mainMenu as menu
+from Boundaries.GestioneUtente import mainMenu as menu
+
 
 ## Sostituire le parti interessate con l'interazione a GestoreEventoCalendario
 ## In questo caso, la vista richiede al Gestore di popolarne i dati

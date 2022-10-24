@@ -1,12 +1,11 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QWidget
+from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 
 from db import dbController as db
-from Boundaries import loginView as lv, calendarioView as cal
-from Boundaries import profileView as profile
-from Boundaries import InventarioView as inv
-from Boundaries import personnelManagementView as perman
+from Boundaries.GestioneUtente import loginView as lv, personnelManagementView as perman, profileView as profile
+from Boundaries.GestioneCalendario import calendarioView as cal
+from Boundaries.GestioneInventario import InventarioView as inv
 
 
 class MainMenu(QWidget):

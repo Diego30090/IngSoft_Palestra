@@ -1,10 +1,9 @@
 import sys
-from Boundaries import mainMenu as menu
+from Boundaries.GestioneUtente import mainMenu as menu
 from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGroupBox, QVBoxLayout, QGridLayout, \
-    QSizePolicy, QDateEdit
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QDateEdit
 from PyQt5.QtCore import *
-from general import dateFormatter as dat
+from Controller.GestioneUtente import dateFormatter as dat
 
 
 class ProfileView(QWidget):
