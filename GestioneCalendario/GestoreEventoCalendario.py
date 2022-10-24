@@ -1,6 +1,6 @@
 import sqlite3
 
-from models.EventoCalendarioModel import EventoCalendarioModel
+from models.GestioneCalendario.EventoCalendarioModel import EventoCalendarioModel
 
 class GestoreEventoCalendario():
 

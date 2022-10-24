@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtCore import Qt, QDate
 
-from views import mainMenu as menu
+from Boundaries import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
     QDateEdit, QComboBox
