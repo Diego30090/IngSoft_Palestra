@@ -1,20 +1,22 @@
 import sqlite3
 
-from models.GestioneCalendario.EventoCalendarioModel import EventoCalendarioModel
+from Model.GestioneCalendario.EventoCalendarioModel import EventoCalendarioModel
+from db import dbController as db
 
 class GestoreEventoCalendario():
+    def __init__(self, id_event, name_event, date_event, description_event, organizer_event, time_event, location_event):
+        self.__evento = EventoCalendarioModel(id_event, name_event, date_event, description_event, organizer_event, time_event, location_event)
+        self.__db = sqlite3.connect('dbProject.db')
+        self.__cursor = self.__db.cursor()
 
-    def __init__(self, name_event, date_event, location_event, time_event, organizer_event, description_event):
-        self.evento = EventoCalendarioModel(name_event, date_event, location_event, time_event, organizer_event, description_event)
-        self.db = sqlite3.connect('dbProject.db')
-        self.cursor = self.db.cursor()
+    def addEventoInDb(self):
+        # definizione della query
+        query = f"INSERT INTO tasks(name, date, description, organizer, time, location) VALUES ('{self.__evento.getNomeEvento()}','{self.__evento.getDataEvento()}', '{self.__evento.getDescrizioneEvento()}','{self.__evento.getOrganizzatoreEvento()}', '{self.__evento.getOrarioEvento()}', '{self.__evento.getLuogoEvento()}');"
+        #esecuzione della query
+        self.__cursor.execute(query)
+        #commit nel database
+        self.__db.commit()
 
-    def insertEvent(self):
-        query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{self.name}','{self.date}', '{self.location}','{self.time}', '{self.organizer}', '{self.description}');"
-        self.cursor.execute(query)
-        self.db.commit()
+    def getDataEvento(self):
+        return self.__evento.getDataEvento()
 
-        #Deve tenere gli il modello e l'interazione con il db
-
-    ## Inserire gli algoritmi per l'interazione con il database ed il model
-    ## Gli algoritmi creati devono esser utili alla vista

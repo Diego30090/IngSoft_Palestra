@@ -32,7 +32,8 @@ class CalendarView(QWidget):
 
     def addNewTask(self):
         name_event = str(self.line_edit_name.text())
-        date_event = self.calendar_widget.selectedDate().toPyDate()
+        date_event = self.calendar_widget.selectedDate()
+        print(type(date_event))
         location_event = str(self.line_edit_location.text())
         time_event = str(self.line_edit_time.text())
         organizer_event = str(self.line_edit_organizer.text())

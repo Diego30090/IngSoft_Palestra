@@ -1,7 +1,12 @@
+from datetime import datetime, date
+import PyQt5
+
+
 class EventoCalendarioModel(object):
-    def __init__(self, idEvento: int, nomeEvento: str, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
+    def __init__(self, idEvento: int, nomeEvento: str, dataEvento: PyQt5.QtCore.QDate, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
         self.__idEvento = idEvento
         self.__nomeEvento = nomeEvento
+        self.__dataEvento = dataEvento
         self.__descrizioneEvento = descrizioneEvento
         self.__organizzatoreEvento = organizzatoreEvento
         self.__orarioEvento = orarioEvento
@@ -19,6 +24,12 @@ class EventoCalendarioModel(object):
 
     def setNomeEvento(self, nomeEvento):
         self.__nomeEvento = nomeEvento
+
+    def getDataEvento(self):
+        return self.__dataEvento
+
+    def setDataEvento(self, dataEvento):
+        self.__dataEvento = dataEvento
 
     def getDescrizioneEvento(self):
         return self.__descrizioneEvento
@@ -46,9 +57,10 @@ class EventoCalendarioModel(object):
     ##Definizione getter e setter del modello
 
 if __name__ == "__main__":
-    evento=EventoCalendarioModel(1, "Gara", "TEXT", "Marco", "11.00", "Ancona")
+    evento=EventoCalendarioModel(1, "Gara", "2022-11-04", "TEXT", "Marco", "11.00", "Ancona")
     print(evento.getIdEvento())
     print(evento.getNomeEvento())
+    print(evento.getDataEvento())
     print(evento.getDescrizioneEvento())
     print(evento.getOrganizzatoreEvento())
     print(evento.getOrarioEvento())

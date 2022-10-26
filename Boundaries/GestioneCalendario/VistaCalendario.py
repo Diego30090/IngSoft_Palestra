@@ -1,6 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem
 from PyQt5.uic import loadUi
+
+from Controller.GestioneCalendario import GestoreCalendario
 from db import dbController as db
 from Boundaries.GestioneUtente import mainMenu as menu
 
@@ -13,7 +15,7 @@ class VistaCalendario(QWidget):
     def __init__(self, username):
         self.username = username
         super(VistaCalendario, self).__init__()
-        loadUi("../Calendario/mainCalendario.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendario.ui", self)
         self.calendar_widget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.calendarDateChanged()
@@ -36,15 +38,9 @@ class VistaCalendario(QWidget):
             self.event_list.append([str(events[event][0]), str(id(self.event_list_widget.item(event)))])
 
     def addNewTask(self):
-        name_event = str(self.line_edit_name.text())
-        date_event = self.calendar_widget.selectedDate().toPyDate()
-        location_event = str(self.line_edit_location.text())
-        time_event = str(self.line_edit_time.text())
-        organizer_event = str(self.line_edit_organizer.text())
-        description_event = str(self.line_edit_description.text())
-
-        db.insert_event(name_event, date_event, location_event, time_event, organizer_event, description_event)
-        self.updateTaskList(date_event)
+        evento = GestoreCalendario.GestoreEventoCalendario(str(self.line_edit_name.text()), self.calendar_widget.selectedDate().toPyDate(), str(self.line_edit_location.text()), str(self.line_edit_time.text()), str(self.line_edit_organizer.text()), str(self.line_edit_description.text()))
+        evento.addEventoInDb()
+        self.updateTaskList(evento.getDataEvento())
         self.line_edit_name.clear()
 
     def viewSelectedTask(self):
