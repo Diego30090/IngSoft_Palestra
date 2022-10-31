@@ -6,13 +6,14 @@ from Boundaries.GestioneUtente import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
     QDateEdit, QComboBox
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 
 
 class PersonnelManagementView(QWidget):
 
-    def __init__(self, username):
+    def __init__(self, accountController: accountController):
         super().__init__()
-        self.username = username
+        self.accountController = accountController
         # Window settings
         self.title = 'Gestione Personale'
         self.width = 850
@@ -110,22 +111,22 @@ class PersonnelManagementView(QWidget):
     def toCrudView(self):
         columns = self.table_column
         columns.pop(0)
-        self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.username, self.tab)
+        self.insert_window = PersonnelManagementCrudView('Inserisci Utente', columns, self.tab, self.accountController)
         self.insert_window.show()
         self.hide()
 
     def toMainMenu(self):
-        self.screen = menu.MainMenu(username=self.username)
+        self.screen = menu.MainMenu(self.accountController)
         self.screen.show()
         self.close()
 
 
 class PersonnelManagementCrudView(QWidget):
 
-    def __init__(self, window_title, table_column, username, tab_type):
+    def __init__(self, window_title, table_column, tab_type, accountController):
         super().__init__()
+        self.accountController = accountController
         self.tab_type = tab_type
-        self.username= username
         # Window settings
         self.title = window_title
         self.width = 370
@@ -228,7 +229,7 @@ class PersonnelManagementCrudView(QWidget):
             self.closeThis()
 
     def closeThis(self):
-        self.screen = PersonnelManagementView(username=self.username)
+        self.screen = PersonnelManagementView( accountController=self.accountController)
         self.screen.show()
         self.screen.show_tab(tab_type=self.tab_type)
         self.close()
@@ -236,5 +237,5 @@ class PersonnelManagementCrudView(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = PersonnelManagementView(username= 'root1')
+    ex = PersonnelManagementView(accountController=accountController('root1', 'pwd'))
     sys.exit(app.exec_())

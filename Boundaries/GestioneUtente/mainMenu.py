@@ -2,7 +2,6 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 
-from db import dbController as db
 from Boundaries.GestioneUtente import loginView as lv, personnelManagementView as perman, profileView as profile
 from Boundaries.GestioneCalendario import calendarioView as cal
 from Boundaries.GestioneInventario import InventarioView as inv
@@ -119,12 +118,12 @@ class MainMenu(QWidget):
         self.close()
 
     def toPersonnelManagement(self):
-        self.screen = perman.PersonnelManagementView(username=self.userController.utente.getUsername())
+        self.screen = perman.PersonnelManagementView(accountController=self.userController)
         self.screen.show()
         self.close()
 
     def toProfile(self):
-        self.screen = profile.ProfileView(profile_name=self.userController.utente.getUsername())
+        self.screen = profile.ProfileView(accountController=self.userController)
         self.screen.show()
         self.close()
 
@@ -141,5 +140,5 @@ class MainMenu(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainMenu(username='root1')
+    ex = MainMenu(userController=AccountController('root1', 'pwd'))
     sys.exit(app.exec_())

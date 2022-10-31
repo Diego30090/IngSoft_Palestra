@@ -4,13 +4,15 @@ from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QDateEdit
 from PyQt5.QtCore import *
 from Controller.GestioneUtente import dateFormatter as dat
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 
 
 class ProfileView(QWidget):
 
-    def __init__(self, profile_name):
+    def __init__(self, accountController: accountController):
         super().__init__()
-        self.username = profile_name
+        self.accountController = accountController
+
         # Starting Distance Layout
         self.starting_height_distance = 60
         self.fixed_left_distance = 75
@@ -23,7 +25,7 @@ class ProfileView(QWidget):
         self.starting_confirm_distance = 330
         self.show()
 
-        self.profile_name_label = QLabel(f"Profilo di {self.username}", self)
+        self.profile_name_label = QLabel(f"Profilo di {self.accountController.utente.getUsername()}", self)
 
         # Field Label
         self.name_label = QLabel(self)
@@ -98,7 +100,7 @@ class ProfileView(QWidget):
         self.menu_button = QPushButton('Torna al Menu', self)
 
         self.profileItemGeometry()
-        self.profileDataInitializer(name=self.username)
+        self.profileDataInitializer()
 
     def profileItemGeometry(self):
         # set position of labels
@@ -193,6 +195,7 @@ class ProfileView(QWidget):
             self.elem_to_show[elem].hide()
         self.profileViewGeometry()
         self.profileItemGeometry()
+        self.profileDataInitializer()
 
     def editProfile(self):
         self.editProfileViewGeometry()
@@ -211,9 +214,10 @@ class ProfileView(QWidget):
             self.elem_to_show[i].show()
         self.editProfileDataInitializer()
 
-    def profileDataInitializer(self, name):
-        val = db.user_info(name)
-        to_substitute = [val[1], val[2], val[3], val[7], val[8], val[6]]
+    def profileDataInitializer(self):
+        to_substitute = [self.accountController.utente.getNome(), self.accountController.utente.getCognome(),
+                         self.accountController.utente.getDataDiNascita(), self.accountController.utente.getDataDiNascita(),
+                         self.accountController.utente.getTelefono(), self.accountController.utente.getUtenteTipo()]
         for elem in range(len(to_substitute)):
             if elem != 2:
                 self.field_line_obj[elem].setText(str(to_substitute[elem]))
@@ -221,7 +225,7 @@ class ProfileView(QWidget):
                 if to_substitute[2] is None:
                     self.field_line_obj[elem].setDate(QDate(1000, 1, 1))
                 else:
-                    self.field_line_obj[elem].setDate(dat.str_to_date(to_substitute[2]))
+                    self.field_line_obj[elem].setDate(QDate.fromString(to_substitute[2],"YYYY-MM-dd"))
 
     def editProfileDataInitializer(self):
         # get from db
@@ -247,24 +251,30 @@ class ProfileView(QWidget):
             self.error(err=error)
         elif self.confirm_password_info.text() == self.confirm_password_info2.text():
             # get pass from db
-            if self.confirm_password_info.text() != db.user_pass(self.username):
+            if self.confirm_password_info.text() != self.accountController.getUserInfoInDb('password'):
                 error = 'Errore: Password sbagliata'
                 self.error(err=error)
             else:
                 self.err_label.hide()
-                db.update_user(self.new_name.text(), self.new_surname.text(),
-                               self.new_born_data.date().toString('yyyy-MM-dd'),
-                               self.new_email.text(), self.new_phone.text(), self.new_user_type.text(), self.username)
+                self.accountController.utente.setNome(self.new_name.text())
+                self.accountController.utente.setCognome(self.new_surname.text())
+                self.accountController.utente.setDataDiNascita(self.new_born_data.date().toString('yyyy-MM-dd'))
+                self.accountController.utente.setUsername(self.accountController.utente.getUsername())
+                self.accountController.utente.setPassword(self.accountController.utente.getPassword())
+                self.accountController.utente.setUtenteTipo(self.new_user_type.text())
+                self.accountController.utente.setEmail(self.new_email.text())
+                self.accountController.utente.setTelefono(self.new_phone.text())
+                self.accountController.setUserInfoInDb()
                 self.returnToProfile()
 
     def toMainMenu(self):
-        self.screen = menu.MainMenu(username=self.username)
+        self.screen = menu.MainMenu(self.accountController)
         self.screen.show()
         self.close()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ProfileView(profile_name= 'root0')
+    ex = ProfileView(accountController=accountController('root', '0000'))
     sys.exit(app.exec_())
 
 

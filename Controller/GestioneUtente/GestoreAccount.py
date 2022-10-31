@@ -32,14 +32,22 @@ class GestioneAccount(object):
         return val[0]
 
     def setUserInfoInDb(self):
-        query = f"INSERT INTO utente(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono) VALUES " \
-                f"('{self.utente.getNome()}','{self.utente.getCognome()}'," \
-                f" '{self.utente.getDataDiNascita()}', '{self.utente.getUsername()}'," \
-                f" '{self.utente.getPassword()}', '{self.utente.getUtenteTipo()}'," \
-                f" '{self.utente.getEmail()}', '{self.utente.getTelefono()}') ; "
+
+        query = f"UPDATE utente SET nome = '{self.utente.getNome()}'," \
+                f"cognome = '{self.utente.getCognome()}'," \
+                f"data_nascita = '{self.utente.getDataDiNascita()}'," \
+                f"username = '{self.utente.getUsername()}'," \
+                f"password = '{self.utente.getPassword()}', " \
+                f"utente_tipo = '{self.utente.getUtenteTipo()}'," \
+                f"email = '{self.utente.getEmail()}'," \
+                f"telefono = '{self.utente.getTelefono()}' " \
+                f"WHERE id_utente = '{self.utente.getIdUtente()}';"
         self.__cursor.execute(query)
         self.__db.commit()
 
 if __name__ == '__main__':
     a= GestioneAccount('root', '0000')
     print(a.login())
+    date = a.utente.getDataDiNascita()
+    print(date)
+    print(type(date))
