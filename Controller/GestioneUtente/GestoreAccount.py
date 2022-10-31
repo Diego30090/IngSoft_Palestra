@@ -1,4 +1,4 @@
-from Model.GestioneUtente.Utente import UtenteModel as Model
+from Model.GestioneUtente.UtenteModel import UtenteModel as Model
 import sqlite3
 
 class GestioneAccount(object):
@@ -6,6 +6,12 @@ class GestioneAccount(object):
         self.__utente = Model(None, None, None, None, username, password, None, None, None)
         self.__db = sqlite3.connect('../../db/dbProject.db')
         self.__cursor = self.__db.cursor()
+
+    def getUtenteUsername(self):
+        return self.__utente.getUsername()
+
+    def getUtentePassword(self):
+        return self.__utente.getPassword()
 
     def login(self):
         ## Controlla che l'utente desiderato sia presente con username e password indicate

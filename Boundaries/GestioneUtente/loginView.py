@@ -2,7 +2,7 @@ import sys
 from Boundaries.GestioneUtente import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget
-
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as controller
 
 class LoginView(QWidget):
 
@@ -57,12 +57,12 @@ class LoginView(QWidget):
         self.login_button.clicked.connect(self.loginButtonClicked)
 
     def loginButtonClicked(self):
-        user = self.user_text.text()
-        pwd = self.pass_text.text()
-        if user != '' and pwd != '':
-            flag = db.login(user, pwd)
+        userController = controller(self.user_text.text(), self.pass_text.text())
+
+        if userController.getUtenteUsername() != '' and userController.getUtentePassword() != '':
+            flag = userController.login()
             if flag:
-                self.toMainMenu(user)
+                self.toMainMenu(userController.getUtenteUsername())
 
             else:
                 err_text = "Errore: Credenziali non corrette!"
