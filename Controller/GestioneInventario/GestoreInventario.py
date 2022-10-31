@@ -1,23 +1,21 @@
 import sqlite3
+
+from Controller.GestioneDatabase.GestoreDatabase import GestioneDatabase
 from Model.GestioneInventario.DivisaModel import DivisaModel as divisaModel
 from Model.GestioneInventario.ArmaModel import ArmaModel as armaModel
 from Model.GestioneInventario.BorsoneModel import BorsoneModel as borsoneModel
 
 
-class GestioneInventario(object):
+class GestioneInventario(GestioneDatabase):
     def __init__(self):
+        super().__init__()
         self.listaDivise: divisaModel = []
         self.listaArmi: armaModel = []
         self.listaBorsoni: borsoneModel = []
 
-        self.__db = sqlite3.connect('../../db/dbProject.db')
-        self.__cursor = self.__db.cursor()
         self.getDiviseFromDb()
         self.getArmiFromDb()
         self.getBorsoniFromDb()
-
-    def svuotaDivise(self):
-        self.listaDivise.clear()
 
     def aggiungiDivise(self, result: divisaModel):
         self.listaDivise.append(result)
@@ -29,20 +27,23 @@ class GestioneInventario(object):
         self.listaBorsoni.append(result)
 
     def getDiviseFromDb(self):
+        self.listaDivise.clear()
         query = "SELECT * from divise;"
-        diviseList = self.__cursor.execute(query).fetchall()
+        diviseList = self.cursor.execute(query).fetchall()
         for i in range(len(diviseList)):
             self.aggiungiDivise(divisaModel(*diviseList[i]))
 
     def getArmiFromDb(self):
+        self.listaArmi.clear()
         query = "SELECT * FROM armi;"
-        armiList = self.__cursor.execute(query).fetchall()
+        armiList = self.cursor.execute(query).fetchall()
         for i in range(len(armiList)):
             self.aggiungiArmi(armaModel(*armiList[i]))
 
     def getBorsoniFromDb(self):
+        self.listaBorsoni.clear()
         query = "SELECT * FROM borsoni;"
-        borsoniList = self.__cursor.execute(query).fetchall()
+        borsoniList = self.cursor.execute(query).fetchall()
         print(borsoniList[0])
         for i in range(len(borsoniList)):
             self.aggiungiBorsoni(borsoneModel(*borsoniList[i]))
