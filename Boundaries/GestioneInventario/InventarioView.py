@@ -5,11 +5,12 @@ from Boundaries.GestioneUtente import mainMenu as menu
 from db import dbController as db
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
                             QComboBox
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 
 class InventarioView(QWidget):
 
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, userController: accountController):
+        self.userController = userController
         super().__init__()
         # Window settings
         self.title = 'Inventario'
@@ -133,12 +134,12 @@ class InventarioView(QWidget):
         return item
 
     def insertModify(self, info):
-        self.insert_window = InventarioCRUDView(f'Inserisci {self.tab_name}', self.table_columns, self.tab_name, info, self.username)
+        self.insert_window = InventarioCRUDView(f'Inserisci {self.tab_name}', self.table_columns, self.tab_name, info, self.userController)
         self.insert_window.show()
         self.hide()
 
     def toMainMenu(self):
-        self.screen = menu.MainMenu(username=self.username)
+        self.screen = menu.MainMenu(self.userController)
         self.screen.show()
         self.close()
 
@@ -146,10 +147,10 @@ class InventarioView(QWidget):
 #INSertMODifyWINDOW
 class InventarioCRUDView(QWidget):
 
-    def __init__(self, window_title, table_column, tab_name, info, username):
+    def __init__(self, window_title, table_column, tab_name, info, userController: accountController):
         super().__init__()
+        self.userController = userController
         self.item = info
-        self.username = username
     # Window settings
         self.title = window_title
         self.width = 370
@@ -251,7 +252,7 @@ class InventarioCRUDView(QWidget):
         self.accept_button.clicked.connect(lambda: self.saveChanges())
 
     def closeThis(self):
-        self.screen = InventarioView(username=self.username)
+        self.screen = InventarioView(self.userController)
         self.screen.show()
         self.screen.showTab(tab_type=self.tab_name)
         self.close()

@@ -128,7 +128,7 @@ class MainMenu(QWidget):
         self.close()
 
     def toInventory(self):
-        self.screen = inv.InventarioView(username=self.userController.utente.getUsername())
+        self.screen = inv.InventarioView(self.userController)
         self.screen.show()
         self.close()
 
