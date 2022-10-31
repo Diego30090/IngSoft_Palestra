@@ -113,7 +113,7 @@ class MainMenu(QWidget):
         self.logout_button.clicked.connect(self.toLogout)
 
     def toCalendar(self):
-        self.screen = cal.CalendarView(username=self.userController.utente.getUsername())
+        self.screen = cal.CalendarView(self.userController)
         self.screen.show()
         self.close()
 
