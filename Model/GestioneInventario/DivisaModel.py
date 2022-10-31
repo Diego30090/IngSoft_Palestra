@@ -1,4 +1,4 @@
-from OggettoInventarioModel import OggettoInventarioModel
+from Model.GestioneInventario.OggettoInventarioModel import OggettoInventarioModel
 
 
 class DivisaModel(OggettoInventarioModel):
