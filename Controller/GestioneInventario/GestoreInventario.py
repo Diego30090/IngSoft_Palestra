@@ -17,36 +17,32 @@ class GestioneInventario(GestioneDatabase):
         self.getArmiFromDb()
         self.getBorsoniFromDb()
 
-    def aggiungiDivise(self, result: divisaModel):
+    def aggiungiDivisa(self, result: divisaModel):
         self.listaDivise.append(result)
 
-    def aggiungiArmi(self, result: armaModel):
+    def aggiungiArma(self, result: armaModel):
         self.listaArmi.append(result)
 
-    def aggiungiBorsoni(self, result: borsoneModel):
+    def aggiungiBorsone(self, result: borsoneModel):
         self.listaBorsoni.append(result)
 
     def getDiviseFromDb(self):
         self.listaDivise.clear()
-        query = "SELECT * from divise;"
-        diviseList = self.cursor.execute(query).fetchall()
+        diviseList = self.generalizedSelect('divise')
         for i in range(len(diviseList)):
-            self.aggiungiDivise(divisaModel(*diviseList[i]))
+            self.aggiungiDivisa(divisaModel(*diviseList[i]))
 
     def getArmiFromDb(self):
         self.listaArmi.clear()
-        query = "SELECT * FROM armi;"
-        armiList = self.cursor.execute(query).fetchall()
+        armiList = self.generalizedSelect('armi')
         for i in range(len(armiList)):
-            self.aggiungiArmi(armaModel(*armiList[i]))
+            self.aggiungiArma(armaModel(*armiList[i]))
 
     def getBorsoniFromDb(self):
         self.listaBorsoni.clear()
-        query = "SELECT * FROM borsoni;"
-        borsoniList = self.cursor.execute(query).fetchall()
-        print(borsoniList[0])
+        borsoniList = self.generalizedSelect('borsoni')
         for i in range(len(borsoniList)):
-            self.aggiungiBorsoni(borsoneModel(*borsoniList[i]))
+            self.aggiungiBorsone(borsoneModel(*borsoniList[i]))
 
 
 if __name__ == '__main__':
