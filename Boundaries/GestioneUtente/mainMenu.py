@@ -6,21 +6,20 @@ from db import dbController as db
 from Boundaries.GestioneUtente import loginView as lv, personnelManagementView as perman, profileView as profile
 from Boundaries.GestioneCalendario import calendarioView as cal
 from Boundaries.GestioneInventario import InventarioView as inv
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 
 
 class MainMenu(QWidget):
 
-    def __init__(self, username):
+    def __init__(self, userController: AccountController):
         super().__init__()
         # login check
-        if username is None:
-            self.username = None
+        if userController.utente.getUsername() is None:
+            self.userController = AccountController(None, None)
             self.flag = False
-            self.user_type = None
         else:
-            self.username = username
+            self.userController = userController
             self.flag = True
-            self.user_type = db.user_type(self.username)
         self.starting_label = None
         self.title = 'Main Menu'
         self.width = 450
@@ -86,14 +85,14 @@ class MainMenu(QWidget):
         # In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
         if self.flag is False:
             self.disabler(buttons=self.buttons, opt=disabled_opt)
-        elif self.user_type == 'Atleta':
+        elif self.userController.utente.getUtenteTipo() == 'Atleta':
             self.disabler(buttons=self.buttons, opt=atleta_opt)
             self.personnelManagement_button.hide()
-        elif self.user_type == "Istruttore":
+        elif self.userController.utente.getUtenteTipo() == "Istruttore":
             self.disabler(buttons=self.buttons, opt=istruttore_opt)
             self.personnelManagement_button.hide()
             # self.market_button.hide()
-        elif self.user_type == "Admin":
+        elif self.userController.utente.getUtenteTipo() == "Admin":
             self.disabler(buttons=self.buttons, opt=admin_opt)
         else:
             self.disabler(buttons=self.buttons, opt=disabled_opt)
@@ -115,22 +114,22 @@ class MainMenu(QWidget):
         self.logout_button.clicked.connect(self.toLogout)
 
     def toCalendar(self):
-        self.screen = cal.CalendarView(username=self.username)
+        self.screen = cal.CalendarView(username=self.userController.utente.getUsername())
         self.screen.show()
         self.close()
 
     def toPersonnelManagement(self):
-        self.screen = perman.PersonnelManagementView(username=self.username)
+        self.screen = perman.PersonnelManagementView(username=self.userController.utente.getUsername())
         self.screen.show()
         self.close()
 
     def toProfile(self):
-        self.screen = profile.ProfileView(profile_name=self.username)
+        self.screen = profile.ProfileView(profile_name=self.userController.utente.getUsername())
         self.screen.show()
         self.close()
 
     def toInventory(self):
-        self.screen = inv.InventarioView(username=self.username)
+        self.screen = inv.InventarioView(username=self.userController.utente.getUsername())
         self.screen.show()
         self.close()
 

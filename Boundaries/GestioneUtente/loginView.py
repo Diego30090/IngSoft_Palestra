@@ -59,10 +59,11 @@ class LoginView(QWidget):
     def loginButtonClicked(self):
         userController = controller(self.user_text.text(), self.pass_text.text())
 
-        if userController.getUtenteUsername() != '' and userController.getUtentePassword() != '':
+        if userController.utente.getUsername() != '' and userController.utente.getPassword() != '':
             flag = userController.login()
             if flag:
-                self.toMainMenu(userController.getUtenteUsername())
+                self.toMainMenu(userController)
+
 
             else:
                 err_text = "Errore: Credenziali non corrette!"
@@ -71,8 +72,8 @@ class LoginView(QWidget):
             err_text = "Errore: inserisci i valori di login!"
             self.error_label.setText(err_text)
 
-    def toMainMenu(self, user):
-        self.screen = menu.MainMenu(username=user)
+    def toMainMenu(self, userController):
+        self.screen = menu.MainMenu(userController)
         self.screen.show()
         self.close()
 
