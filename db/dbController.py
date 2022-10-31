@@ -39,29 +39,6 @@ def check_username(user):
         return False
 
 # funzioni user
-def user_info(user):
-    cur = connect()
-    query = f"SELECT * FROM utente WHERE username='{user}';"
-    val = cur.execute(query)
-    val = val.fetchall()
-    return val[0]
-
-
-def user_info_by_id(id):
-    cur = connect()
-    query = f"SELECT * FROM utente WHERE id_utente='{id}';"
-    val = cur.execute(query).fetchone()
-    return val
-
-
-def user_type(user):
-    val = user_info(user)
-    return val[6]
-
-
-def user_pass(user):
-    val = user_info(user)
-    return val[5]
 
 
 # funzioni calendario
