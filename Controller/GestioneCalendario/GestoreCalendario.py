@@ -5,7 +5,7 @@ from db import dbController as db
 
 class GestoreEventoCalendario():
     def __init__(self, id_event, name_event, date_event, description_event, organizer_event, time_event, location_event):
-        self.__evento = EventoCalendarioModel(id_event, name_event, date_event, description_event, organizer_event, time_event, location_event)
+        self.evento = EventoCalendarioModel(id_event, name_event, date_event, description_event, organizer_event, time_event, location_event)
         self.__db = sqlite3.connect('dbProject.db')
         self.__cursor = self.__db.cursor()
 

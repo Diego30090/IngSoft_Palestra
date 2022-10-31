@@ -2,7 +2,8 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 
-from Boundaries.GestioneUtente import loginView as lv, personnelManagementView as perman, profileView as profile
+from Boundaries.GestioneUtente import loginView as lv, profileView as profile
+from Boundaries.GestioneInformazioniPersonale import personnelManagementView as perman
 from Boundaries.GestioneCalendario import calendarioView as cal
 from Boundaries.GestioneInventario import InventarioView as inv
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController

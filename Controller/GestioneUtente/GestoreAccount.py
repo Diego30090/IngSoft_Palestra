@@ -32,7 +32,6 @@ class GestioneAccount(object):
         return val[0]
 
     def setUserInfoInDb(self):
-
         query = f"UPDATE utente SET nome = '{self.utente.getNome()}'," \
                 f"cognome = '{self.utente.getCognome()}'," \
                 f"data_nascita = '{self.utente.getDataDiNascita()}'," \
@@ -44,10 +43,3 @@ class GestioneAccount(object):
                 f"WHERE id_utente = '{self.utente.getIdUtente()}';"
         self.__cursor.execute(query)
         self.__db.commit()
-
-if __name__ == '__main__':
-    a= GestioneAccount('root', '0000')
-    print(a.login())
-    date = a.utente.getDataDiNascita()
-    print(date)
-    print(type(date))
