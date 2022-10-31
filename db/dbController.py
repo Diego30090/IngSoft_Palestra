@@ -16,18 +16,7 @@ def idu(query):
     con.commit()
 
 
-# Official login function
-def login(user, pwd):
-    cur = connect()
-    query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}' AND password = '{pwd}';"
-    val = cur.execute(query)
-    val = val.fetchall()
-    val = str(val[0][0])
-    if val == '1':
-        return True
-    else:
-        return False
-
+#Da metterci mano in seguito
 def check_username(user):
     cur = connect()
     query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}';"
@@ -37,9 +26,6 @@ def check_username(user):
         return True
     else:
         return False
-
-# funzioni user
-
 
 # funzioni calendario
 def event_name_by_date(date):
