@@ -1,39 +1,39 @@
-class OggettoInventarioModel():
+class OggettoInventarioModel(object):
 
     def __init__(self, id, giacenza, disponibilita, produttore, descrizione):
-        self.__id = id
-        self.__giacenza = giacenza
-        self.__disponibilita = disponibilita
-        self.__produttore = produttore
-        self.__descrizione = descrizione
+        self.id = id
+        self.giacenza = giacenza
+        self.disponibilita = disponibilita
+        self.produttore = produttore
+        self.descrizione = descrizione
 
     def getId(self):
-        return self.__id
+        return self.id
 
     def getGiacenza(self):
-        return self.__giacenza
+        return self.giacenza
 
     def getDisponibilita(self):
-        return self.__disponibilita
+        return self.disponibilita
 
     def getProduttore(self):
-        return self.__disponibilita
+        return self.disponibilita
 
     def getDescrizione(self):
-        return self.__descrizione
+        return self.descrizione
 
     def setId(self, id):
-        self.__id = id
+        self.id = id
 
     def setGiacenza(self, giacenza):
-        self.__giacenza = giacenza
+        self.giacenza = giacenza
 
     def setDisponibilita(self, disponibilita):
-        self.__disponibilita = disponibilita
+        self.disponibilita = disponibilita
 
     def setProduttore(self, produttore):
-        self.__produttore = produttore
+        self.produttore = produttore
 
     def setDescrizione(self, descrizione):
-        self.__descrizione = descrizione
+        self.descrizione = descrizione
 

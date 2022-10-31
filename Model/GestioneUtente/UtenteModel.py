@@ -4,20 +4,20 @@ import sqlite3
 class UtenteModel(object):
     def __init__(self, idUtente: int, nome: str, cognome: str, dataDiNascita: str, username: str, password: str,
                  utenteTipo: str, email: str, telefono: str):
-        self.__idUtente = idUtente
-        self.__nome = nome
-        self.__cognome = cognome
-        self.__dataDiNascita = dataDiNascita
-        self.__username = username
-        self.__password = password
-        self.__utenteTipo = utenteTipo
-        self.__email = email
-        self.__telefono = telefono
+        self.idUtente = idUtente
+        self.nome = nome
+        self.cognome = cognome
+        self.dataDiNascita = dataDiNascita
+        self.username = username
+        self.password = password
+        self.utenteTipo = utenteTipo
+        self.email = email
+        self.telefono = telefono
 
 
     def getInfo(self):
-        return [self.__idUtente, self.__nome, self.__cognome, self.__dataDiNascita, self.__username, self.__password,
-                self.__utenteTipo, self.__email, self.__telefono]
+        return [self.idUtente, self.nome, self.cognome, self.dataDiNascita, self.username, self.password,
+                self.utenteTipo, self.email, self.telefono]
 
     def setInfo(self, newIdUtente, newNome, newCognome, newDataDiNascita, newUsername, newPassword, newUtenteTipo, newEmail, newTelefono):
         self.setIdUtente(newIdUtente)
@@ -32,58 +32,58 @@ class UtenteModel(object):
 
 
     def getIdUtente(self):
-        return self.__idUtente
+        return self.idUtente
 
     def getNome(self):
-        return self.__nome
+        return self.nome
 
     def getCognome(self):
-        return self.__cognome
+        return self.cognome
 
     def getDataDiNascita(self):
-        return self.__dataDiNascita
+        return self.dataDiNascita
 
     def getUsername(self):
-        return self.__username
+        return self.username
 
     def getPassword(self):
-        return self.__password
+        return self.password
 
     def getUtenteTipo(self):
-        return self.__utenteTipo
+        return self.utenteTipo
 
     def getEmail(self):
-        return self.__email
+        return self.email
 
     def getTelefono(self):
-        return self.__telefono
+        return self.telefono
 
     def setIdUtente(self, newIdUtente):
-        self.__idUtente = newIdUtente
+        self.idUtente = newIdUtente
 
     def setNome(self, newNome):
-        self.__nome = newNome
+        self.nome = newNome
 
     def setCognome(self, newCognome):
-        self.__cognome = newCognome
+        self.cognome = newCognome
 
     def setDataDiNascita(self, newDataDiNascita):
-        self.__dataDiNascita = newDataDiNascita
+        self.dataDiNascita = newDataDiNascita
 
     def setUsername(self, newUsername):
-        self.__username = newUsername
+        self.username = newUsername
 
     def setPassword(self, newPassword):
-        self.__password = newPassword
+        self.password = newPassword
 
     def setUtenteTipo(self, newUtenteTipo):
-        self.__utenteTipo = newUtenteTipo
+        self.utenteTipo = newUtenteTipo
 
     def setEmail(self, newEmail):
-        self.__email = newEmail
+        self.email = newEmail
 
     def setTelefono(self, newTelefono):
-        self.__telefono = newTelefono
+        self.telefono = newTelefono
 
 
 if __name__ == '__main__':

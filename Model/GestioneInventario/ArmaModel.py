@@ -1,8 +1,10 @@
-from Model.GestioneInventario import OggettoInventarioModel
+from OggettoInventarioModel import OggettoInventarioModel
+
 
 class DivisaModel(OggettoInventarioModel):
 
-    def __init__(self, id, giacenza, disponibilita, arma, lunghezza, impugnatura, materiale, mano, produttore, descrizione):
+    def __init__(self, id, giacenza, disponibilita, arma, lunghezza, impugnatura, materiale, mano, produttore,
+                 descrizione):
         super().__init__(id, giacenza, disponibilita, produttore, descrizione)
         self.arma = arma
         self.lunghezza = lunghezza
@@ -39,6 +41,3 @@ class DivisaModel(OggettoInventarioModel):
 
     def setMano(self, mano):
         self.mano = mano
-
-
-

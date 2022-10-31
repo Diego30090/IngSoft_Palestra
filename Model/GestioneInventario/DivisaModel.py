@@ -1,4 +1,5 @@
-from Model.GestioneInventario import OggettoInventarioModel
+from OggettoInventarioModel import OggettoInventarioModel
+
 
 class DivisaModel(OggettoInventarioModel):
 
@@ -40,3 +41,7 @@ class DivisaModel(OggettoInventarioModel):
     def setMano(self, mano):
         self.mano = mano
 
+
+if __name__ == '__main__':
+    obj = DivisaModel(5, 5, 5, 'ciao', 'asd', 'asd', 'asd', 'asd', produttore='allstar', descrizione='asidads')
+    print(obj.getDisponibilita())

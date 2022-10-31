@@ -4,56 +4,56 @@ import PyQt5
 
 class EventoCalendarioModel(object):
     def __init__(self, idEvento: int, nomeEvento: str, dataEvento: PyQt5.QtCore.QDate, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
-        self.__idEvento = idEvento
-        self.__nomeEvento = nomeEvento
-        self.__dataEvento = dataEvento
-        self.__descrizioneEvento = descrizioneEvento
-        self.__organizzatoreEvento = organizzatoreEvento
-        self.__orarioEvento = orarioEvento
-        self.__luogoEvento = luogoEvento
+        self.idEvento = idEvento
+        self.nomeEvento = nomeEvento
+        self.dataEvento = dataEvento
+        self.descrizioneEvento = descrizioneEvento
+        self.organizzatoreEvento = organizzatoreEvento
+        self.orarioEvento = orarioEvento
+        self.luogoEvento = luogoEvento
         ## Definizione attributi del modello come nei diagrammi
 
     def getIdEvento(self): ##restituisce il valore desiderato
-        return self.__idEvento
+        return self.idEvento
 
     def setIdEvento(self, idEvento): ##imposta il valore desiderato all'interno della classe
-        self.__idEvento = idEvento
+        self.idEvento = idEvento
 
     def getNomeEvento(self):
-        return self.__nomeEvento
+        return self.nomeEvento
 
     def setNomeEvento(self, nomeEvento):
-        self.__nomeEvento = nomeEvento
+        self.nomeEvento = nomeEvento
 
     def getDataEvento(self):
-        return self.__dataEvento
+        return self.dataEvento
 
     def setDataEvento(self, dataEvento):
-        self.__dataEvento = dataEvento
+        self.dataEvento = dataEvento
 
     def getDescrizioneEvento(self):
-        return self.__descrizioneEvento
+        return self.descrizioneEvento
 
     def setDescrizioneEvento(self, descrizioneEvento):
-        self.__descrizioneEvento = descrizioneEvento
+        self.descrizioneEvento = descrizioneEvento
 
     def getOrganizzatoreEvento(self):
-        return self.__organizzatoreEvento
+        return self.organizzatoreEvento
 
     def setOrganizzatoreEvento(self, organizzatoreEvento):
-        self.__organizzatoreEvento = organizzatoreEvento
+        self.organizzatoreEvento = organizzatoreEvento
 
     def getOrarioEvento(self):
-        return self.__orarioEvento
+        return self.orarioEvento
 
     def setOrarioEvento(self, orarioEvento):
-        self.__orarioEvento = orarioEvento
+        self.orarioEvento = orarioEvento
 
     def getLuogoEvento(self):
-        return self.__luogoEvento
+        return self.luogoEvento
 
     def setLuogoEvento(self, luogoEvento):
-        self.__luogoEvento = luogoEvento
+        self.luogoEvento = luogoEvento
     ##Definizione getter e setter del modello
 
 if __name__ == "__main__":
