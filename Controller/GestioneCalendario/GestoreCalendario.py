@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 
 from Controller.GestioneDatabase.GestoreDatabase import GestioneDatabase
@@ -10,10 +11,12 @@ class GestoreEventoCalendario(GestioneDatabase):
                  location_event):
         self.evento = EventoCalendarioModel(id_event, name_event, date_event, description_event, organizer_event,
                                             time_event, location_event)
+        self.db = sqlite3.connect('../../db/dbProject.db')
+        self.cursor = self.db.cursor()
 
     def addEventoInDb(self):
         # definizione della query
-        query = f"INSERT INTO tasks(name, date, description, organizer, time, location) VALUES ('{self.evento.getNomeEvento()}','{self.evento.getDataEvento()}', '{self.evento.getDescrizioneEvento()}','{self.evento.getOrganizzatoreEvento()}', '{self.evento.getOrarioEvento()}', '{self.evento.getLuogoEvento()}');"
+        query = f"INSERT INTO tasks(name, date, description, organizer, time, location) VALUES ('{self.evento.getNomeEvento()}','{str(self.evento.getDataEvento())}', '{self.evento.getDescrizioneEvento()}','{self.evento.getOrganizzatoreEvento()}', '{self.evento.getOrarioEvento()}', '{self.evento.getLuogoEvento()}');"
         # esecuzione della query
         self.cursor.execute(query)
         # commit nel database
@@ -21,3 +24,8 @@ class GestoreEventoCalendario(GestioneDatabase):
 
     def getDataEvento(self):
         return self.evento.getDataEvento()
+
+
+if __name__ == '__main__':
+    eventManager = GestoreEventoCalendario(5, 'asd', datetime.date(1952,10,12), 'prova1', 'org', '15-18', 'ngul ammammt')
+    eventManager.addEventoInDb()

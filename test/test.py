@@ -1,4 +1,7 @@
 import datetime
+
+from PyQt5.QtCore import QDate
+
 '''
 Testing sul forzare il tipo di dato
 
@@ -62,8 +65,8 @@ class Product:
 
 if __name__ == '__main__':
     date1 = datetime.date(1952,10,12)
-    prodotto = Product(25, 25, date1)
-    print(prodotto.name)
-    print(type(prodotto.name))
+    prodotto = Product('asd', 25, date1)
+
+
 
 

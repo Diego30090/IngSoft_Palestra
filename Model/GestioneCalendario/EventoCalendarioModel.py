@@ -3,7 +3,7 @@ import PyQt5
 
 
 class EventoCalendarioModel(object):
-    def __init__(self, idEvento: int, nomeEvento: str, dataEvento: PyQt5.QtCore.QDate, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
+    def __init__(self, idEvento: int, nomeEvento: str, dataEvento: datetime.date, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
         self.idEvento = idEvento
         self.nomeEvento = nomeEvento
         self.dataEvento = dataEvento
