@@ -1,7 +1,7 @@
-from Model.GestioneInventario.OggettoInventarioModel import OggettoInventarioModel
+from Model.GestioneInventario.ElementoInventarioModel import ElementoInventarioModel
 
 
-class DivisaModel(OggettoInventarioModel):
+class DivisaModel(ElementoInventarioModel):
 
     def __init__(self, id, giacenza, disponibilita, elemento, sesso, taglia, arma, mano, produttore, descrizione):
         super().__init__(id, giacenza, disponibilita, produttore, descrizione)

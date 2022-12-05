@@ -4,15 +4,26 @@ Testing sul forzare il tipo di dato
 
 '''
 
+class ensure_type():
+    def __init__(self, value, types):
+        self.value = value
+        self.types = types
 
+    def ensure_type(value, types):
+        if isinstance(value, types):
+            return True
+        else:
+            raise TypeError('Value {value} is {value_type}, but should be {types}!'.format(
+                value=value, value_type=type(value), types=types))
 
+'''
 def ensure_type(value, types):
     if isinstance(value, types):
         return value
     else:
         raise TypeError('Value {value} is {value_type}, but should be {types}!'.format(
             value=value, value_type=type(value), types=types))
-
+'''
 
 
 
@@ -28,7 +39,10 @@ class Product:
 
     @name.setter
     def name(self, value):
-        self.__dict__['name'] = ensure_type(value, str)
+        if ensure_type.ensure_type(value, str) is True:
+            self.__dict__['name'] = value
+        #self.__dict__['name'] = ensure_type.ensure_type(value, str)
+
 
     @property
     def quantity(self):
@@ -48,7 +62,8 @@ class Product:
 
 if __name__ == '__main__':
     date1 = datetime.date(1952,10,12)
-    prodotto = Product('25', 34, date1)
-    #print(type(prodotto.date))
-    print(prodotto.quantity)
+    prodotto = Product(25, 25, date1)
+    print(prodotto.name)
+    print(type(prodotto.name))
+
 

@@ -1,7 +1,7 @@
-from Model.GestioneInventario.OggettoInventarioModel import OggettoInventarioModel
+from Model.GestioneInventario.ElementoInventarioModel import ElementoInventarioModel
 
 
-class ArmaModel(OggettoInventarioModel):
+class ArmaModel(ElementoInventarioModel):
 
     def __init__(self, id, giacenza, disponibilita, arma, lunghezza, impugnatura, materiale, mano, produttore,
                  descrizione):

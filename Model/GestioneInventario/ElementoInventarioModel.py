@@ -1,4 +1,4 @@
-class OggettoInventarioModel(object):
+class ElementoInventarioModel(object):
 
     def __init__(self, id, giacenza, disponibilita, produttore, descrizione):
         self.id = id

@@ -1,7 +1,7 @@
-from Model.GestioneInventario.OggettoInventarioModel import OggettoInventarioModel
+from Model.GestioneInventario.ElementoInventarioModel import ElementoInventarioModel
 
 
-class BorsoneModel(OggettoInventarioModel):
+class BorsoneModel(ElementoInventarioModel):
 
     def __init__(self, id, giacenza, disponibilita, elemento, produttore, descrizione):
         super().__init__(id, giacenza, disponibilita, produttore, descrizione)
