@@ -4,7 +4,13 @@ Testing sul forzare il tipo di dato
 
 '''
 
-
+class ensure_type():
+    def __init__(self, value, types):
+        if isinstance(value, types):
+            return value
+        else:
+            raise TypeError('Value {value} is {value_type}, but should be {types}!'.format(
+                value=value, value_type=type(value), types=types))
 
 def ensure_type(value, types):
     if isinstance(value, types):
