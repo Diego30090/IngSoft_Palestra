@@ -1,18 +1,24 @@
 from Model.GestioneUtente.UtenteModel import UtenteModel as Model
 import sqlite3
+from Controller.GestioneDatabase.GestoreDatabase import GestioneDatabase
 
-class GestioneAccount(object):
+
+class GestioneAccount(GestioneDatabase):
+
     def __init__(self, username, password):
+        super().__init__()
         self.utente = Model(None, None, None, None, username, password, None, None, None)
-        self.__db = sqlite3.connect('../../db/dbProject.db')
-        self.__cursor = self.__db.cursor()
+
+        #self.db = sqlite3.connect('../../db/dbProject.db')
+        #self.cursor = self.__db.cursor()
 
 
 
     def login(self):
         ## Controlla che l'utente desiderato sia presente con username e password indicate
         query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{self.utente.getUsername()}' AND password = '{self.utente.getPassword()}';"
-        value = self.__cursor.execute(query).fetchone()
+        value = self.cursor.execute(query).fetchone()
+
         ## Se esiste, istanzia completamente il model
         ## Altrimenti, ritorna un valore di false
         if value[0] == 1:
@@ -26,9 +32,9 @@ class GestioneAccount(object):
             return False
 
     def getUserInfoInDb(self, column):
-        query= f"SELECT {column} FROM utente WHERE username = '{self.utente.getUsername()}' AND " \
-               f"password = '{self.utente.getPassword()}';"
-        val = self.__cursor.execute(query).fetchone()
+        query = f"SELECT {column} FROM utente WHERE username = '{self.utente.getUsername()}' AND " \
+                f"password = '{self.utente.getPassword()}';"
+        val = self.cursor.execute(query).fetchone()
         return val[0]
 
     def setUserInfoInDb(self):
@@ -41,5 +47,9 @@ class GestioneAccount(object):
                 f"email = '{self.utente.getEmail()}'," \
                 f"telefono = '{self.utente.getTelefono()}' " \
                 f"WHERE id_utente = '{self.utente.getIdUtente()}';"
-        self.__cursor.execute(query)
-        self.__db.commit()
+        self.cursor.execute(query)
+        self.db.commit()
+
+if __name__ == '__main__':
+    gest = GestioneAccount('root', '0000')
+    gest.login()
