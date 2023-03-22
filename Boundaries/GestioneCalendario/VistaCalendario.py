@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QWidget, QApplication, QListWidgetItem
 from PyQt5.uic import loadUi
 
+from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 from Controller.GestioneCalendario import GestoreCalendario
 from db import dbController as db
 from Boundaries.GestioneUtente import mainMenu as menu
@@ -12,12 +13,14 @@ from Boundaries.GestioneUtente import mainMenu as menu
 ## La vista agisce in modo attivo
 
 class VistaCalendario(QWidget):
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, accountController: AccountController):
+        self.userController = accountController
+        self.username = accountController.utente.getUsername()
         super(VistaCalendario, self).__init__()
         loadUi("../GestioneCalendario/Calendario/mainCalendario.ui", self)
         self.calendar_widget.selectionChanged.connect(
             self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
+        self.eventDefiner = [self.line_edit_name, self.line_edit_location, self.line_edit_time, self.line_edit_organizer, self.line_edit_description]
         self.calendarDateChanged()
         self.add_button.clicked.connect(self.addNewTask)
         self.event_list_widget.clicked.connect(self.viewSelectedTask)
@@ -46,29 +49,31 @@ class VistaCalendario(QWidget):
                                                            description_event=str(self.line_edit_description.text()))
         evento.addEventoInDb()
         self.updateTaskList(evento.getDataEvento())
-        self.line_edit_name.clear()
+        for itemToClear in self.eventDefiner:
+            itemToClear.clear()
 
     def viewSelectedTask(self):
         item = id(self.event_list_widget.currentItem())
         for i in range(len(self.event_list)):
             if str(item) == str(self.event_list[i][1]):
                 selectedId = str(self.event_list[i][0])
-                self.window = VistaEventoSelezionato(id=selectedId, username=self.username)
+                self.window = VistaEventoSelezionato(id=selectedId, accountController=self.userController)
                 self.window.show()
                 self.close()
 
     def toMainMenu(self):
-        self.screen = menu.MainMenu(username=self.username)
+        self.screen = menu.MainMenu(userController=self.userController)
         self.screen.show()
         self.close()
 
 
 class VistaEventoSelezionato(QWidget):
-    def __init__(self, id, username):
-        self.username = username
+    def __init__(self, id, accountController: AccountController):
+        self.userController = accountController
+        self.username = accountController.utente.getUsername()
         self.id_event = id
         super(VistaEventoSelezionato, self).__init__()
-        loadUi("../Calendario/mainCalendarioSelezionato.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
         self.back_button.clicked.connect(self.closeThis)
@@ -104,22 +109,23 @@ class VistaEventoSelezionato(QWidget):
         self.closeThis()
 
     def openWindow(self):
-        self.window = VistaModifica(id=self.id_event, username=self.username)
+        self.window = VistaModifica(id=self.id_event, accountController=self.userController)
         self.window.show()
         self.close()
 
     def closeThis(self):
-        self.window = VistaCalendario(username=self.username)
+        self.window = VistaCalendario(accountController=self.userController)
         self.window.show()
         self.close()
 
 
 class VistaModifica(QWidget):
-    def __init__(self, id, username):
-        self.username = username
+    def __init__(self, id, accountController: AccountController):
+        self.userController = accountController
+        self.username = accountController.utente.getUsername()
         self.id_event = id
         super(VistaModifica, self).__init__()
-        loadUi("../Calendario/mainCalendarioModifiche.ui", self)
+        loadUi("../GestioneCalendario/Calendario/mainCalendarioModifiche.ui", self)
         self.init_ui()
         self.negate_button.clicked.connect(self.closeThis)
         self.confirm_button.clicked.connect(self.saveChanges)
@@ -134,7 +140,7 @@ class VistaModifica(QWidget):
             widget_list[elem].addItem(wid_value[elem])
 
     def closeThis(self):
-        self.window = VistaEventoSelezionato(id=self.id_event, username=self.username)
+        self.window = VistaEventoSelezionato(id=self.id_event, accountController=self.userController)
         self.window.show()
         self.close()
 
@@ -150,6 +156,6 @@ class VistaModifica(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = VistaCalendario(username='root0')
+    window = VistaCalendario(accountController=AccountController('root1', 'pwd'))
     window.show()
     sys.exit(app.exec())

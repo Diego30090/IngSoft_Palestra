@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
 
 from Boundaries.GestioneUtente import loginView as lv, profileView as profile
 from Boundaries.GestioneInformazioniPersonale import personnelManagementView as perman
-from Boundaries.GestioneCalendario import calendarioView as cal
+from Boundaries.GestioneCalendario import VistaCalendario as cal
 from Boundaries.GestioneInventario import InventarioView as inv
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 
@@ -114,7 +114,7 @@ class MainMenu(QWidget):
         self.logout_button.clicked.connect(self.toLogout)
 
     def toCalendar(self):
-        self.screen = cal.CalendarView(self.userController)
+        self.screen = cal.VistaCalendario(accountController =self.userController)
         self.screen.show()
         self.close()
 
