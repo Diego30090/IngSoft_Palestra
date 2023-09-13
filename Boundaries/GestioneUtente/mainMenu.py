@@ -99,7 +99,6 @@ class MainMenu(QWidget):
             self.calendar_button.hide()
             self.personnelManagement_button.hide()
             self.profile_button.hide()
-            # self.market_button.hide()
             self.inventory_button.hide()
 
     def disabler(self, buttons, opt):
