@@ -77,6 +77,7 @@ class PersonnelManagementView(QWidget):
         self.upper_buttons[1].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[1]))
         self.upper_buttons[2].clicked.connect(lambda: self.show_tab(self.upper_buttons_argument[2]))
         self.lower_buttons[0].clicked.connect(lambda: self.toCrudView())
+        #self.lower_buttons[1].clicked.connect(lambda: )
         self.lower_buttons[2].clicked.connect(self.toMainMenu)
 
     def show_tab(self, tab_type):

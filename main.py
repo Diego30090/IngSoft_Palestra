@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication
 from Boundaries.GestioneUtente import loginView as login
 
 if __name__ == '__main__':
+    ##Da inserire accountController e generalizzare il tutto
     os.chdir('Boundaries/GestioneUtente')
     app = QApplication(sys.argv)
     ex = login.LoginView()
