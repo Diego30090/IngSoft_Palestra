@@ -9,3 +9,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = login.LoginView()
     sys.exit(app.exec_())
+
+#https://drive.google.com/drive/folders/10wTUP52GmpR36XTljvt4heKkZB6CpK5f?usp=sharing
