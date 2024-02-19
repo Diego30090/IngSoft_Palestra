@@ -4,7 +4,6 @@ from PyQt5.uic import loadUi
 
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 from Controller.GestioneCalendario import GestoreCalendario
-from db import dbController as db
 from Controller.GestioneDatabase.GestoreDatabase import EventoDB as EventoDB
 from Boundaries.GestioneUtente import mainMenu as menu
 
@@ -13,6 +12,7 @@ from Boundaries.GestioneUtente import mainMenu as menu
 ## In questo caso, la vista richiede al Gestore di popolarne i dati
 ## La vista agisce in modo attivo
 
+# noinspection PyUnresolvedReferences
 class VistaCalendario(QWidget):
     def __init__(self, accountController: AccountController):
         self.eventoDB = EventoDB()

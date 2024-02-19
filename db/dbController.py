@@ -16,7 +16,7 @@ def idu(query):
     con.commit()
 
 
-#Da metterci mano in seguito
+# Da metterci mano in seguito
 def check_username(user):
     cur = connect()
     query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}';"
@@ -27,6 +27,7 @@ def check_username(user):
     else:
         return False
 
+
 # funzioni calendario
 def event_name_by_date(date):
     cur = connect()
@@ -34,33 +35,6 @@ def event_name_by_date(date):
     val = cur.execute(query)
     val = val.fetchall()
     return val
-
-
-def event_by_id(id):
-    # spostato in GestoreDatabase EventoDB
-    cur = connect()
-    query = f"SELECT * FROM tasks WHERE id='{id}';"
-    val = cur.execute(query).fetchall()
-    return val[0]
-
-
-def insert_event(name, date, location, time, organizer, description):
-    # spostato in GestoreDatabase EventoDB
-    query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
-    idu(query)
-
-
-def remove_event(event_id):
-    # spostato in GestoreDatabase EventoDB
-    query = f"DELETE FROM tasks WHERE id='{event_id}';"
-    idu(query)
-
-
-def update_event(event_id, name, location, time, organizer, description):
-    # spostato in GestoreDatabase EventoDB
-    query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
-            f"description = '{description}' WHERE id='{event_id}' "
-    idu(query)
 
 
 # Funzione update dello user
@@ -89,6 +63,7 @@ def select_inventario(tab_type):
     val = cur.execute(query).fetchall()
     return val
 
+
 def insert_inventario(tab_type, info):
     if tab_type == 'armi':
         query = f"INSERT INTO {tab_type}(giacenza, disponibilita, arma, ds, materiale, lunghezza, produttore, " \
@@ -103,12 +78,42 @@ def insert_inventario(tab_type, info):
                 f"({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}')"
     idu(query)
 
+
 def select_inventario_by_id(id, tab_type):
     cur = connect()
     query = f"SELECT * FROM {tab_type} WHERE id = {id};"
     val = cur.execute(query).fetchone()
     return val
 
+
+# Funzioni non più usate
+'''
+def event_by_id(id):
+    # spostato in GestoreDatabase EventoDB
+    cur = connect()
+    query = f"SELECT * FROM tasks WHERE id='{id}';"
+    val = cur.execute(query).fetchall()
+    return val[0]
+
+
+def insert_event(name, date, location, time, organizer, description):
+    # spostato in GestoreDatabase EventoDB
+    query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
+    idu(query)
+
+
+def remove_event(event_id):
+    # spostato in GestoreDatabase EventoDB
+    query = f"DELETE FROM tasks WHERE id='{event_id}';"
+    idu(query)
+
+
+def update_event(event_id, name, location, time, organizer, description):
+    # spostato in GestoreDatabase EventoDB
+    query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
+            f"description = '{description}' WHERE id='{event_id}' "
+    idu(query)
+'''
 
 if __name__ == "__main__":
     print(check_username('root0'))

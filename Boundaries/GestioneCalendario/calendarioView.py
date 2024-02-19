@@ -5,6 +5,8 @@ from db import dbController as db
 from Boundaries.GestioneUtente import mainMenu as menu
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 
+#Classi non più utilizzate
+'''
 class CalendarView(QWidget):
     def __init__(self, userController: AccountController):
         self.userController = userController
@@ -138,11 +140,4 @@ class ModifyView(QWidget):
         new_description = self.line_edit_description.text()
         db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
         self.init_ui()
-
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = CalendarView(username='root0')
-    window.show()
-    sys.exit(app.exec())
+'''
