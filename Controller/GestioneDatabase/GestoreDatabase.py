@@ -15,7 +15,11 @@ class GestioneDatabase(object):
         return self.cursor.execute(query).fetchall()
     
     def init_table(self, table):
-        self.table=table
+        self.table = table
+
+    def get_element_by_id(self, id):
+        query = f"SELECT * FROM {self.table} WHERE id='{id}';"
+        return self.cursor.execute(query).fetchall()[0]
 
 
 class UtenteDB(GestioneDatabase):
@@ -27,6 +31,7 @@ class UtenteDB(GestioneDatabase):
     def count_user(self, username, password):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
         return self.cursor.execute(query).fetchone()
+
     def check_username(self, user):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{user}';"
         val = str(self.cursor.execute(query).fetchone()[0])
@@ -66,7 +71,6 @@ class EventoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
         self.init_table('tasks')
-    
 
     def event_name_by_date(self, date):
         query = f"SELECT * FROM {self.table} WHERE date = '{date}';"
@@ -75,8 +79,7 @@ class EventoDB(GestioneDatabase):
         return val
 
     def event_by_id(self, id):
-        query = f"SELECT * FROM {self.table} WHERE id='{id}';"
-        return self.cursor.execute(query).fetchall()[0]
+        return self.get_element_by_id(id=id)
 
     def insert_event(self, name, date, location, time, organizer, description):
         query = f"INSERT INTO {self.table}(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
@@ -116,7 +119,26 @@ class InventarioDB(GestioneDatabase):
         return self.cursor.execute(query).fetchone()
 
 
+class PagamentoDB(GestioneDatabase):
+    def __init__(self):
+        super().__init__()
+        self.init_table('pagamento')
+        pass
+
+    def insert_pagamento(self):
+        pass
+
+    def update_pagamento(self):
+        pass
+
+    def delete_pagamento(self):
+        pass
+
+    def get_pagamento_by_id(self):
+        return self.get_element_by_id(id=id)
+
+
 if __name__ == "__main__":
     db = EventoDB()
-    #print(db.check_username(user='root0'))
-    print(db.event_name_by_date('2023-09-20'))
+    # print(db.check_username(user='root0'))
+    print(db.event_by_id(3))
