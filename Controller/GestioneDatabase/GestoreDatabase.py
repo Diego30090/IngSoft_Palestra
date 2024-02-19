@@ -1,4 +1,6 @@
+import datetime
 import sqlite3
+
 
 
 class GestioneDatabase(object):
@@ -13,13 +15,17 @@ class GestioneDatabase(object):
     def generalizedSelect(self, table):
         query = f"SELECT * FROM {table};"
         return self.cursor.execute(query).fetchall()
-    
+
     def init_table(self, table):
         self.table = table
 
     def get_element_by_id(self, id):
         query = f"SELECT * FROM {self.table} WHERE id='{id}';"
         return self.cursor.execute(query).fetchall()[0]
+
+    def delete_element_by_id(self, id):
+        query = f"DELETE FROM {self.table} WHERE id='{id}';"
+        self.queryExecuteCommitter(query)
 
 
 class UtenteDB(GestioneDatabase):
@@ -86,8 +92,7 @@ class EventoDB(GestioneDatabase):
         self.queryExecuteCommitter(query)
 
     def remove_event(self, event_id):
-        query = f"DELETE FROM {self.table} WHERE id='{event_id}';"
-        self.queryExecuteCommitter(query)
+        self.delete_element_by_id(id=event_id)
 
     def update_event(self, event_id, name, location, time, organizer, description):
         query = f"UPDATE {self.table} SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
@@ -125,20 +130,69 @@ class PagamentoDB(GestioneDatabase):
         self.init_table('pagamento')
         pass
 
-    def insert_pagamento(self):
-        pass
+    def insert_pagamento(self, mittente, destinatario, timestamp, importo, dettaglio):
+        query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato) VALUES ('{mittente}','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'pagamento', 0);"
+        self.queryExecuteCommitter(query)
 
-    def update_pagamento(self):
-        pass
+    def update_pagamento(self, pagamentoId, mittente, destinatario, timestamp, importo, dettaglio):
+        query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}'" \
+                f"WHERE id ={pagamentoId}"
+        self.queryExecuteCommitter(query)
 
-    def delete_pagamento(self):
-        pass
+    def delete_pagamento(self, id):
+        self.delete_element_by_id(id=id)
 
-    def get_pagamento_by_id(self):
+    def get_pagamento_by_id(self, id):
         return self.get_element_by_id(id=id)
+
+    def getAllPagamentiSenzaMulte(self):
+        query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento'"
+        return self.cursor.execute(query).fetchall()
+
+    def setPagamentoEffettuato(self, pagamentoId):
+        query = f"UPDATE {self.table} SET tipologia ='pagamento effettuato'" \
+                f"WHERE id ={pagamentoId}"
+        self.queryExecuteCommitter(query)
+
+class MultaDB(GestioneDatabase):
+    def __init__(self):
+        super().__init__()
+        self.init_table('pagamento')
+        pass
+
+    def insert_multa(self, destinatario, timestamp, importo, dettaglio):
+        query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato) VALUES ('Sistema','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'multa', 1);"
+        self.queryExecuteCommitter(query)
+
+    def update_multa(self, multaId, mittente, destinatario, timestamp, importo, dettaglio):
+        query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}'" \
+                f"WHERE id ={multaId}"
+        self.queryExecuteCommitter(query)
+
+    def delete_multa(self, id):
+        self.delete_element_by_id(id=id)
+
+    def get_multa_by_id(self, id):
+        return self.get_element_by_id(id=id)
+
+    def getAllMulte(self):
+        query = f"SELECT * FROM {self.table} WHERE tipologia = 'multa'"
+        return self.cursor.execute(query).fetchall()
+
+    def setMultaPagata(self, idMulta):
+        query = f"UPDATE {self.table} SET tipologia = 'multa pagata' WHERE id='{idMulta}'"
+        self.queryExecuteCommitter(query=query)
 
 
 if __name__ == "__main__":
-    db = EventoDB()
-    # print(db.check_username(user='root0'))
-    print(db.event_by_id(3))
+    db = MultaDB()
+    multa= db.getAllMulte()
+    print(multa)
+
+    for i in range(10):
+        mittente = 'user1'
+        destinatario = 'user2'
+        timestamp = str(datetime.date.today())
+        importo = 5
+        dettaglio = 'multa di prova'
+        db.insert_multa(destinatario, timestamp, importo, dettaglio)

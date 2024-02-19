@@ -1,11 +1,12 @@
 class PagamentoModel(object):
-    def __init__(self, id, mittente, destinatario, timestamp, importo, dettaglio):
+    def __init__(self, id, mittente, destinatario, timestamp, importo, dettaglio, statusMultato):
         self.id = id
         self.mittente = mittente
         self.destinatario = destinatario
         self.timestamp = timestamp
         self.importo = importo
         self.dettaglio = dettaglio
+        self.statusMultato = statusMultato
         pass
 
     def getId(self):
@@ -49,10 +50,4 @@ class MultaModel(PagamentoModel):
     def __init__(self):
         super().__init__(id=None, mittente='Sistema',
                          destinatario=None, timestamp=None,
-                         importo=None, dettaglio=None)
-
-
-if __name__ == '__main__':
-    multa = MultaModel()
-    multa.setDestinatario(destinatario='Tumadre')
-    print(multa.__dict__)
+                         importo=None, dettaglio=None, statusMultato=None)
