@@ -13,15 +13,22 @@ class GestioneDatabase(object):
     def generalizedSelect(self, table):
         query = f"SELECT * FROM {table};"
         return self.cursor.execute(query).fetchall()
+    
+    def init_table(self, table):
+        self.table=table
 
 
 class UtenteDB(GestioneDatabase):
 
     def __init__(self):
         super().__init__()
+        self.init_table('utente')
 
+    def count_user(self, username, password):
+        query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
+        return self.cursor.execute(query).fetchone()
     def check_username(self, user):
-        query = f"SELECT COUNT(id_utente) FROM utente WHERE username = '{user}';"
+        query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{user}';"
         val = str(self.cursor.execute(query).fetchone()[0])
         if val == '1':
             return True
@@ -29,38 +36,58 @@ class UtenteDB(GestioneDatabase):
             return False
 
     def insert_user(self, nome, cognome, data_nascita, username, password, utente_tipo, email, telefono):
-        query = f"INSERT INTO utente(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono) VALUES " \
+        query = f"INSERT INTO {self.table}(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono) VALUES " \
                 f"('{nome}','{cognome}', '{data_nascita}', '{username}', '{password}', '{utente_tipo}', '{email}', '{telefono}') ; "
         self.queryExecuteCommitter(query)
 
     def select_utente(self, user_type):
-        query = f"SELECT * from utente WHERE utente_tipo = '{user_type}';"
+        query = f"SELECT * from {self.table} WHERE utente_tipo = '{user_type}';"
         return self.cursor.execute(query).fetchall()
+
+    def getUserInfoInDb(self, column, username, password):
+        query = f"SELECT {column} FROM {self.table} WHERE username = '{username}' AND " \
+                f"password = '{password}';"
+        return self.cursor.execute(query).fetchone()[0]
+
+    def updateUser(self, nome, cognome, dataNascita, username, password, tipoUtente, email, telefono, idUtente):
+        query = f"UPDATE {self.table} SET nome = '{nome}'," \
+                f"cognome = '{cognome}'," \
+                f"data_nascita = '{dataNascita}'," \
+                f"username = '{username}'," \
+                f"password = '{password}', " \
+                f"utente_tipo = '{tipoUtente}'," \
+                f"email = '{email}'," \
+                f"telefono = '{telefono}' " \
+                f"WHERE id_utente = '{idUtente}';"
+        self.queryExecuteCommitter(query=query)
 
 
 class EventoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
+        self.init_table('tasks')
+    
 
     def event_name_by_date(self, date):
-        query = f"SELECT * FROM tasks WHERE date = '{date}';"
-        val = self.cursor.execute(query).fetchall()
+        query = f"SELECT * FROM {self.table} WHERE date = '{date}';"
+        val = self.cursor.execute(query)
+        val = val.fetchall()
         return val
 
     def event_by_id(self, id):
-        query = f"SELECT * FROM tasks WHERE id='{id}';"
+        query = f"SELECT * FROM {self.table} WHERE id='{id}';"
         return self.cursor.execute(query).fetchall()[0]
 
     def insert_event(self, name, date, location, time, organizer, description):
-        query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
+        query = f"INSERT INTO {self.table}(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
         self.queryExecuteCommitter(query)
 
     def remove_event(self, event_id):
-        query = f"DELETE FROM tasks WHERE id='{event_id}';"
+        query = f"DELETE FROM {self.table} WHERE id='{event_id}';"
         self.queryExecuteCommitter(query)
 
     def update_event(self, event_id, name, location, time, organizer, description):
-        query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
+        query = f"UPDATE {self.table} SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
                 f"description = '{description}' WHERE id='{event_id}' "
         self.queryExecuteCommitter(query)
 
@@ -90,5 +117,6 @@ class InventarioDB(GestioneDatabase):
 
 
 if __name__ == "__main__":
-    db = UtenteDB()
-    print(db.check_username(user='root0'))
+    db = EventoDB()
+    #print(db.check_username(user='root0'))
+    print(db.event_name_by_date('2023-09-20'))

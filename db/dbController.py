@@ -37,6 +37,7 @@ def event_name_by_date(date):
 
 
 def event_by_id(id):
+    # spostato in GestoreDatabase EventoDB
     cur = connect()
     query = f"SELECT * FROM tasks WHERE id='{id}';"
     val = cur.execute(query).fetchall()
@@ -44,16 +45,19 @@ def event_by_id(id):
 
 
 def insert_event(name, date, location, time, organizer, description):
+    # spostato in GestoreDatabase EventoDB
     query = f"INSERT INTO tasks(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
     idu(query)
 
 
 def remove_event(event_id):
+    # spostato in GestoreDatabase EventoDB
     query = f"DELETE FROM tasks WHERE id='{event_id}';"
     idu(query)
 
 
 def update_event(event_id, name, location, time, organizer, description):
+    # spostato in GestoreDatabase EventoDB
     query = f"UPDATE tasks SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
             f"description = '{description}' WHERE id='{event_id}' "
     idu(query)

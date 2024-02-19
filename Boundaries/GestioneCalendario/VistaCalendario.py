@@ -5,6 +5,7 @@ from PyQt5.uic import loadUi
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 from Controller.GestioneCalendario import GestoreCalendario
 from db import dbController as db
+from Controller.GestioneDatabase.GestoreDatabase import EventoDB as EventoDB
 from Boundaries.GestioneUtente import mainMenu as menu
 
 
@@ -14,6 +15,7 @@ from Boundaries.GestioneUtente import mainMenu as menu
 
 class VistaCalendario(QWidget):
     def __init__(self, accountController: AccountController):
+        self.eventoDB = EventoDB()
         self.userController = accountController
         self.username = accountController.utente.getUsername()
         super(VistaCalendario, self).__init__()
@@ -26,6 +28,7 @@ class VistaCalendario(QWidget):
         self.event_list_widget.clicked.connect(self.viewSelectedTask)
         self.back_button.clicked.connect(self.toMainMenu)
 
+
     def calendarDateChanged(self):
         self.dateSelected = self.calendar_widget.selectedDate().toPyDate()  # funzione di QCalendarWidget che indica la data selezionata, in forma di stringa PyDate e strftime che lo mette in giorno mese anno
         print("Data selezionata: ", self.dateSelected)
@@ -33,8 +36,9 @@ class VistaCalendario(QWidget):
 
     def updateTaskList(self, date):
         self.event_list_widget.clear()
-        events = db.event_name_by_date(date)
+        events = self.eventoDB.event_name_by_date(date=date)
         self.event_list = []
+
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
             self.event_list_widget.addItem(item)
@@ -69,6 +73,7 @@ class VistaCalendario(QWidget):
 
 class VistaEventoSelezionato(QWidget):
     def __init__(self, id, accountController: AccountController):
+        self.eventoDB = EventoDB()
         self.userController = accountController
         self.username = accountController.utente.getUsername()
         self.id_event = id
@@ -82,8 +87,8 @@ class VistaEventoSelezionato(QWidget):
 
     def init_list(self, id):
         self.event_list_widget.clear()
-        events = db.event_by_id(id)
-        events = db.event_name_by_date(events[2])
+        events = self.eventoDB.event_by_id(id)
+        events = self.eventoDB.event_name_by_date(events[2])
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
@@ -92,7 +97,7 @@ class VistaEventoSelezionato(QWidget):
         self.event_list_widget.setDisabled(True)
 
     def dataUpdate(self):
-        event = db.event_by_id(self.id_event)
+        event = self.eventoDB.event_by_id(self.id_event)
         name_event = event[1]
         location_event = event[3]
         time_event = event[4]
@@ -105,7 +110,7 @@ class VistaEventoSelezionato(QWidget):
         self.widget_description.addItem(description_event)
 
     def eventDelete(self):
-        db.remove_event(self.id_event)
+        self.eventoDB.remove_event(self.id_event)
         self.closeThis()
 
     def openWindow(self):
@@ -121,6 +126,7 @@ class VistaEventoSelezionato(QWidget):
 
 class VistaModifica(QWidget):
     def __init__(self, id, accountController: AccountController):
+        self.eventoDB = EventoDB()
         self.userController = accountController
         self.username = accountController.utente.getUsername()
         self.id_event = id
@@ -131,7 +137,7 @@ class VistaModifica(QWidget):
         self.confirm_button.clicked.connect(self.saveChanges)
 
     def init_ui(self):
-        event = db.event_by_id(self.id_event)
+        event = self.eventoDB.event_by_id(self.id_event)
         widget_list = [self.widget_name, self.widget_location, self.widget_time, self.widget_organizer,
                        self.widget_description]
         wid_value = [event[1], event[3], event[4], event[5], event[6]]
@@ -150,7 +156,7 @@ class VistaModifica(QWidget):
         new_time = self.line_edit_time.text()
         new_organizer = self.line_edit_organizer.text()
         new_description = self.line_edit_description.text()
-        db.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
+        self.eventoDB.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
         self.init_ui()
 
 
