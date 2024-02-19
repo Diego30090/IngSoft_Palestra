@@ -27,7 +27,7 @@ class PagamentoModel(object):
         return self.dettaglio
 
     def setId(self, id):
-        self.id= id
+        self.id = id
 
     def setMittente(self, mittente):
         self.mittente = mittente
@@ -36,10 +36,10 @@ class PagamentoModel(object):
         self.destinatario = destinatario
 
     def setTimestamp(self, timestamp):
-        self.Timestamp = timestamp
+        self.timestamp = timestamp
 
-    def setImporto(self,importo):
+    def setImporto(self, importo):
         self.importo = importo
 
     def setDettaglio(self, dettaglio):
-        self.Dettaglio = dettaglio
+        self.dettaglio = dettaglio
