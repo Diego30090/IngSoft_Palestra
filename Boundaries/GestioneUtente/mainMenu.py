@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
-
+from PyQt5.uic import loadUi
 from Boundaries.GestioneUtente import loginView as lv, profileView as profile
 from Boundaries.GestioneInformazioniPersonale import personnelManagementView as perman
 from Boundaries.GestioneCalendario import VistaCalendario as cal
@@ -10,6 +10,93 @@ from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountC
 
 
 class MainMenu(QWidget):
+
+    def __init__(self, userController: AccountController):
+        super().__init__()
+        # login check
+        if userController.utente.getUsername() is None:
+            self.userController = AccountController(None, None)
+            self.flag = False
+        else:
+            self.userController = userController
+            self.flag = True
+        loadUi("../GestioneUtente/mainMenu.ui", self)
+        self.show()
+        # self.initUi()
+
+        self.controlCheck()
+        self.instruction()
+
+    def controlCheck(self):
+        self.buttons = [self.calendar_button, self.personnelManagement_button, self.profile_button,
+                        self.inventory_button, self.gestionePagamenti_button, self.notifiche_button]
+        atleta_opt = [False, True, False, False, False, False]
+        istruttore_opt = [False, True, False, False, False, False]
+        admin_opt = [False, False, False, False, False, False]
+        disabled_opt = [True, True, True, True, True, True]
+        # In caso di mancato login, disabilita tutti i pulsanti tranne quello del logout
+        if self.flag is False:
+            self.disabler(buttons=self.buttons, opt=disabled_opt)
+        elif self.userController.utente.getUtenteTipo() == 'Atleta':
+            self.disabler(buttons=self.buttons, opt=atleta_opt)
+            self.personnelManagement_button.hide()
+        elif self.userController.utente.getUtenteTipo() == "Istruttore":
+            self.disabler(buttons=self.buttons, opt=istruttore_opt)
+            self.personnelManagement_button.hide()
+            # self.market_button.hide()
+        elif self.userController.utente.getUtenteTipo() == "Admin":
+            self.disabler(buttons=self.buttons, opt=admin_opt)
+        else:
+            self.disabler(buttons=self.buttons, opt=disabled_opt)
+
+    def disabler(self, buttons, opt):
+        for elem in range(len(buttons)):
+            buttons[elem].setDisabled(opt[elem])
+
+    def instruction(self):
+        self.calendar_button.clicked.connect(self.toCalendar)
+        self.personnelManagement_button.clicked.connect(self.toPersonnelManagement)
+        self.profile_button.clicked.connect(self.toProfile)
+        self.inventory_button.clicked.connect(self.toInventory)
+        self.logout_button.clicked.connect(self.toLogout)
+        self.gestionePagamenti_button.clicked.connect(self.toGestionePagamenti)
+        self.notifiche_button.clicked.connect(self.toNotifiche)
+
+    def toCalendar(self):
+        self.screen = cal.VistaCalendario(accountController=self.userController)
+        self.screen.show()
+        self.close()
+
+    def toPersonnelManagement(self):
+        self.screen = perman.PersonnelManagementView(accountController=self.userController)
+        self.screen.show()
+        self.close()
+
+    def toProfile(self):
+        self.screen = profile.ProfileView(accountController=self.userController)
+        self.screen.show()
+        self.close()
+
+    def toInventory(self):
+        self.screen = inv.InventarioView(self.userController)
+        self.screen.show()
+        self.close()
+
+    def toLogout(self):
+        self.screen = lv.LoginView()
+        self.screen.show()
+        self.close()
+
+    def toGestionePagamenti(self):
+        # Va alla pagina della gestione del personale
+        pass
+
+    def toNotifiche(self):
+        # Va alla pagina delle notifiche
+        pass
+
+
+class MainMenuOld(QWidget):
 
     def __init__(self, userController: AccountController):
         super().__init__()
@@ -113,7 +200,7 @@ class MainMenu(QWidget):
         self.logout_button.clicked.connect(self.toLogout)
 
     def toCalendar(self):
-        self.screen = cal.VistaCalendario(accountController =self.userController)
+        self.screen = cal.VistaCalendario(accountController=self.userController)
         self.screen.show()
         self.close()
 
@@ -140,5 +227,5 @@ class MainMenu(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainMenu(userController=AccountController('root1', 'pwd'))
+    ex = MainMenu(userController=AccountController('asd', 'asd'))
     sys.exit(app.exec_())

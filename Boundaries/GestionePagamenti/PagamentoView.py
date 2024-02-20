@@ -10,7 +10,7 @@ class ElencoPagamenti(QWidget):
         self.userController = accountController
         self.username = accountController.utente.getUsername()
         super(ElencoPagamenti, self).__init__()
-        loadUi("visualizzaPagamenti.ui", self)
+        loadUi("../GestionePagamenti/visualizzaPagamenti.ui", self)
         self.instruction()
 
     def instruction(self):
