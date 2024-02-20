@@ -1,8 +1,8 @@
 import sys
-from Boundaries.GestioneUtente import mainMenu as menu
-from db import dbController as db
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QDateEdit
 from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QDateEdit
+
+from Boundaries.GestioneUtente import mainMenu as menu
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 
 

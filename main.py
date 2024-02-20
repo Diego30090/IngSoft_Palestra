@@ -1,6 +1,8 @@
-import sys
 import os
+import sys
+
 from PyQt5.QtWidgets import QApplication
+
 from Boundaries.GestioneUtente import loginView as login
 
 if __name__ == '__main__':
