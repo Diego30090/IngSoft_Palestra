@@ -3,37 +3,38 @@ from PyQt5.uic import loadUi
 from Boundaries.GestioneUtente import mainMenu as menu
 from PyQt5.QtWidgets import QApplication, QWidget
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
-
+from Boundaries.GestionePagamenti import creaPagamentoView as creapag
+from Boundaries.GestionePagamenti import visualizzaPagamento as vispag
 
 class ElencoPagamenti(QWidget):
     def __init__(self, accountController: accountController):
         self.userController = accountController
         self.username = accountController.utente.getUsername()
         super(ElencoPagamenti, self).__init__()
-        loadUi("../GestionePagamenti/visualizzaPagamenti.ui", self)
+        loadUi("../GestionePagamenti/elencoPagamenti.ui", self)
         self.instruction()
 
     def instruction(self):
         self.backButton.clicked.connect(self.toMainView)
         self.creaPagamentoButton.clicked.connect(self.toCreaPagamento)
-        self.visualizzaPagamentoButton.clicked.connect(self.toVisualizzaPagamento)
+        #self.visualizzaPagamentoButton.clicked.connect(self.toVisualizzaPagamento)
 
     def listaPagamenti(self):
         #funzione che mostra la lista dei pagamenti nella tabella principale
         pass
 
-    def dettagliOperazione(self):
-        #funzione che mostra il dettaglio dell'operazione singola
-        pass
-
     def toVisualizzaPagamento(self):
-        #Va alla vista della visualizzazione dei pagamenti
-        print(f"funzione che porta alla vista di visualizzazione del pagamento")
+        #Va alla vista della visualizzazione dei pagamenti se è stato selezionato un evento
+        self.screen = vispag.visualizzaPagamento(accountController=self.userController)
+        self.screen.show()
+        self.close()
         pass
 
     def toCreaPagamento(self):
         #Va alla vista di creazione del pagamento
-        print(f"funzione che porta alla vista di creazione pagamento")
+        self.screen = creapag.CreaPagamento(accountController=self.userController)
+        self.screen.show()
+        self.close()
         pass
 
     def toMainView(self):

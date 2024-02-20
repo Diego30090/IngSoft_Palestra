@@ -10,7 +10,7 @@ from Controller.GestioneUtente.GestoreAccount import GestioneAccount as controll
 class LoginView(QWidget):
     def __init__(self, ):
         super(LoginView, self).__init__()
-        loadUi("Login.ui", self)
+        loadUi("../GestioneUtente/Login.ui", self)
         self.instruction()
         self.show()
 

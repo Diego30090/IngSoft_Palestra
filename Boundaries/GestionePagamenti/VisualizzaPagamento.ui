@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Form</class>
- <widget class="QDialog" name="Form">
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,8 +11,76 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Form</string>
   </property>
+  <widget class="QTableWidget" name="operationDetailsTable">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>50</y>
+     <width>289</width>
+     <height>229</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="dettagliOperazioneLabel">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>20</y>
+     <width>161</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Dettagli Operazione</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tabellaPagamenti">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>541</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <property name="columnCount">
+    <number>5</number>
+   </property>
+   <column>
+    <property name="text">
+     <string>ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Data</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Importo</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Stato</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Dettaglio</string>
+    </property>
+   </column>
+  </widget>
   <widget class="QLabel" name="backgroundLabel">
    <property name="geometry">
     <rect>
@@ -36,16 +104,6 @@
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QTableWidget" name="operationDetailsTable">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>50</y>
-     <width>289</width>
-     <height>229</height>
-    </rect>
    </property>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget_2">
@@ -109,64 +167,11 @@ PAGAMENTO</string>
     </item>
    </layout>
   </widget>
-  <widget class="QTableWidget" name="tabellaPagamenti">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>541</width>
-     <height>421</height>
-    </rect>
-   </property>
-   <property name="columnCount">
-    <number>5</number>
-   </property>
-   <column>
-    <property name="text">
-     <string>ID</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Data</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Importo</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Stato</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>Dettaglio</string>
-    </property>
-   </column>
-  </widget>
-  <widget class="QLabel" name="dettagliOperazioneLabel">
-   <property name="geometry">
-    <rect>
-     <x>670</x>
-     <y>20</y>
-     <width>161</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>11</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Dettagli Operazione</string>
-   </property>
-  </widget>
+  <zorder>backgroundLabel</zorder>
+  <zorder>operationDetailsTable</zorder>
+  <zorder>dettagliOperazioneLabel</zorder>
+  <zorder>tabellaPagamenti</zorder>
+  <zorder>gridLayoutWidget_2</zorder>
  </widget>
  <resources/>
  <connections/>

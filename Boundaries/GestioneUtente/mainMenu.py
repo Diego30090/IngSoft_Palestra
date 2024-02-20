@@ -7,7 +7,7 @@ from Boundaries.GestioneInformazioniPersonale import personnelManagementView as 
 from Boundaries.GestioneCalendario import VistaCalendario as cal
 from Boundaries.GestioneInventario import InventarioView as inv
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
-
+from Boundaries.GestionePagamenti import elencoPagamenti as elepag
 
 class MainMenu(QWidget):
 
@@ -88,8 +88,9 @@ class MainMenu(QWidget):
         self.close()
 
     def toGestionePagamenti(self):
-        # Va alla pagina della gestione del personale
-        pass
+        self.screen = elepag.ElencoPagamenti(accountController=self.userController)
+        self.screen.show()
+        self.close()
 
     def toNotifiche(self):
         # Va alla pagina delle notifiche
