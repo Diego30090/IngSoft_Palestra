@@ -154,6 +154,9 @@ class PagamentoDB(GestioneDatabase):
                 f"WHERE id ={pagamentoId}"
         self.queryExecuteCommitter(query)
 
+    def listaPagamentiCompleta(self):
+        return self.generalizedSelect(table=self.table)
+
 class MultaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
@@ -185,6 +188,8 @@ class MultaDB(GestioneDatabase):
 
 
 if __name__ == "__main__":
+
+    '''
     db = MultaDB()
     multa= db.getAllMulte()
     print(multa)
@@ -196,3 +201,11 @@ if __name__ == "__main__":
         importo = 5
         dettaglio = 'multa di prova'
         db.insert_multa(destinatario, timestamp, importo, dettaglio)
+'''
+
+    db= MultaDB()
+    destinatario ='user1'
+    timestamp = str(datetime.date.today())
+    importo = 5
+    dettaglio = 'multa di prova'
+    db.insert_multa(destinatario, timestamp, importo, dettaglio)

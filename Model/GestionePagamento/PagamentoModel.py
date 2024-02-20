@@ -1,5 +1,5 @@
 class PagamentoModel(object):
-    def __init__(self, id, mittente, destinatario, timestamp, importo, dettaglio, statusMultato):
+    def __init__(self, id, mittente, destinatario, timestamp, importo, dettaglio, statusMultato, tipologia):
         self.id = id
         self.mittente = mittente
         self.destinatario = destinatario
@@ -7,6 +7,7 @@ class PagamentoModel(object):
         self.importo = importo
         self.dettaglio = dettaglio
         self.statusMultato = statusMultato
+        self.tipologia = tipologia
         pass
 
     def getId(self):
@@ -27,6 +28,9 @@ class PagamentoModel(object):
     def getDettaglio(self):
         return self.dettaglio
 
+    def getTipologia(self):
+        return self.tipologia
+
     def setId(self, id):
         self.id = id
 
@@ -44,6 +48,9 @@ class PagamentoModel(object):
 
     def setDettaglio(self, dettaglio):
         self.dettaglio = dettaglio
+
+    def setTipologia(self, tipologia):
+        self.tipologia = tipologia
 
 
 class MultaModel(PagamentoModel):
