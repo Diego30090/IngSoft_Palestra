@@ -28,16 +28,15 @@ class ElencoPagamenti(QWidget):
         #funzione che mostra la lista dei pagamenti nella tabella principale
         pagamentiController = GestorePagamenti()
         self.listaPagamenti = pagamentiController.getListaPagamentiCompleta()
-        currentRow = 1
         self.tabellaPagamenti.setRowCount(len(self.listaPagamenti))
         for row in range(len(self.listaPagamenti)):
             self.tabellaPagamenti.setItem(row,0, QTableWidgetItem(str(self.listaPagamenti[row].id)))
             self.tabellaPagamenti.setItem(row, 1, QTableWidgetItem(str(self.listaPagamenti[row].timestamp)))
             self.tabellaPagamenti.setItem(row, 2, QTableWidgetItem(f"{str(self.listaPagamenti[row].importo)} €"))
-            if self.listaPagamenti[row].tipologia == 'pagamento' or self.listaPagamenti[row].tipologia == 'multa':
-                self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Non Pagato')))
-            else:
+            if self.listaPagamenti[row].tipologia == 'pagamento effettuato' or self.listaPagamenti[row].tipologia == 'multa pagata':
                 self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Pagato')))
+            else:
+                self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Non Pagato')))
             self.tabellaPagamenti.setItem(row, 4, QTableWidgetItem(str(self.listaPagamenti[row].dettaglio)))
 
 
