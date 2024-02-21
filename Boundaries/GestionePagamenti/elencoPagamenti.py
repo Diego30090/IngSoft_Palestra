@@ -13,7 +13,6 @@ class ElencoPagamenti(QWidget):
     def __init__(self, accountController: accountController):
         self.userController = accountController
         self.username = accountController.utente.getUsername()
-        self.listaPagamenti = []
         super(ElencoPagamenti, self).__init__()
         loadUi("../GestionePagamenti/elencoPagamenti.ui", self)
         self.instruction()
@@ -22,23 +21,35 @@ class ElencoPagamenti(QWidget):
     def instruction(self):
         self.backButton.clicked.connect(self.toMainView)
         self.creaPagamentoButton.clicked.connect(self.toCreaPagamento)
-        #self.visualizzaPagamentoButton.clicked.connect(self.toVisualizzaPagamento)
+        self.tabellaPagamenti.cellClicked.connect(self.clickedCell)
 
     def populatePagamentiTable(self):
         #funzione che mostra la lista dei pagamenti nella tabella principale
         pagamentiController = GestorePagamenti()
-        self.listaPagamenti = pagamentiController.getListaPagamentiCompleta()
-        self.tabellaPagamenti.setRowCount(len(self.listaPagamenti))
-        for row in range(len(self.listaPagamenti)):
-            self.tabellaPagamenti.setItem(row,0, QTableWidgetItem(str(self.listaPagamenti[row].id)))
-            self.tabellaPagamenti.setItem(row, 1, QTableWidgetItem(str(self.listaPagamenti[row].timestamp)))
-            self.tabellaPagamenti.setItem(row, 2, QTableWidgetItem(f"{str(self.listaPagamenti[row].importo)} €"))
-            if self.listaPagamenti[row].tipologia == 'pagamento effettuato' or self.listaPagamenti[row].tipologia == 'multa pagata':
+        listaPagamenti = pagamentiController.getListaPagamentiCompleta()
+        self.tabellaPagamenti.setRowCount(len(listaPagamenti))
+        for row in range(len(listaPagamenti)):
+            self.tabellaPagamenti.setItem(row,0, QTableWidgetItem(str(listaPagamenti[row].id)))
+            self.tabellaPagamenti.setItem(row, 1, QTableWidgetItem(str(listaPagamenti[row].timestamp)))
+            self.tabellaPagamenti.setItem(row, 2, QTableWidgetItem(f"{str(listaPagamenti[row].importo)} €"))
+            if listaPagamenti[row].tipologia == 'pagamento effettuato' or listaPagamenti[row].tipologia == 'multa pagata':
                 self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Pagato')))
             else:
                 self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Non Pagato')))
-            self.tabellaPagamenti.setItem(row, 4, QTableWidgetItem(str(self.listaPagamenti[row].dettaglio)))
+            self.tabellaPagamenti.setItem(row, 4, QTableWidgetItem(str(listaPagamenti[row].dettaglio)))
 
+    def clickedCell(self,row, column):
+
+        currentItemId = self.tabellaPagamenti.item(row,0).text()
+        currentPagamento = GestorePagamenti()
+        currentPagamento.getSingoloPagamento(currentItemId)
+
+        self.idInfo.setText(currentPagamento.getCurrentIdPagamento())
+        self.dataInfo.setText(currentPagamento.getCurrentDataEmissione())
+        self.importoInfo.setText(currentPagamento.getCurrentImporto())
+        self.statusInfo.setText(currentPagamento.getCurrentStatus())
+        self.tipologiaInfo.setText(currentPagamento.getCurrentTipologia())
+        self.descrizioneInfo.setPlainText(currentPagamento.getCurrentDescrizione())
 
     def toVisualizzaPagamento(self):
         #Va alla vista della visualizzazione dei pagamenti se è stato selezionato un evento

@@ -142,7 +142,7 @@ class PagamentoDB(GestioneDatabase):
     def delete_pagamento(self, id):
         self.delete_element_by_id(id=id)
 
-    def get_pagamento_by_id(self, id):
+    def getPagamentoById(self, id):
         return self.get_element_by_id(id=id)
 
     def getAllPagamentiSenzaMulte(self):

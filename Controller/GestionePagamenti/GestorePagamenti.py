@@ -17,6 +17,48 @@ class GestorePagamenti(object):
     def getListaPagamentiCompleta(self):
         return self.pagamentiCompleti
 
+    def getSingoloPagamento(self, id):
+        pagamento = self.dbPagamenti.getPagamentoById(id)
+        self.currentPagamento = PagamentoModel.PagamentoModel(*pagamento)
+
+    def getCurrentIdPagamento(self):
+        idPagamento =self.currentPagamento.getId()
+        return str(idPagamento)
+
+    def getCurrentDataEmissione(self):
+        dataEmissione = self.currentPagamento.getTimestamp()
+        return str(dataEmissione)
+
+    def getCurrentImporto(self):
+        importo = self.currentPagamento.getImporto()
+        return str(importo)
+
+    def getCurrentStatus(self):
+        status = 'Nessuno'
+        if self.currentPagamento.getTipologia() == 'pagamento' or self.currentPagamento.getTipologia() == 'multa':
+            status = 'Non Pagato'
+        elif self.currentPagamento.getTipologia() == 'pagamento effettuato' or self.currentPagamento.getTipologia() == 'multa pagata':
+            status = 'Pagato'
+        else:
+            status = 'Nessuno'
+        return status
+
+    def getCurrentTipologia(self):
+        arg = self.currentPagamento.getTipologia()
+        tipologia = ''
+        if arg == 'pagamento' or arg == 'pagamento effettuato':
+            tipologia = 'Pagamento'
+        elif arg == 'multa' or arg == 'multa pagata':
+            tipologia = 'Multa'
+        else:
+            tipologia = 'NaN'
+        return tipologia
+
+
+    def getCurrentDescrizione(self):
+        descrizione = self.currentPagamento.getDettaglio()
+        return str(descrizione)
+
 
 if __name__ == "__main__":
     con= GestorePagamenti()
