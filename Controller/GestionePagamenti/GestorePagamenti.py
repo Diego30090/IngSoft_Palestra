@@ -1,3 +1,5 @@
+import datetime
+
 from Controller.GestioneDatabase import GestoreDatabase
 from Model.GestionePagamento import PagamentoModel
 class GestorePagamenti(object):
@@ -56,8 +58,25 @@ class GestorePagamenti(object):
 
 
     def getCurrentDescrizione(self):
-        descrizione = self.currentPagamento.getDettaglio()
+        descrizione = self.currentPagamento.getDescrizione()
+        if descrizione is None:
+            descrizione = 'Nessuna descrizione'
         return str(descrizione)
+
+    def getCurrentDettaglio(self):
+        dettaglio = self.currentPagamento.getDettaglio()
+        return str(dettaglio)
+
+    def insertPagamento(self, dettaglio, importo, descrizione, mittente, destinatario):
+        print(f'dettaglio operazione: {dettaglio}\n'
+              f'importo operazione : {importo}\n'
+              f'descrizione operazione: {descrizione}\n'
+              f'mittente: {mittente}\n'
+              f'destinatario: {destinatario}')
+        currentDay = str(datetime.date.today())
+        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay, importo=importo, dettaglio=dettaglio)
+        pass
+
 
 
 if __name__ == "__main__":

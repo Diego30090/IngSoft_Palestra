@@ -8,8 +8,21 @@ class GestioneAccount(UtenteDB):
     def __init__(self, username, password):
         super().__init__()
         self.utente = Model(None, None, None, None, username, password, None, None, None)
+        self.listaUtenti = []
+    def getEveryUtente(self):
+        self.listaUtenti.clear()
+        listaUser= self.getAllUtenti()
+        for user in listaUser:
+            utente=Model(*user)
+            self.listaUtenti.append(utente)
 
-    #
+    def returnEveryUsername(self):
+        self.getEveryUtente()
+        listaUsername = []
+        for user in self.listaUtenti:
+            listaUsername.append(user.getUsername())
+        return listaUsername
+
     def login(self):
         ## Controlla che l'utente desiderato sia presente con username e password indicate
         value = self.count_user(username=self.utente.getUsername(), password=self.utente.getPassword())
@@ -48,3 +61,4 @@ class GestioneAccount(UtenteDB):
 if __name__ == '__main__':
     gest = GestioneAccount('root', '0000')
     gest.login()
+    gest.getEveryUtente()

@@ -72,6 +72,9 @@ class UtenteDB(GestioneDatabase):
                 f"WHERE id_utente = '{idUtente}';"
         self.queryExecuteCommitter(query=query)
 
+    def getAllUtenti(self):
+        query = "SELECT id_utente, nome, cognome, data_nascita, username, password, utente_tipo, email, password FROM utente;"
+        return self.cursor.execute(query).fetchall()
 
 class EventoDB(GestioneDatabase):
     def __init__(self):

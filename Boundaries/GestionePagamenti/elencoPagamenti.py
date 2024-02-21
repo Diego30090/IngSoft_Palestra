@@ -54,10 +54,14 @@ class ElencoPagamenti(QWidget):
 
     def toModificaPagamento(self):
         #Va alla vista della visualizzazione dei pagamenti se è stato selezionato un evento
-        self.screen = vispag.modificaPagamento(accountController=self.userController)
-        self.screen.show()
-        self.close()
-        pass
+        pagamentoId = self.idInfo.text()
+        if pagamentoId == '':
+            print('Nessun Id di pagamento')
+        else:
+            self.screen = vispag.modificaPagamento(accountController=self.userController, idPagamento = pagamentoId)
+            self.screen.show()
+            self.close()
+
 
     def toCreaPagamento(self):
         #Va alla vista di creazione del pagamento
