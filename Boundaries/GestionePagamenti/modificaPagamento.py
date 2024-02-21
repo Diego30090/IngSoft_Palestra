@@ -6,12 +6,12 @@ from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountC
 from Boundaries.GestionePagamenti import creaPagamentoView as creapag
 from Boundaries.GestionePagamenti import elencoPagamenti as elepag
 
-class visualizzaPagamento(QWidget):
+class modificaPagamento(QWidget):
     def __init__(self, accountController: accountController):
         self.userController = accountController
         self.username = accountController.utente.getUsername()
-        super(visualizzaPagamento, self).__init__()
-        loadUi("../GestionePagamenti/VisualizzaPagamento.ui", self)
+        super(modificaPagamento, self).__init__()
+        loadUi("../GestionePagamenti/ModificaPagamento.ui", self)
         self.instruction()
 
     def instruction(self):
@@ -33,6 +33,6 @@ class visualizzaPagamento(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = visualizzaPagamento(accountController=accountController('root1', 'pwd'))
+    ex = modificaPagamento(accountController=accountController('root1', 'pwd'))
     ex.show()
     sys.exit(app.exec_())

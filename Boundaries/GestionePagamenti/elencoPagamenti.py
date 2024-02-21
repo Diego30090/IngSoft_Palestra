@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetIte
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 from Controller.GestionePagamenti.GestorePagamenti import GestorePagamenti
 from Boundaries.GestionePagamenti import creaPagamentoView as creapag
-from Boundaries.GestionePagamenti import visualizzaPagamento as vispag
+from Boundaries.GestionePagamenti import modificaPagamento as vispag
 
 class ElencoPagamenti(QWidget):
     def __init__(self, accountController: accountController):
@@ -22,6 +22,7 @@ class ElencoPagamenti(QWidget):
         self.backButton.clicked.connect(self.toMainView)
         self.creaPagamentoButton.clicked.connect(self.toCreaPagamento)
         self.tabellaPagamenti.cellClicked.connect(self.clickedCell)
+        self.modificaPagamentoButton.clicked.connect(self.toModificaPagamento)
 
     def populatePagamentiTable(self):
         #funzione che mostra la lista dei pagamenti nella tabella principale
@@ -38,7 +39,7 @@ class ElencoPagamenti(QWidget):
                 self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Non Pagato')))
             self.tabellaPagamenti.setItem(row, 4, QTableWidgetItem(str(listaPagamenti[row].dettaglio)))
 
-    def clickedCell(self,row, column):
+    def clickedCell(self, row):
 
         currentItemId = self.tabellaPagamenti.item(row,0).text()
         currentPagamento = GestorePagamenti()
@@ -51,9 +52,9 @@ class ElencoPagamenti(QWidget):
         self.tipologiaInfo.setText(currentPagamento.getCurrentTipologia())
         self.descrizioneInfo.setPlainText(currentPagamento.getCurrentDescrizione())
 
-    def toVisualizzaPagamento(self):
+    def toModificaPagamento(self):
         #Va alla vista della visualizzazione dei pagamenti se è stato selezionato un evento
-        self.screen = vispag.visualizzaPagamento(accountController=self.userController)
+        self.screen = vispag.modificaPagamento(accountController=self.userController)
         self.screen.show()
         self.close()
         pass
