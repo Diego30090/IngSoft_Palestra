@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>902</width>
+    <height>602</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>750</x>
+     <y>502</y>
+     <width>141</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,70,70)</string>
+   </property>
+   <property name="text">
+    <string>INDIETRO</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tabellaNotifiche">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>881</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::SingleSelection</enum>
+   </property>
+   <property name="columnCount">
+    <number>2</number>
+   </property>
+   <column>
+    <property name="text">
+     <string>Dettagli</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Data Notifica</string>
+    </property>
+   </column>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

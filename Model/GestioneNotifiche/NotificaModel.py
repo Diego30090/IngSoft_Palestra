@@ -2,12 +2,14 @@
 
 class NotifcaModel(object):
 
-    def __init__(self, idNotifica, descrizione, data, idUtenteAssociato, tipoNotifica):
-        self.idNotifica = idNotifica
-        self.descrizione = descrizione
-        self.data = data
-        self.idUtenteAssociato = idUtenteAssociato
-        self.tipoNotifica = tipoNotifica
+    def __init__(self, idNotifica, descrizione, data, destinatario, tipoNotifica, dettaglio, timestamp):
+        ##    self.idNotifica = idNotifica
+        ##    self.descrizione = descrizione
+        ##    self.data = data
+        self.destinatario = destinatario
+        ##    self.tipoNotifica = tipoNotifica
+        self.dettaglio = dettaglio
+        self.timestamp = timestamp
 
 
     def getIdNotifica(self):

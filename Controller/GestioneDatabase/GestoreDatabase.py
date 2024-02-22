@@ -167,7 +167,7 @@ class PagamentoDB(GestioneDatabase):
 class MultaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('pagamento')
+        self.init_table('multa')
         pass
 
     def insert_multa(self, destinatario, timestamp, importo, dettaglio):
@@ -185,8 +185,6 @@ class MultaDB(GestioneDatabase):
     def get_multa_by_id(self, id):
         return self.get_element_by_id(id=id)
 
-
-
     def getAllMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'multa'"
         return self.cursor.execute(query).fetchall()
@@ -195,6 +193,33 @@ class MultaDB(GestioneDatabase):
         query = f"UPDATE {self.table} SET tipologia = 'multa pagata' WHERE id='{idMulta}'"
         self.queryExecuteCommitter(query=query)
 
+class NotificaDB(GestioneDatabase):
+    def __init__(self):
+        super().__init__()
+        self.init_table('notifica')
+        pass
+
+    def insert_notifica(self, destinatario, timestamp, dettaglio):
+        query = f"INSERT INTO {self.table}(dettaglio, timestamp) VALUES () ('Sistema','{destinatario}', '{timestamp}', '{dettaglio}', , 'notifica')"
+        self.queryExecuteCommitter(query)
+
+    def update_notifica(self, destinatario, timestamp, dettaglio):
+        query = f"UPDATE {self.table} SET destinatario = '{destinatario}', timestamp= {timestamp}, dettaglio = '{dettaglio}'"
+        self.queryExecuteCommitter(query)
+
+    def insert_notifica_utente(self, destinatario, timestamp, dettaglio):
+        query = f"INSERT INTO {self.table} (dettaglio, timestamp) " \
+                f"VALUES ('Sistema', '{destinatario}', '{dettaglio}'), '{timestamp}';"
+        self.queryExecuteCommitter(query)
+
+    def update_notifica_utente(self, destinatario, timestamp, dettaglio):
+        query = f"UPDATE {self.table} SET (dettaglio, timestamp) " \
+                f"VALUES ('Sistema', '{destinatario}', '{dettaglio}'), '{timestamp}';"
+        self.queryExecuteCommitter(query)
+
+    def get_notifica_destinatario(self, destinatario):
+        query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}'"
+        return self.cursor.execute(query).fetchall()
 
 if __name__ == "__main__":
 
