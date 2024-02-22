@@ -2,28 +2,29 @@ import datetime
 
 from Controller.GestioneDatabase import GestoreDatabase
 from Model.GestionePagamento import PagamentoModel
+
+
 class GestorePagamenti(object):
 
     def __init__(self):
-        self.dbPagamenti = GestoreDatabase.PagamentoDB()  #funzioni db dedicate ai pagamenti
-        self.pagamentiCompleti =[] #lista pagamenti
-        self.listaPagamentiCompleta() # ottiene la lista pagamenti
-
+        self.dbPagamenti = GestoreDatabase.PagamentoDB()
+        self.pagamentiCompleti = []
+        self.listaPagamentiCompleta()
 
     def listaPagamentiCompleta(self):
         self.pagamentiCompleti.clear()
-        lista = self.dbPagamenti.listaPagamentiCompleta()  # Ottiene la lista dal db, secondo il GestoreDatabase
-        for elem in lista: #Il for si occupa di inserire tutti i record ottenuti dal db e popolare il model
+        lista = self.dbPagamenti.listaPagamentiCompleta()
+        for elem in lista:
             pagamento = PagamentoModel.PagamentoModel(*elem)
             self.pagamentiCompleti.append(pagamento)
 
     def listaPagamentiUtente(self, username):
         self.pagamentiCompleti.clear()
-        lista = self.dbPagamenti.getPagamentoByMittente(mittente=username)  # Ottiene la lista dal db, secondo il GestoreDatabase
-        for elem in lista:  # Il for si occupa di inserire tutti i record ottenuti dal db e popolare il model
+        lista = self.dbPagamenti.getPagamentoByMittente(
+            mittente=username)
+        for elem in lista:
             pagamento = PagamentoModel.PagamentoModel(*elem)
             self.pagamentiCompleti.append(pagamento)
-        print(lista)
 
     def getListaPagamentiCompleta(self):
         return self.pagamentiCompleti
@@ -32,8 +33,12 @@ class GestorePagamenti(object):
         pagamento = self.dbPagamenti.getPagamentoById(id)
         self.currentPagamento = PagamentoModel.PagamentoModel(*pagamento)
 
+    def returnSingoloPagamento(self, id):
+        pagamento = self.dbPagamenti.getPagamentoById(id)
+        return PagamentoModel.PagamentoModel(*pagamento)
+
     def getCurrentIdPagamento(self):
-        idPagamento =self.currentPagamento.getId()
+        idPagamento = self.currentPagamento.getId()
         return str(idPagamento)
 
     def getCurrentDataEmissione(self):
@@ -65,10 +70,31 @@ class GestorePagamenti(object):
             tipologia = 'NaN'
         return tipologia
 
+    def modificaPagamento(self, id, dettagli, importo, stato, descrizione):
+        stato = self.statusInfo(id=id, stato=stato)
+        self.dbPagamenti.update_pagamento(pagamentoId=id, importo=importo, dettaglio=dettagli, descrizione=descrizione, tipologia=stato)
+
+    def statusInfo(self, id, stato):
+        pagamento = self.returnSingoloPagamento(id)
+        if stato == 'Pagato':
+            if pagamento.tipologia == 'pagamento' or pagamento.tipologia == 'pagamento effettuato':
+                return 'pagamento effettuato'
+            elif pagamento.tipologia == 'multa' or pagamento.tipologia == 'multa pagata':
+                return 'multa pagata'
+            else:
+                pass
+        elif stato == 'Non Pagato':
+            if pagamento.tipologia == 'pagamento' or pagamento.tipologia == 'pagamento effettuato':
+                return 'pagamento'
+            elif pagamento.tipologia == 'multa' or pagamento.tipologia == 'multa pagata':
+                return 'multa'
+            else:
+                pass
+        else:
+            pass
 
     def getCurrentDescrizione(self):
         descrizione = self.currentPagamento.getDescrizione()
-        print(descrizione)
         if descrizione == '':
             descrizione = 'Nessuna descrizione'
         return str(descrizione)
@@ -78,18 +104,18 @@ class GestorePagamenti(object):
         return str(dettaglio)
 
     def insertPagamento(self, dettaglio, importo, descrizione, mittente, destinatario):
-        print(f'dettaglio operazione: {dettaglio}\n'
-              f'importo operazione : {importo}\n'
-              f'descrizione operazione: {descrizione}\n'
-              f'mittente: {mittente}\n'
-              f'destinatario: {destinatario}')
         currentDay = str(datetime.date.today())
-        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay, importo=importo, dettaglio=dettaglio, descrizione=descrizione)
+        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay,
+                                          importo=importo, dettaglio=dettaglio, descrizione=descrizione)
+        pass
+
+    def eliminaPagamento(self, id):
+        print(f"pagamento eliminato: {id}")
+        self.dbPagamenti.delete_pagamento(id=id)
         pass
 
 
-
 if __name__ == "__main__":
-    con= GestorePagamenti()
+    con = GestorePagamenti()
     con.listaPagamentiUtente(username='user2')
     print(con.pagamentiCompleti)

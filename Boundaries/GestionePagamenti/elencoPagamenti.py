@@ -24,14 +24,13 @@ class ElencoPagamenti(QWidget):
         self.creaPagamentoButton.clicked.connect(self.toCreaPagamento)
         self.tabellaPagamenti.cellClicked.connect(self.clickedCell)
         self.modificaPagamentoButton.clicked.connect(self.toModificaPagamento)
+        self.eliminaPagamentoButton.clicked.connect(self.eliminaPagamento)
 
     def populatePagamentiTable(self):
         # funzione che mostra la lista dei pagamenti nella tabella principale
         tipologiaUtente = self.userController.utente.getUtenteTipo()
         pagamentiController = GestorePagamenti()
         listaPagamenti = pagamentiController.getListaPagamentiCompleta()
-        if self.userController.utente.utenteTipo != 'Admin':
-            print(pagamentiController.listaPagamentiUtente(username=self.username))
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 
 
@@ -51,6 +50,7 @@ class ElencoPagamenti(QWidget):
         currentItemId = self.tabellaPagamenti.item(row, 0).text()
         currentPagamento = GestorePagamenti()
         currentPagamento.getSingoloPagamento(currentItemId)
+        self.currentRow= row
 
         self.idInfo.setText(currentPagamento.getCurrentIdPagamento())
         self.dataInfo.setText(currentPagamento.getCurrentDataEmissione())
@@ -58,6 +58,18 @@ class ElencoPagamenti(QWidget):
         self.statusInfo.setText(currentPagamento.getCurrentStatus())
         self.tipologiaInfo.setText(currentPagamento.getCurrentTipologia())
         self.descrizioneInfo.setPlainText(currentPagamento.getCurrentDescrizione())
+
+    def eliminaPagamento(self):
+        pagamentoId = self.idInfo.text()
+        if pagamentoId == '':
+            print('Nessun pagamento da eliminare')
+        else:
+            currentPagamento = GestorePagamenti()
+            id = self.idInfo.text()
+            currentPagamento.eliminaPagamento(id=id)
+            self.tabellaPagamenti.removeRow(self.currentRow)
+
+        pass
 
     def toModificaPagamento(self):
         # Va alla vista della visualizzazione dei pagamenti se è stato selezionato un evento

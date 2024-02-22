@@ -28,12 +28,23 @@ class modificaPagamento(QWidget):
 
     def instruction(self):
         self.backButton.clicked.connect(self.toElencoPagamenti)
+        self.confermaModificaButton.clicked.connect(self.confermaModifica)
         pass
 
     def importoValidator(self):
         regex = QRegExp("[0-9.]*")  # Only digits (0-9) and periods (.) allowed
         validator = QRegExpValidator(regex)
         self.lineEditImporto.setValidator(validator)
+
+    def populateStatus(self, status):
+        if status == 'Non Pagato':
+            self.statusInfo.addItem('Non Pagato')
+            self.statusInfo.addItem('Pagato')
+        elif status == 'Pagato':
+            self.statusInfo.addItem('Pagato')
+            self.statusInfo.addItem('Non Pagato')
+        else:
+            pass
 
     def populatePagamentiTable(self):
         # funzione che mostra la lista dei pagamenti nella tabella principale
@@ -56,14 +67,16 @@ class modificaPagamento(QWidget):
 
         self.lineEditImporto.setText(pagamentiController.getCurrentImporto())
         self.lineEditDettagli.setText(pagamentiController.getCurrentDettaglio())
-        self.lineEditStato.setText(pagamentiController.getCurrentStatus())
+        self.populateStatus(pagamentiController.getCurrentStatus())
         self.lineEditDescrizione.setText(pagamentiController.getCurrentDescrizione())
         pass
 
-    def toModificaPagamento(self):
-        # Va alla vista della visualizzazione dei pagamenti
-        print(f"funzione che porta alla vista di modifica del pagamento")
-        pass
+    def confermaModifica(self):
+        pagamentiController = GestorePagamenti()
+        pagamentiController.modificaPagamento(id=self.idPagamento, dettagli=self.lineEditDettagli.text(),
+                                              importo=self.lineEditImporto.text(), stato=self.statusInfo.currentText(),
+                                              descrizione=self.lineEditDescrizione.text())
+        self.toElencoPagamenti()
 
     def toElencoPagamenti(self):
         self.screen = elepag.ElencoPagamenti(accountController=self.userController)

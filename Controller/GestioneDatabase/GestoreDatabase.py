@@ -137,8 +137,8 @@ class PagamentoDB(GestioneDatabase):
         query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato, descrizione) VALUES ('{mittente}','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'pagamento', 0, '{descrizione}');"
         self.queryExecuteCommitter(query)
 
-    def update_pagamento(self, pagamentoId, mittente, destinatario, timestamp, importo, dettaglio, descrizione):
-        query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}', descrizione = '{descrizione}'" \
+    def update_pagamento(self, pagamentoId, importo, dettaglio, descrizione, tipologia):
+        query = f"UPDATE {self.table} SET importo= '{importo}',dettaglio = '{dettaglio}', descrizione = '{descrizione}', tipologia = '{tipologia}'" \
                 f"WHERE id ={pagamentoId}"
         self.queryExecuteCommitter(query)
 
