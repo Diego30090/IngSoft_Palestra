@@ -62,3 +62,4 @@ if __name__ == '__main__':
     gest = GestioneAccount('root', '0000')
     gest.login()
     gest.getEveryUtente()
+    print(gest.utente.__dict__)

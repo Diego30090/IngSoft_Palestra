@@ -42,6 +42,7 @@ class CreaPagamento(QWidget):
         descrizione = self.lineEditDescrizione.text()
         gestorePagamento = GestorePagamenti()
         destinatario = self.destinatarioList.currentText()
+
         gestorePagamento.insertPagamento(dettagli, importo, descrizione, self.username, destinatario)
 
         self.toVisualizzaPagamento()

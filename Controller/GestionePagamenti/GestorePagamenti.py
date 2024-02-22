@@ -11,10 +11,19 @@ class GestorePagamenti(object):
 
 
     def listaPagamentiCompleta(self):
+        self.pagamentiCompleti.clear()
         lista = self.dbPagamenti.listaPagamentiCompleta()  # Ottiene la lista dal db, secondo il GestoreDatabase
         for elem in lista: #Il for si occupa di inserire tutti i record ottenuti dal db e popolare il model
             pagamento = PagamentoModel.PagamentoModel(*elem)
             self.pagamentiCompleti.append(pagamento)
+
+    def listaPagamentiUtente(self, username):
+        self.pagamentiCompleti.clear()
+        lista = self.dbPagamenti.getPagamentoByMittente(mittente=username)  # Ottiene la lista dal db, secondo il GestoreDatabase
+        for elem in lista:  # Il for si occupa di inserire tutti i record ottenuti dal db e popolare il model
+            pagamento = PagamentoModel.PagamentoModel(*elem)
+            self.pagamentiCompleti.append(pagamento)
+        print(lista)
 
     def getListaPagamentiCompleta(self):
         return self.pagamentiCompleti
@@ -59,7 +68,8 @@ class GestorePagamenti(object):
 
     def getCurrentDescrizione(self):
         descrizione = self.currentPagamento.getDescrizione()
-        if descrizione is None:
+        print(descrizione)
+        if descrizione == '':
             descrizione = 'Nessuna descrizione'
         return str(descrizione)
 
@@ -74,11 +84,12 @@ class GestorePagamenti(object):
               f'mittente: {mittente}\n'
               f'destinatario: {destinatario}')
         currentDay = str(datetime.date.today())
-        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay, importo=importo, dettaglio=dettaglio)
+        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay, importo=importo, dettaglio=dettaglio, descrizione=descrizione)
         pass
 
 
 
 if __name__ == "__main__":
     con= GestorePagamenti()
-    print(con.pagamentiCompleti[0].__dict__)
+    con.listaPagamentiUtente(username='user2')
+    print(con.pagamentiCompleti)

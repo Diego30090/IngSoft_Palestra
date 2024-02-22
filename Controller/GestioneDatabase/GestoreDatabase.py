@@ -133,12 +133,12 @@ class PagamentoDB(GestioneDatabase):
         self.init_table('pagamento')
         pass
 
-    def insert_pagamento(self, mittente, destinatario, timestamp, importo, dettaglio):
-        query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato) VALUES ('{mittente}','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'pagamento', 0);"
+    def insert_pagamento(self, mittente, destinatario, timestamp, importo, dettaglio, descrizione):
+        query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato, descrizione) VALUES ('{mittente}','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'pagamento', 0, '{descrizione}');"
         self.queryExecuteCommitter(query)
 
-    def update_pagamento(self, pagamentoId, mittente, destinatario, timestamp, importo, dettaglio):
-        query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}'" \
+    def update_pagamento(self, pagamentoId, mittente, destinatario, timestamp, importo, dettaglio, descrizione):
+        query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}', descrizione = '{descrizione}'" \
                 f"WHERE id ={pagamentoId}"
         self.queryExecuteCommitter(query)
 
@@ -147,6 +147,10 @@ class PagamentoDB(GestioneDatabase):
 
     def getPagamentoById(self, id):
         return self.get_element_by_id(id=id)
+
+    def getPagamentoByMittente(self, mittente):
+        query = f"SELECT * FROM {self.table} WHERE mittente = '{mittente}';"
+        return self.cursor.execute(query).fetchall()
 
     def getAllPagamentiSenzaMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento'"
@@ -181,6 +185,8 @@ class MultaDB(GestioneDatabase):
     def get_multa_by_id(self, id):
         return self.get_element_by_id(id=id)
 
+
+
     def getAllMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'multa'"
         return self.cursor.execute(query).fetchall()
@@ -206,9 +212,6 @@ if __name__ == "__main__":
         db.insert_multa(destinatario, timestamp, importo, dettaglio)
 '''
 
-    db= MultaDB()
+    db= PagamentoDB()
     destinatario ='user1'
-    timestamp = str(datetime.date.today())
-    importo = 5
-    dettaglio = 'multa di prova'
-    db.insert_multa(destinatario, timestamp, importo, dettaglio)
+    print(db.getPagamentoByMittente(mittente='root1'))
