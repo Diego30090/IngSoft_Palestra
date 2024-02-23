@@ -34,6 +34,10 @@ class UtenteDB(GestioneDatabase):
         super().__init__()
         self.init_table('utente')
 
+    def getUtente(self, username):
+        query = f"SELECT * FROM {self.table} WHERE username = '{username}'"
+        return self.cursor.execute(query).fetchall()
+
     def count_user(self, username, password):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
         return self.cursor.execute(query).fetchone()
@@ -152,6 +156,10 @@ class PagamentoDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE mittente = '{mittente}';"
         return self.cursor.execute(query).fetchall()
 
+    def getPagamentoByDestinatario(self, destinatario):
+        query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}';"
+        return self.cursor.execute(query).fetchall()
+
     def getAllPagamentiSenzaMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento'"
         return self.cursor.execute(query).fetchall()
@@ -237,6 +245,6 @@ if __name__ == "__main__":
         db.insert_multa(destinatario, timestamp, importo, dettaglio)
 '''
 
-    db= PagamentoDB()
-    destinatario ='user1'
-    print(db.getPagamentoByMittente(mittente='root1'))
+    db = UtenteDB()
+    user= db.getUtente('root0')
+    #print(user)

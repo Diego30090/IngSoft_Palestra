@@ -1,3 +1,5 @@
+import datetime
+
 from Model.GestioneUtente.UtenteModel import UtenteModel as Model
 import sqlite3
 from Controller.GestioneDatabase.GestoreDatabase import UtenteDB
@@ -8,7 +10,11 @@ class GestioneAccount(UtenteDB):
     def __init__(self, username, password):
         super().__init__()
         self.utente = Model(None, None, None, None, username, password, None, None, None)
+        self.login()
         self.listaUtenti = []
+
+
+
     def getEveryUtente(self):
         self.listaUtenti.clear()
         listaUser= self.getAllUtenti()
@@ -45,7 +51,30 @@ class GestioneAccount(UtenteDB):
         else:
             return False
 
-    #
+    def controlloDati(self, nome, cognome, password, email, telefono, username, dataNascita):
+        errorFlag = False
+        textList = [nome, cognome, password, email, telefono, username]
+        controller = UtenteDB()
+        for elem in textList:
+            if elem == '':
+                errorFlag = True
+                error = 'Error: Inserire tutti i campi'
+                return [errorFlag, error]
+        dataNascita = datetime.datetime.strptime(dataNascita,'%Y-%m-%d').date()
+        if dataNascita > datetime.date.today():
+            errorFlag = True
+            error = 'Errore: Inserisci una data valida'
+            return [errorFlag, error]
+
+        usernameFlag = controller.check_username(user=username)
+        print(f"username Flag: {str(usernameFlag)}")
+        if usernameFlag is True:
+            error = 'Errore: Username già esistente'
+            errorFlag = True
+            return [errorFlag, error]
+        else:
+            return [errorFlag, '']
+
     def setUserInfoInDb(self):
         self.updateUser(nome=self.utente.getNome(),
                         cognome=self.utente.getCognome(),
@@ -60,6 +89,5 @@ class GestioneAccount(UtenteDB):
 
 if __name__ == '__main__':
     gest = GestioneAccount('root', '0000')
-    gest.login()
-    gest.getEveryUtente()
-    print(gest.utente.__dict__)
+    flag =gest.controlloDati(nome='aa', cognome= 'aa', dataNascita='1900-12-12', password='aa', email='aa', telefono='a', username='a')
+    print(flag)

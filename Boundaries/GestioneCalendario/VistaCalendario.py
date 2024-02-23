@@ -20,13 +20,21 @@ class VistaCalendario(QWidget):
         self.username = accountController.utente.getUsername()
         super(VistaCalendario, self).__init__()
         loadUi("../GestioneCalendario/Calendario/mainCalendario.ui", self)
-        self.calendar_widget.selectionChanged.connect(
-            self.calendarDateChanged)  # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
+          # quando la data che selezione cambia mi connetto alla funzione calendarDateChanged
         self.eventDefiner = [self.line_edit_name, self.line_edit_location, self.line_edit_time, self.line_edit_organizer, self.line_edit_description]
         self.calendarDateChanged()
+        self.instruction()
+        self.blockedOptions()
+
+    def instruction(self):
         self.add_button.clicked.connect(self.addNewTask)
         self.event_list_widget.clicked.connect(self.viewSelectedTask)
         self.back_button.clicked.connect(self.toMainMenu)
+        self.calendar_widget.selectionChanged.connect(self.calendarDateChanged)
+
+    def blockedOptions(self):
+        if self.userController.utente.utenteTipo == 'Atleta':
+            self.add_button.setDisabled(True)
 
 
     def calendarDateChanged(self):
@@ -81,9 +89,18 @@ class VistaEventoSelezionato(QWidget):
         loadUi("../GestioneCalendario/Calendario/mainCalendarioSelezionato.ui", self)
         self.init_list(id=self.id_event)
         self.dataUpdate()
+        self.instruction()
+        self.blockedOptions()
+
+    def instruction(self):
         self.back_button.clicked.connect(self.closeThis)
         self.delete_button.clicked.connect(self.eventDelete)
         self.modify_button.clicked.connect(self.openWindow)
+
+    def blockedOptions(self):
+        if self.userController.utente.utenteTipo == 'Atleta':
+            self.modify_button.setDisabled(True)
+            self.delete_button.setDisabled(True)
 
     def init_list(self, id):
         self.event_list_widget.clear()
@@ -162,6 +179,6 @@ class VistaModifica(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = VistaCalendario(accountController=AccountController('root1', 'pwd'))
+    window = VistaCalendario(accountController=AccountController('root', '0000'))
     window.show()
     sys.exit(app.exec())

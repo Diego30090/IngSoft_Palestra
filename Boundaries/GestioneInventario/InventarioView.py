@@ -265,7 +265,7 @@ if __name__ == '__main__':
     item = np.asarray(item)
     item = item.flatten()
     print(item)'''
-    ex = InventarioView(username='root0')
+    ex = InventarioView(userController=accountController('root1', 'pwd'))
     '''ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
                                  'Impugnatura'],'armi', item)'''
     sys.exit(app.exec_())
