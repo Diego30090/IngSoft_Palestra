@@ -10,7 +10,11 @@ class GestioneAccount(UtenteDB):
     def __init__(self, username, password):
         super().__init__()
         self.utente = Model(None, None, None, None, username, password, None, None, None)
+        self.login()
         self.listaUtenti = []
+
+
+
     def getEveryUtente(self):
         self.listaUtenti.clear()
         listaUser= self.getAllUtenti()

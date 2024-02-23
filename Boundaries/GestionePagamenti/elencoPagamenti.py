@@ -18,6 +18,7 @@ class ElencoPagamenti(QWidget):
         loadUi("../GestionePagamenti/elencoPagamenti.ui", self)
         self.instruction()
         self.populatePagamentiTable()
+        self.lockedOptions()
 
     def instruction(self):
         self.backButton.clicked.connect(self.toMainView)
@@ -33,7 +34,6 @@ class ElencoPagamenti(QWidget):
         listaPagamenti = pagamentiController.getListaPagamentiCompleta()
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 
-
         for row in range(len(listaPagamenti)):
             self.tabellaPagamenti.setItem(row, 0, QTableWidgetItem(str(listaPagamenti[row].id)))
             self.tabellaPagamenti.setItem(row, 1, QTableWidgetItem(str(listaPagamenti[row].timestamp)))
@@ -44,6 +44,17 @@ class ElencoPagamenti(QWidget):
             else:
                 self.tabellaPagamenti.setItem(row, 3, QTableWidgetItem(str('Non Pagato')))
             self.tabellaPagamenti.setItem(row, 4, QTableWidgetItem(str(listaPagamenti[row].dettaglio)))
+
+    def lockedOptions(self):
+        status = True
+        if self.userController.utente.getUtenteTipo() == 'Admin':
+            status = True
+        else:
+            status = False
+        self.creaPagamentoButton.setEnabled(status)
+        self.eliminaPagamentoButton.setEnabled(status)
+        self.modificaPagamentoButton.setEnabled(status)
+        pass
 
     def clickedCell(self, row):
 
@@ -96,6 +107,6 @@ class ElencoPagamenti(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ElencoPagamenti(accountController=accountController('root1', 'pwd'))
+    ex = ElencoPagamenti(accountController=accountController('root0', '0000'))
     ex.show()
     sys.exit(app.exec_())

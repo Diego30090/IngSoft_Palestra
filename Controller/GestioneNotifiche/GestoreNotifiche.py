@@ -44,11 +44,11 @@ class GestoreNotifiche(object):
     def __init__(self):
         def __init__(self, destinatario, timestamp, dettaglio):
 
-        self.db = sqlite3.connect('../../db/dbProject.db')
-        self.cursor = self.db.cursor()
-        self.dbNotifiche = GestoreDatabase.NotificaDB()
-        self.notificheComplete = []  # lista tutte notifiche
-        self.listaNotificheCompleta()  # ottiene la lista notifiche completa
+            self.db = sqlite3.connect('../../db/dbProject.db')
+            self.cursor = self.db.cursor()
+            self.dbNotifiche = GestoreDatabase.NotificaDB()
+            self.notificheComplete = []  # lista tutte notifiche
+            self.listaNotificheCompleta()  # ottiene la lista notifiche completa
 
     def listaNotificheCompleta(self):
         self.notificheComplete.clear()
