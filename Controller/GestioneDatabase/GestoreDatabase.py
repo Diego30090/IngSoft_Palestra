@@ -156,6 +156,10 @@ class PagamentoDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE mittente = '{mittente}';"
         return self.cursor.execute(query).fetchall()
 
+    def getPagamentoByDestinatario(self, destinatario):
+        query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}';"
+        return self.cursor.execute(query).fetchall()
+
     def getAllPagamentiSenzaMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento'"
         return self.cursor.execute(query).fetchall()

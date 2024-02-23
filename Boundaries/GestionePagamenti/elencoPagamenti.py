@@ -31,6 +31,8 @@ class ElencoPagamenti(QWidget):
         # funzione che mostra la lista dei pagamenti nella tabella principale
         tipologiaUtente = self.userController.utente.getUtenteTipo()
         pagamentiController = GestorePagamenti()
+        prova1 = pagamentiController.differenziazionePagamenti(utente = self.userController.utente)
+        print(prova1)
         listaPagamenti = pagamentiController.getListaPagamentiCompleta()
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 

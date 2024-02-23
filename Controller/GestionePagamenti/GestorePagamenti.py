@@ -2,7 +2,7 @@ import datetime
 
 from Controller.GestioneDatabase import GestoreDatabase
 from Model.GestionePagamento import PagamentoModel
-
+from Model.GestioneUtente import UtenteModel
 
 class GestorePagamenti(object):
 
@@ -10,6 +10,13 @@ class GestorePagamenti(object):
         self.dbPagamenti = GestoreDatabase.PagamentoDB()
         self.pagamentiCompleti = []
         self.listaPagamentiCompleta()
+
+    def differenziazionePagamenti(self, utente: UtenteModel):
+        print(utente.__dict__)
+        if utente.utenteTipo == 'Admin':
+            return self.listaPagamentiCompleta()
+        else:
+            return self.listaPagamentiUtente(utente.username)
 
     def listaPagamentiCompleta(self):
         self.pagamentiCompleti.clear()
@@ -20,8 +27,8 @@ class GestorePagamenti(object):
 
     def listaPagamentiUtente(self, username):
         self.pagamentiCompleti.clear()
-        lista = self.dbPagamenti.getPagamentoByMittente(
-            mittente=username)
+        lista = self.dbPagamenti.getPagamentoByDestinatario(
+            destinatario=username)
         for elem in lista:
             pagamento = PagamentoModel.PagamentoModel(*elem)
             self.pagamentiCompleti.append(pagamento)
