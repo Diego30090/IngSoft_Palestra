@@ -38,6 +38,10 @@ class UtenteDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE username = '{username}'"
         return self.cursor.execute(query).fetchall()
 
+    def getUtenteById(self, idUtente):
+        query = f"SELECT * FROM {self.table} WHERE id_utente = '{idUtente}'"
+        return self.cursor.execute(query).fetchone()
+
     def count_user(self, username, password):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
         return self.cursor.execute(query).fetchone()

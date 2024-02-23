@@ -13,7 +13,21 @@ class GestioneAccount(UtenteDB):
         self.login()
         self.listaUtenti = []
 
+    def getSingoloutente(self, userId):
+        utente = self.getUtenteById(idUtente=userId)
+        utente=list(utente)
+        utente.pop(7)
+        return Model(*utente)
 
+    def getUtentePerTipo(self, userType):
+        self.listaUtenti.clear()
+        lista = self.select_utente(user_type=userType)
+        for user in lista:
+            listUser = list(user)
+            listUser.pop(7)
+            utente= Model(*listUser)
+            self.listaUtenti.append(utente)
+        return self.listaUtenti
 
     def getEveryUtente(self):
         self.listaUtenti.clear()
@@ -86,6 +100,16 @@ class GestioneAccount(UtenteDB):
                         telefono=self.utente.getTelefono(),
                         idUtente=self.utente.getIdUtente())
 
+    def userUpdater(self, idUtente, nome, cognome, dataDiNascita, username, password, utenteTipo, email, telefono):
+        self.updateUser(nome= nome,
+                        cognome=cognome,
+                        dataNascita=dataDiNascita,
+                        username=username,
+                        password= password,
+                        tipoUtente=utenteTipo,
+                        email=email,
+                        telefono=telefono,
+                        idUtente=idUtente)
 
 if __name__ == '__main__':
     gest = GestioneAccount('root', '0000')

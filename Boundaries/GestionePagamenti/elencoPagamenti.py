@@ -33,6 +33,7 @@ class ElencoPagamenti(QWidget):
         pagamentiController = GestorePagamenti()
         prova1 = pagamentiController.differenziazionePagamenti(utente = self.userController.utente)
         print(prova1)
+        #Da completare con il differenziamento di utente
         listaPagamenti = pagamentiController.getListaPagamentiCompleta()
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 
