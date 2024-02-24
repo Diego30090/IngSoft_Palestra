@@ -252,3 +252,4 @@ if __name__ == "__main__":
     db = UtenteDB()
     user= db.getUtente('root0')
     #print(user)
+

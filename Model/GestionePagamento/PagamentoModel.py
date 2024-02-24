@@ -60,8 +60,3 @@ class PagamentoModel(object):
         self.descrizione = descrizione
 
 
-class MultaModel(PagamentoModel):
-    def __init__(self):
-        super().__init__(id=None, mittente='Sistema',
-                         destinatario=None, timestamp=None,
-                         importo=None, dettaglio=None, statusMultato=None)
