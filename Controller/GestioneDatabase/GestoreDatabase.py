@@ -208,7 +208,7 @@ class MultaDB(GestioneDatabase):
 class NotificaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('notifica')
+        self.init_table('notifiche')
         pass
 
     def insert_notifica(self, destinatario, timestamp, dettaglio):
@@ -232,6 +232,10 @@ class NotificaDB(GestioneDatabase):
     def get_notifica_destinatario(self, destinatario):
         query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}'"
         return self.cursor.execute(query).fetchall()
+
+    def getListaNotificheCompleta(self):
+        return self.generalizedSelect(self.table)
+
 
 if __name__ == "__main__":
 

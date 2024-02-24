@@ -1,13 +1,11 @@
 import sys
 from PyQt5.uic import loadUi
-from PyQt5.uic.properties import QtGui
 
 from Boundaries.GestioneUtente import mainMenu as menu
-from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
-from Controller.GestionePagamenti.GestorePagamenti import GestorePagamenti
-from Boundaries.GestionePagamenti import creaPagamentoView as creapag
-from Boundaries.GestionePagamenti import modificaPagamento as vispag
+from Controller.GestioneNotifiche.GestoreNotifiche import GestoreNotifiche
+
 
 class ElencoNotifiche(QWidget):
     def __init__(self, accountController: accountController):
@@ -15,12 +13,26 @@ class ElencoNotifiche(QWidget):
         self.username = accountController.utente.getUsername()
         super(ElencoNotifiche, self).__init__()
         loadUi("../GestioneNotifiche/VisualizzaNotifiche.ui", self)
+        self.instruction()
+        self.populateTabellaNotifiche()
+
+    def instruction(self):
         self.backButton.clicked.connect(self.toMainMenu)
-        # self.populateTabellaNotifiche()
+
+    def populateTabellaNotifiche(self):
+        # la funzione popola la tabella notifiche
+        gestoreNotifiche = GestoreNotifiche()
+        listaNotifiche = gestoreNotifiche.listaNotificheCompleta()
+        self.tabellaNotifiche.setRowCount(len(listaNotifiche))
+        for row in range(len(listaNotifiche)):
+            self.tabellaNotifiche.setItem(row, 0, QTableWidgetItem(str(listaNotifiche[row].getDettaglio())))
+            self.tabellaNotifiche.setItem(row, 1, QTableWidgetItem(str(listaNotifiche[row].getData())))
+
     def toMainMenu(self):
         self.screen = menu.MainMenu(userController=self.userController)
         self.screen.show()
         self.close()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
