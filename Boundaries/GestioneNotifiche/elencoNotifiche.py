@@ -25,8 +25,9 @@ class ElencoNotifiche(QWidget):
         listaNotifiche = gestoreNotifiche.listaNotificheCompleta()
         self.tabellaNotifiche.setRowCount(len(listaNotifiche))
         for row in range(len(listaNotifiche)):
-            self.tabellaNotifiche.setItem(row, 0, QTableWidgetItem(str(listaNotifiche[row].getDettaglio())))
-            self.tabellaNotifiche.setItem(row, 1, QTableWidgetItem(str(listaNotifiche[row].getData())))
+            self.tabellaNotifiche.setItem(row, 0, QTableWidgetItem(str(listaNotifiche[row].getData())))
+            self.tabellaNotifiche.setItem(row, 1, QTableWidgetItem(str(listaNotifiche[row].getDettaglio())))
+
 
     def toMainMenu(self):
         self.screen = menu.MainMenu(userController=self.userController)
