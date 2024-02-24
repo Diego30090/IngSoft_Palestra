@@ -236,6 +236,9 @@ class NotificaDB(GestioneDatabase):
     def getListaNotificheCompleta(self):
         return self.generalizedSelect(self.table)
 
+    def getListaNotificheUtente(self):
+        return self.generalizedSelect(self.table)
+
 
 if __name__ == "__main__":
 

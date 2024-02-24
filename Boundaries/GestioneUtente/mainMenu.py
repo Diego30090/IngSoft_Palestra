@@ -8,6 +8,7 @@ from Boundaries.GestioneCalendario import VistaCalendario as cal
 from Boundaries.GestioneInventario import InventarioView as inv
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as AccountController
 from Boundaries.GestionePagamenti import elencoPagamenti as elepag
+from Boundaries.GestioneNotifiche import elencoNotifiche as en
 
 class MainMenu(QWidget):
 
@@ -91,8 +92,9 @@ class MainMenu(QWidget):
         self.close()
 
     def toNotifiche(self):
-        # Va alla pagina delle notifiche
-        pass
+        self.screen = en.ElencoNotifiche(accountController=self.userController)
+        self.screen.show()
+        self.close()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
