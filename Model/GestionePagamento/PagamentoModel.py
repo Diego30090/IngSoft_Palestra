@@ -35,6 +35,9 @@ class PagamentoModel(object):
     def getDescrizione(self):
         return self.descrizione
 
+    def getStatusMultato(self):
+        return self.statusMultato
+
     def setId(self, id):
         self.id = id
 
@@ -59,4 +62,13 @@ class PagamentoModel(object):
     def setDescrizione(self, descrizione):
         self.descrizione = descrizione
 
+    def setStatusMultato(self, status):
+        self.statusMultato = status
 
+class MultaModel(PagamentoModel):
+    def __init__(self, id, mittente, destinatario, timestamp, importo, dettaglio, statusMultato, tipologia, descrizione):
+        super().__init__(id=id, mittente=mittente,
+                         destinatario=destinatario, timestamp=timestamp, importo=importo,
+                         dettaglio=dettaglio, statusMultato=statusMultato,
+                        tipologia=tipologia, descrizione=descrizione)
+        self.setMittente(mittente= "Sistema")
