@@ -16,6 +16,7 @@ class ElencoNotifiche(QWidget):
         super(ElencoNotifiche, self).__init__()
         loadUi("../GestioneNotifiche/VisualizzaNotifiche.ui", self)
         self.backButton.clicked.connect(self.toMainMenu)
+        # self.populateTabellaNotifiche()
     def toMainMenu(self):
         self.screen = menu.MainMenu(userController=self.userController)
         self.screen.show()

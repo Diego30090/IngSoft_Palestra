@@ -11,8 +11,25 @@ class NotifcaModel(object):
         self.dettaglio = dettaglio
         self.timestamp = timestamp
 
+    def getDestinatario(self):
+        return self.destinatario
 
-    def getIdNotifica(self):
+    def getTimestamp(self):
+        return self.timestamp
+
+    def getDettaglio(self):
+        return self.dettaglio
+
+    def setDestinatario(self, newDestinatario):
+        self.destinatario = newDestinatario
+
+    def setTimestamp(self, newTimestamp):
+        self.timestamp = newTimestamp
+
+    def setDettaglio(self, newDettaglio):
+        self.dettaglio = newDettaglio
+
+'''    def getIdNotifica(self):
         return self.idNotifica
 
     def getDescrizione(self):
@@ -41,3 +58,4 @@ class NotifcaModel(object):
 
     def setTipoNotifica(self, newTipoNotifica):
         self.tipoNotifica = newTipoNotifica
+'''

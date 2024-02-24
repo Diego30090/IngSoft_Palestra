@@ -36,6 +36,8 @@
 import datetime
 import sqlite3
 
+from PyQt5.QtWidgets import QTableWidget
+
 from Controller.GestioneDatabase import GestoreDatabase
 from Model.GestioneNotifiche import NotificaModel
 
@@ -49,6 +51,7 @@ class GestoreNotifiche(object):
             self.dbNotifiche = GestoreDatabase.NotificaDB()
             self.notificheComplete = []  # lista tutte notifiche
             self.listaNotificheCompleta()  # ottiene la lista notifiche completa
+            self.populateTabellaNotifiche()
 
     def listaNotificheCompleta(self):
         self.notificheComplete.clear()
@@ -87,4 +90,17 @@ class GestoreNotifiche(object):
 
     def insertNotifica(self, descrizione, destinatario):
         currentDay = str(datetime.date.today())
-        self.dbNotifiche.insert_notifica(destinatario=destinatario, timestamp=datetime.now(), descrizione=descrizione)
+        self.dbNotifiche.insert_notifica(destinatario=destinatario, timestamp=currentDay, descrizione=descrizione)
+
+    def populateTabellaNotifiche(self):
+        query = "SELECT timestamp, dettaglio FROM notifica"
+        self.cursor.execute(query)
+        dati_notifiche = self.cursor.fetchall()
+
+        self.tabellaPagamenti.setRowCount(len(dati_notifiche))
+        self.tabellaPagamenti.setColumnCount(2)
+
+        for riga, record in enumerate(dati_notifiche):
+            for colonna, valore in enumerate(record):
+                item = QTableWidget(str(valore))
+                self.tabellaNotifiche.setItem(riga, colonna, item)
