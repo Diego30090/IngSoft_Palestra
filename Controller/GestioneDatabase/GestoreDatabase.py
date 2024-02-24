@@ -87,7 +87,7 @@ class UtenteDB(GestioneDatabase):
 class EventoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('tasks')
+        self.init_table('eventi')
 
     def event_name_by_date(self, date):
         query = f"SELECT * FROM {self.table} WHERE date = '{date}';"

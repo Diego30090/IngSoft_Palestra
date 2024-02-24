@@ -53,16 +53,22 @@ class VistaCalendario(QWidget):
             self.event_list.append([str(events[event][0]), str(id(self.event_list_widget.item(event)))])
 
     def addNewTask(self):
-        evento = GestoreCalendario.GestoreEventoCalendario(id_event=None, name_event=str(self.line_edit_name.text()),
-                                                           date_event=self.calendar_widget.selectedDate().toPyDate(),
-                                                           location_event=str(self.line_edit_location.text()),
-                                                           time_event=str(self.line_edit_time.text()),
-                                                           organizer_event=str(self.line_edit_organizer.text()),
-                                                           description_event=str(self.line_edit_description.text()))
-        evento.addEventoInDb()
-        self.updateTaskList(evento.getDataEvento())
-        for itemToClear in self.eventDefiner:
-            itemToClear.clear()
+        list = [self.line_edit_name.text(),self.line_edit_location.text(), self.line_edit_time.text(), self.line_edit_organizer.text(),self.line_edit_description.text()]
+        flag = True
+        for elem in list:
+            if elem == '':
+                flag = False
+        if flag is True:
+            evento = GestoreCalendario.GestoreEventoCalendario(id_event=None, name_event=str(self.line_edit_name.text()),
+                                                               date_event=self.calendar_widget.selectedDate().toPyDate(),
+                                                               location_event=str(self.line_edit_location.text()),
+                                                               time_event=str(self.line_edit_time.text()),
+                                                               organizer_event=str(self.line_edit_organizer.text()),
+                                                               description_event=str(self.line_edit_description.text()))
+            evento.addEventoInDb()
+            self.updateTaskList(evento.getDataEvento())
+            for itemToClear in self.eventDefiner:
+                itemToClear.clear()
 
     def viewSelectedTask(self):
         item = id(self.event_list_widget.currentItem())

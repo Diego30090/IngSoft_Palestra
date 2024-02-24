@@ -16,7 +16,7 @@ class GestoreEventoCalendario(GestioneDatabase):
 
     def addEventoInDb(self):
         # definizione della query
-        query = f"INSERT INTO tasks(name, date, description, organizer, time, location) VALUES ('{self.evento.getNomeEvento()}','{str(self.evento.getDataEvento())}', '{self.evento.getDescrizioneEvento()}','{self.evento.getOrganizzatoreEvento()}', '{self.evento.getOrarioEvento()}', '{self.evento.getLuogoEvento()}');"
+        query = f"INSERT INTO eventi(name, date, description, organizer, time, location) VALUES ('{self.evento.getNomeEvento()}','{str(self.evento.getDataEvento())}', '{self.evento.getDescrizioneEvento()}','{self.evento.getOrganizzatoreEvento()}', '{self.evento.getOrarioEvento()}', '{self.evento.getLuogoEvento()}');"
         # esecuzione della query
         self.cursor.execute(query)
         # commit nel database
