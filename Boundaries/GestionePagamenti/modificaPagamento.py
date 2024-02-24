@@ -3,13 +3,9 @@ import sys
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.uic import loadUi
-from Boundaries.GestioneUtente import mainMenu as menu
-from PyQt5.QtWidgets import QApplication, QWidget
-
 from Controller.GestionePagamenti.GestorePagamenti import GestorePagamenti
-from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QWidget,  QTableWidgetItem
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
-from Boundaries.GestionePagamenti import creaPagamentoView as creapag
 from Boundaries.GestionePagamenti import elencoPagamenti as elepag
 
 

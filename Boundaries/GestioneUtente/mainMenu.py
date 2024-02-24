@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QPushButton, QWidget
+from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.uic import loadUi
 from Boundaries.GestioneUtente import loginView as lv, profileView as profile
 from Boundaries.GestioneInformazioniPersonale import personnelManagementView as perman
@@ -42,8 +42,6 @@ class MainMenu(QWidget):
             self.personnelManagement_button.hide()
         elif self.userController.utente.getUtenteTipo() == "Istruttore":
             self.disabler(buttons=self.buttons, opt=istruttore_opt)
-            #self.personnelManagement_button.hide()
-            # self.market_button.hide()
         elif self.userController.utente.getUtenteTipo() == "Admin":
             self.disabler(buttons=self.buttons, opt=admin_opt)
         else:

@@ -235,20 +235,6 @@ class NotificaDB(GestioneDatabase):
 
 if __name__ == "__main__":
 
-    '''
-    db = MultaDB()
-    multa= db.getAllMulte()
-    print(multa)
-
-    for i in range(10):
-        mittente = 'user1'
-        destinatario = 'user2'
-        timestamp = str(datetime.date.today())
-        importo = 5
-        dettaglio = 'multa di prova'
-        db.insert_multa(destinatario, timestamp, importo, dettaglio)
-'''
-
     db = UtenteDB()
     user= db.getUtente('root0')
     #print(user)

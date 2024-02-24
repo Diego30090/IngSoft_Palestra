@@ -200,18 +200,10 @@ class InventarioCRUDView(QWidget):
                 new_combo.addItem('/')
                 new_combo.setFixedWidth(133)
                 new_combo.move(self.horizontalTextDistance, self.verticalDistance)
-                '''if self.item != None:
-                    AllItems = [new_combo.itemText(i) for i in range(new_combo.count())]
-                    for elem in range(len(AllItems)):
-                        if AllItems[elem] == self.item[i]:
-                            new_combo.selected.AllItems[elem]'''
-
                 self.texts.append(new_combo)
             else:
                 new_text = QLineEdit(self)
                 new_text.move(self.horizontalTextDistance, self.verticalDistance)
-                '''if self.item != None:
-                    new_text.text(self.item[i])'''
                 self.texts.append(new_text)
 
             self.verticalDistance += 50
@@ -260,13 +252,6 @@ class InventarioCRUDView(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    '''item = db.select_inventario_by_id(1, 'armi')
-    item = item[1:]
-    item = np.asarray(item)
-    item = item.flatten()
-    print(item)'''
     ex = InventarioView(userController=accountController('root1', 'pwd'))
-    '''ix = insModWindow('Inserisci arma', ['Giacenza', 'Disponibilità', 'Arma', 'D/S', 'Materiale', 'Lunghezza', 'Produttore',
-                                 'Impugnatura'],'armi', item)'''
     sys.exit(app.exec_())
 

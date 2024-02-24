@@ -1,6 +1,4 @@
-from datetime import datetime, date
-import PyQt5
-
+from datetime import datetime
 
 class EventoCalendarioModel(object):
     def __init__(self, idEvento: int, nomeEvento: str, dataEvento: datetime.date, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
