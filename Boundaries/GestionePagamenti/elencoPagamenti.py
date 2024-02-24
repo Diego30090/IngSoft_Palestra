@@ -1,9 +1,7 @@
 import sys
 from PyQt5.uic import loadUi
-from PyQt5.uic.properties import QtGui
-
 from Boundaries.GestioneUtente import mainMenu as menu
-from PyQt5.QtWidgets import QApplication, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem
 from Controller.GestioneUtente.GestoreAccount import GestioneAccount as accountController
 from Controller.GestionePagamenti.GestorePagamenti import GestorePagamenti
 from Boundaries.GestionePagamenti import creaPagamentoView as creapag
@@ -29,10 +27,10 @@ class ElencoPagamenti(QWidget):
 
     def populatePagamentiTable(self):
         # funzione che mostra la lista dei pagamenti nella tabella principale
-        tipologiaUtente = self.userController.utente.getUtenteTipo()
         pagamentiController = GestorePagamenti()
         prova1 = pagamentiController.differenziazionePagamenti(utente = self.userController.utente)
         print(prova1)
+        #Da completare con il differenziamento di utente
         listaPagamenti = pagamentiController.getListaPagamentiCompleta()
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 

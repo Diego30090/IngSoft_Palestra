@@ -36,7 +36,6 @@ class ProfileView(QWidget):
         self.user_type_label = QLabel(self)
 
         # User info
-        # self.username_info = None
         self.name_info = QLineEdit(self)
         self.surname_info = QLineEdit(self)
         self.born_data_info = QDateEdit(self)

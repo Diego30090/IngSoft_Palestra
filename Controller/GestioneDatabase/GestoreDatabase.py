@@ -38,6 +38,10 @@ class UtenteDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE username = '{username}'"
         return self.cursor.execute(query).fetchall()
 
+    def getUtenteById(self, idUtente):
+        query = f"SELECT * FROM {self.table} WHERE id_utente = '{idUtente}'"
+        return self.cursor.execute(query).fetchone()
+
     def count_user(self, username, password):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
         return self.cursor.execute(query).fetchone()
@@ -231,20 +235,7 @@ class NotificaDB(GestioneDatabase):
 
 if __name__ == "__main__":
 
-    '''
-    db = MultaDB()
-    multa= db.getAllMulte()
-    print(multa)
-
-    for i in range(10):
-        mittente = 'user1'
-        destinatario = 'user2'
-        timestamp = str(datetime.date.today())
-        importo = 5
-        dettaglio = 'multa di prova'
-        db.insert_multa(destinatario, timestamp, importo, dettaglio)
-'''
-
     db = UtenteDB()
     user= db.getUtente('root0')
     #print(user)
+

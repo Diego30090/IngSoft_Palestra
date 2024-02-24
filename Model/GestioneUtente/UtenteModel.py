@@ -85,9 +85,3 @@ class UtenteModel(object):
     def setTelefono(self, newTelefono):
         self.telefono = newTelefono
 
-
-if __name__ == '__main__':
-    user = UtenteModel(5, 'diego', 'abbat', '19-02-2022', 'root0', 'pwd', 'Atleta', None, '3425717')
-    print(user.getNome())
-    user.setNome('Giovanni')
-    print(user.getInfo())
