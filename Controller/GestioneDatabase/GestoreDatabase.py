@@ -87,7 +87,7 @@ class UtenteDB(GestioneDatabase):
 class EventoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('tasks')
+        self.init_table('eventi')
 
     def event_name_by_date(self, date):
         query = f"SELECT * FROM {self.table} WHERE date = '{date}';"
@@ -179,7 +179,7 @@ class PagamentoDB(GestioneDatabase):
 class MultaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('multa')
+        self.init_table('pagamento')
         pass
 
     def insert_multa(self, destinatario, timestamp, importo, dettaglio):
@@ -197,12 +197,20 @@ class MultaDB(GestioneDatabase):
     def get_multa_by_id(self, id):
         return self.get_element_by_id(id=id)
 
+    def getPagamentiNonMultati(self):
+        query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento' AND multato =0"
+        return self.cursor.execute(query).fetchall()
+
     def getAllMulte(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'multa'"
         return self.cursor.execute(query).fetchall()
 
     def setMultaPagata(self, idMulta):
         query = f"UPDATE {self.table} SET tipologia = 'multa pagata' WHERE id='{idMulta}'"
+        self.queryExecuteCommitter(query=query)
+
+    def updatePamentoMultato(self, pagamentoId):
+        query = f"UPDATE {self.table} SET multato = 1 WHERE id = {pagamentoId}"
         self.queryExecuteCommitter(query=query)
 
 class NotificaDB(GestioneDatabase):
@@ -239,10 +247,32 @@ class NotificaDB(GestioneDatabase):
     def getListaNotificheUtente(self):
         return self.generalizedSelect(self.table)
 
+class LogDB(GestioneDatabase):
+    def __init__(self):
+        super().__init__()
+        self.init_table('log')
+        pass
+
+    def insertLog(self, data, descrizione):
+        query = f"INSERT INTO {self.table}(data, descrizione) VALUES ('{data}', '{descrizione}')"
+        self.queryExecuteCommitter(query)
+
+    def getAllLogs(self):
+        return self.generalizedSelect(self.table)
+
+    def getLastCheck(self, descrizione):
+        query = f"SELECT * FROM {self.table} WHERE descrizione ='{descrizione}';"
+        results = []
+        results = self.cursor.execute(query).fetchall()
+        if len(results) != 0:
+            return results[-1]
+        else: return []
+
+
+
 
 if __name__ == "__main__":
 
-    db = UtenteDB()
-    user= db.getUtente('root0')
-    #print(user)
+    db = LogDB()
+    db.getParticularLog("Controllo emissione multe")
 
