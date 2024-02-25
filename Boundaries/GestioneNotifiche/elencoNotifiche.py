@@ -22,7 +22,12 @@ class ElencoNotifiche(QWidget):
     def populateTabellaNotifiche(self):
         # la funzione popola la tabella notifiche
         gestoreNotifiche = GestoreNotifiche()
-        listaNotifiche = gestoreNotifiche.listaNotificheCompleta()
+        listaNotifiche = []
+        if self.userController.utente.getUtenteTipo()=="Admin":
+           listaNotifiche = gestoreNotifiche.listaNotificheCompleta()
+        else:
+            listaNotifiche = gestoreNotifiche.listaNotificheUtente(self.userController.utente.getIdUtente())
+
         self.tabellaNotifiche.setRowCount(len(listaNotifiche))
         for row in range(len(listaNotifiche)):
             self.tabellaNotifiche.setItem(row, 0, QTableWidgetItem(str(listaNotifiche[row].getData())))

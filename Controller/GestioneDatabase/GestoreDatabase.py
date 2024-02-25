@@ -274,6 +274,9 @@ class LogDB(GestioneDatabase):
             return []
 
 
+
+
+
 if __name__ == "__main__":
     db = UtenteDB()
     db.deleteUtente(utenteId=5)
