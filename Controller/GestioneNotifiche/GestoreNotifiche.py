@@ -22,7 +22,7 @@ class GestoreNotifiche(object):
 
     def listaNotificheUtente(self, id_utente):
         self.notificheUtente.clear()
-        lista = self.dbNotifiche.getListaNotificheUtente()
+        lista = self.dbNotifiche.get_notifica_destinatario(destinatario=id_utente)
         for elem in lista:
             notifica = NotificaModel.NotificaModel(*elem)
             self.notificheUtente.append(notifica)
@@ -35,6 +35,6 @@ class GestoreNotifiche(object):
 if __name__ == "__main__":
     controller = GestoreNotifiche()
     listaNotifiche = controller.listaNotificheCompleta()
-    ListaNotificheUtente = controller.listaNotificheUtente() ## fagli passare IdUtente per distinguere
-    print(ListaNotificheUtente)
-    print(listaNotifiche)
+    ListaNotificheUtente = controller.listaNotificheUtente(id_utente=2)
+    for elem in ListaNotificheUtente:
+        print(elem.__dict__)

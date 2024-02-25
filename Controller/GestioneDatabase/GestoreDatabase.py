@@ -244,9 +244,6 @@ class NotificaDB(GestioneDatabase):
     def getListaNotificheCompleta(self):
         return self.generalizedSelect(self.table)
 
-    def getListaNotificheUtente(self):
-        return self.generalizedSelect(self.table)
-
 class LogDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
