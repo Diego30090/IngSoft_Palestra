@@ -28,6 +28,7 @@ class PersonnelManagementView(QWidget):
         self.creaUtenteButton.clicked.connect(self.toCreaUtenteView)
         self.modifyUtenteButton.clicked.connect(self.toModificaView)
         self.displayTable.cellClicked.connect(self.clickedCell)
+        self.eliminaUtenteButton.clicked.connect(self.eliminaUtente)
 
     def showTab(self):
         if self.displayTable.isHidden() == True:
@@ -66,6 +67,24 @@ class PersonnelManagementView(QWidget):
 
     def amministratoriTab(self):
         self.genericPopulateTab('Admin')
+
+    def eliminaUtente(self):
+        personaleController = GestorePersonale.GestoreInformazioniPersonale()
+        deleteFlag = False
+
+        if self.currentSelectedUser is not None:
+            if self.accountController.utente.getUtenteTipo() == 'Istruttore':
+                if self.currentSelectedUser.utenteTipo == 'Utente':
+                    deleteFlag = True
+            elif self.accountController.utente.getUtenteTipo() == 'Admin':
+                if self.accountController.utente.idUtente != self.currentSelectedUser.idUtente:
+                    deleteFlag = True
+            else:
+                deleteFlag = False
+        if deleteFlag ==True:
+            personaleController.eliminaUtente(user=self.currentSelectedUser)
+            self.genericPopulateTab(tab=self.currentTableDisplayed)
+
 
     def toCreaUtenteView(self):
         self.insert_window = creaUtenteView(accountController=self.accountController,

@@ -2,7 +2,6 @@ import datetime
 import sqlite3
 
 
-
 class GestioneDatabase(object):
     def __init__(self):
         self.db = sqlite3.connect('../../db/dbProject.db')
@@ -83,6 +82,11 @@ class UtenteDB(GestioneDatabase):
     def getAllUtenti(self):
         query = "SELECT id_utente, nome, cognome, data_nascita, username, password, utente_tipo, email, password FROM utente;"
         return self.cursor.execute(query).fetchall()
+
+    def deleteUtente(self, utenteId):
+        query = f"DELETE FROM {self.table} WHERE id_utente='{utenteId}';"
+        self.queryExecuteCommitter(query)
+
 
 class EventoDB(GestioneDatabase):
     def __init__(self):
@@ -176,6 +180,7 @@ class PagamentoDB(GestioneDatabase):
     def listaPagamentiCompleta(self):
         return self.generalizedSelect(table=self.table)
 
+
 class MultaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
@@ -213,6 +218,7 @@ class MultaDB(GestioneDatabase):
         query = f"UPDATE {self.table} SET multato = 1 WHERE id = {pagamentoId}"
         self.queryExecuteCommitter(query=query)
 
+
 class NotificaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
@@ -244,6 +250,7 @@ class NotificaDB(GestioneDatabase):
     def getListaNotificheCompleta(self):
         return self.generalizedSelect(self.table)
 
+
 class LogDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
@@ -263,10 +270,10 @@ class LogDB(GestioneDatabase):
         results = self.cursor.execute(query).fetchall()
         if len(results) != 0:
             return results[-1]
-        else: return []
+        else:
+            return []
+
 
 if __name__ == "__main__":
-
-    db = LogDB()
-    db.getParticularLog("Controllo emissione multe")
-
+    db = UtenteDB()
+    db.deleteUtente(utenteId=5)

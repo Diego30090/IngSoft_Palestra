@@ -180,7 +180,7 @@
   <widget class="QPushButton" name="modifyUtenteButton">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>250</x>
      <y>590</y>
      <width>139</width>
      <height>91</height>
@@ -215,10 +215,32 @@
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255,70,70)</string>
+    <string notr="true">background-color: rgb(200,200,200)</string>
    </property>
    <property name="text">
     <string>INDIETRO</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="eliminaUtenteButton">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>590</y>
+     <width>139</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,70,70)</string>
+   </property>
+   <property name="text">
+    <string>ELIMINA</string>
    </property>
   </widget>
  </widget>

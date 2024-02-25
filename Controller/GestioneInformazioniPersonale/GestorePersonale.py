@@ -19,6 +19,10 @@ class GestoreInformazioniPersonale(object):
             self.listaUtenti.append(utente)
         return self.listaUtenti
 
+    def eliminaUtente(self, user: UtenteModel):
+        print(user.idUtente)
+        self.dbPersonale.deleteUtente(utenteId=user.getIdUtente())
+
     def getSingoloutente(self, userId):
         utente = self.getUtenteById(userId=userId)
         utente=list(utente)
@@ -57,3 +61,4 @@ class GestoreInformazioniPersonale(object):
                         email=email,
                         telefono=telefono,
                         idUtente=idUtente)
+
