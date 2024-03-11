@@ -121,7 +121,7 @@ class InventarioDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
 
-    def insert_inventario(self, tab_type, info):
+    def insertInventario(self, tab_type, info):
         if tab_type == 'armi':
             query = f"INSERT INTO {tab_type}(giacenza, disponibilita, arma, ds, materiale, lunghezza, produttore, " \
                     f"impugnatura, descrizione) VALUES ({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}', " \
@@ -135,7 +135,7 @@ class InventarioDB(GestioneDatabase):
                     f"({int(info[0])}, {int(info[1])}, '{info[2]}', '{info[3]}', '{info[4]}')"
         self.queryExecuteCommitter(query)
 
-    def select_inventario_by_id(self, id, tab_type):
+    def selectInventarioById(self, id, tab_type):
         query = f"SELECT * FROM {tab_type} WHERE id = {id};"
         return self.cursor.execute(query).fetchone()
 
@@ -226,25 +226,25 @@ class NotificaDB(GestioneDatabase):
         self.initTable('notifiche')
         pass
 
-    def insert_notifica(self, destinatario, timestamp, dettaglio):
+    def insertNotifica(self, destinatario, timestamp, dettaglio):
         query = f"INSERT INTO {self.table}(dettaglio, timestamp) VALUES () ('Sistema','{destinatario}', '{timestamp}', '{dettaglio}', , 'notifica')"
         self.queryExecuteCommitter(query)
 
-    def update_notifica(self, destinatario, timestamp, dettaglio):
+    def updateNotifica(self, destinatario, timestamp, dettaglio):
         query = f"UPDATE {self.table} SET destinatario = '{destinatario}', timestamp= {timestamp}, dettaglio = '{dettaglio}'"
         self.queryExecuteCommitter(query)
 
-    def insert_notifica_utente(self, destinatario, timestamp, dettaglio):
+    def insertNotificaUtente(self, destinatario, timestamp, dettaglio):
         query = f"INSERT INTO {self.table} (dettaglio, timestamp) " \
                 f"VALUES ('Sistema', '{destinatario}', '{dettaglio}'), '{timestamp}';"
         self.queryExecuteCommitter(query)
 
-    def update_notifica_utente(self, destinatario, timestamp, dettaglio):
+    def updateNotificaUtente(self, destinatario, timestamp, dettaglio):
         query = f"UPDATE {self.table} SET (dettaglio, timestamp) " \
                 f"VALUES ('Sistema', '{destinatario}', '{dettaglio}'), '{timestamp}';"
         self.queryExecuteCommitter(query)
 
-    def get_notifica_destinatario(self, destinatario):
+    def getNotificaDestinatario(self, destinatario):
         query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}'"
         return self.cursor.execute(query).fetchall()
 
