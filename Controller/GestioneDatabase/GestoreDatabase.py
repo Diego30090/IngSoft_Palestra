@@ -94,23 +94,23 @@ class EventoDB(GestioneDatabase):
         super().__init__()
         self.initTable('eventi')
 
-    def event_name_by_date(self, date):
+    def eventNameByDate(self, date):
         query = f"SELECT * FROM {self.table} WHERE date = '{date}';"
         val = self.cursor.execute(query)
         val = val.fetchall()
         return val
 
-    def event_by_id(self, id):
+    def eventById(self, id):
         return self.getElementById(id=id)
 
-    def insert_event(self, name, date, location, time, organizer, description):
+    def insertEvent(self, name, date, location, time, organizer, description):
         query = f"INSERT INTO {self.table}(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
         self.queryExecuteCommitter(query)
 
-    def remove_event(self, event_id):
+    def removeEvent(self, event_id):
         self.deleteElementById(id=event_id)
 
-    def update_event(self, event_id, name, location, time, organizer, description):
+    def updateEvent(self, event_id, name, location, time, organizer, description):
         query = f"UPDATE {self.table} SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
                 f"description = '{description}' WHERE id='{event_id}' "
         self.queryExecuteCommitter(query)

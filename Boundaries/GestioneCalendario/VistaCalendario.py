@@ -44,7 +44,7 @@ class VistaCalendario(QWidget):
 
     def updateTaskList(self, date):
         self.event_list_widget.clear()
-        events = self.eventoDB.event_name_by_date(date=date)
+        events = self.eventoDB.eventNameByDate(date=date)
         self.event_list = []
 
         for event in range(len(events)):
@@ -110,8 +110,8 @@ class VistaEventoSelezionato(QWidget):
 
     def init_list(self, id):
         self.event_list_widget.clear()
-        events = self.eventoDB.event_by_id(id)
-        events = self.eventoDB.event_name_by_date(events[2])
+        events = self.eventoDB.eventById(id)
+        events = self.eventoDB.eventNameByDate(events[2])
         self.event_list = []
         for event in range(len(events)):
             item = QListWidgetItem(str(events[event][1]))
@@ -120,7 +120,7 @@ class VistaEventoSelezionato(QWidget):
         self.event_list_widget.setDisabled(True)
 
     def dataUpdate(self):
-        event = self.eventoDB.event_by_id(self.id_event)
+        event = self.eventoDB.eventById(self.id_event)
         name_event = event[1]
         location_event = event[3]
         time_event = event[4]
@@ -133,7 +133,7 @@ class VistaEventoSelezionato(QWidget):
         self.widget_description.addItem(description_event)
 
     def eventDelete(self):
-        self.eventoDB.remove_event(self.id_event)
+        self.eventoDB.removeEvent(self.id_event)
         self.closeThis()
 
     def openWindow(self):
@@ -160,7 +160,7 @@ class VistaModifica(QWidget):
         self.confirm_button.clicked.connect(self.saveChanges)
 
     def init_ui(self):
-        event = self.eventoDB.event_by_id(self.id_event)
+        event = self.eventoDB.eventById(self.id_event)
         widget_list = [self.widget_name, self.widget_location, self.widget_time, self.widget_organizer,
                        self.widget_description]
         wid_value = [event[1], event[3], event[4], event[5], event[6]]
@@ -179,7 +179,7 @@ class VistaModifica(QWidget):
         new_time = self.line_edit_time.text()
         new_organizer = self.line_edit_organizer.text()
         new_description = self.line_edit_description.text()
-        self.eventoDB.update_event(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
+        self.eventoDB.updateEvent(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
         self.init_ui()
 
 
