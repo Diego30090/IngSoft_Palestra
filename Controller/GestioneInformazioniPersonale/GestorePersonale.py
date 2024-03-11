@@ -11,7 +11,7 @@ class GestoreInformazioniPersonale(object):
 
     def getUtentePerTipo(self, userType):
         self.listaUtenti.clear()
-        lista = self.dbPersonale.select_utente(user_type=userType)
+        lista = self.dbPersonale.selectUtente(user_type=userType)
         for user in lista:
             listUser = list(user)
             listUser.pop(7)
@@ -47,9 +47,9 @@ class GestoreInformazioniPersonale(object):
             return [errorFlag, error]
 
     def insertUser(self, nome, cognome, dataNascita, username, password, utenteTipo, email, telefono):
-        self.dbPersonale.insert_user(nome=nome, cognome=cognome, data_nascita=dataNascita,
-                                     username=username, password=password, utente_tipo=utenteTipo,
-                                     email=email, telefono=telefono)
+        self.dbPersonale.insertUser(nome=nome, cognome=cognome, data_nascita=dataNascita,
+                                    username=username, password=password, utente_tipo=utenteTipo,
+                                    email=email, telefono=telefono)
 
     def userUpdater(self, idUtente, nome, cognome, dataDiNascita, username, password, utenteTipo, email, telefono):
         self.dbPersonale.updateUser(nome= nome,

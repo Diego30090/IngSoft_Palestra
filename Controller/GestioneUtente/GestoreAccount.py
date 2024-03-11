@@ -30,7 +30,7 @@ class GestioneAccount(UtenteDB):
 
     def login(self):
         ## Controlla che l'utente desiderato sia presente con username e password indicate
-        value = self.count_user(username=self.utente.getUsername(), password=self.utente.getPassword())
+        value = self.countUser(username=self.utente.getUsername(), password=self.utente.getPassword())
 
         ## Se esiste, istanzia completamente il model
         ## Altrimenti, ritorna un valore di false

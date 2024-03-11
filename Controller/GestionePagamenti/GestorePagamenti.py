@@ -79,7 +79,7 @@ class GestorePagamenti(object):
 
     def modificaPagamento(self, id, dettagli, importo, stato, descrizione):
         stato = self.statusInfo(id=id, stato=stato)
-        self.dbPagamenti.update_pagamento(pagamentoId=id, importo=importo, dettaglio=dettagli, descrizione=descrizione, tipologia=stato)
+        self.dbPagamenti.updatePagamento(pagamentoId=id, importo=importo, dettaglio=dettagli, descrizione=descrizione, tipologia=stato)
 
     def statusInfo(self, id, stato):
         pagamento = self.returnSingoloPagamento(id)
@@ -112,13 +112,13 @@ class GestorePagamenti(object):
 
     def insertPagamento(self, dettaglio, importo, descrizione, mittente, destinatario):
         currentDay = str(datetime.date.today())
-        self.dbPagamenti.insert_pagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay,
-                                          importo=importo, dettaglio=dettaglio, descrizione=descrizione)
+        self.dbPagamenti.insertPagamento(mittente=mittente, destinatario=destinatario, timestamp=currentDay,
+                                         importo=importo, dettaglio=dettaglio, descrizione=descrizione)
         pass
 
     def eliminaPagamento(self, id):
         print(f"pagamento eliminato: {id}")
-        self.dbPagamenti.delete_pagamento(id=id)
+        self.dbPagamenti.deletePagamento(id=id)
         pass
 
 

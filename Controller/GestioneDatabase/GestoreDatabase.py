@@ -6,6 +6,7 @@ class GestioneDatabase(object):
     def __init__(self):
         self.db = sqlite3.connect('../../db/dbProject.db')
         self.cursor = self.db.cursor()
+        self.table = None
 
     def queryExecuteCommitter(self, query):
         self.cursor.execute(query)
@@ -15,14 +16,14 @@ class GestioneDatabase(object):
         query = f"SELECT * FROM {table};"
         return self.cursor.execute(query).fetchall()
 
-    def init_table(self, table):
+    def initTable(self, table):
         self.table = table
 
-    def get_element_by_id(self, id):
+    def getElementById(self, id):
         query = f"SELECT * FROM {self.table} WHERE id='{id}';"
         return self.cursor.execute(query).fetchall()[0]
 
-    def delete_element_by_id(self, id):
+    def deleteElementById(self, id):
         query = f"DELETE FROM {self.table} WHERE id='{id}';"
         self.queryExecuteCommitter(query)
 
@@ -31,7 +32,7 @@ class UtenteDB(GestioneDatabase):
 
     def __init__(self):
         super().__init__()
-        self.init_table('utente')
+        self.initTable('utente')
 
     def getUtente(self, username):
         query = f"SELECT * FROM {self.table} WHERE username = '{username}'"
@@ -41,11 +42,11 @@ class UtenteDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE id_utente = '{idUtente}'"
         return self.cursor.execute(query).fetchone()
 
-    def count_user(self, username, password):
+    def countUser(self, username, password):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{username}' AND password = '{password}';"
         return self.cursor.execute(query).fetchone()
 
-    def check_username(self, user):
+    def checkUsername(self, user):
         query = f"SELECT COUNT(id_utente) FROM {self.table} WHERE username = '{user}';"
         val = str(self.cursor.execute(query).fetchone()[0])
         if val == '1':
@@ -53,12 +54,12 @@ class UtenteDB(GestioneDatabase):
         else:
             return False
 
-    def insert_user(self, nome, cognome, data_nascita, username, password, utente_tipo, email, telefono):
+    def insertUser(self, nome, cognome, data_nascita, username, password, utente_tipo, email, telefono):
         query = f"INSERT INTO {self.table}(nome, cognome, data_nascita, username, password, utente_tipo, email, telefono) VALUES " \
                 f"('{nome}','{cognome}', '{data_nascita}', '{username}', '{password}', '{utente_tipo}', '{email}', '{telefono}') ; "
         self.queryExecuteCommitter(query)
 
-    def select_utente(self, user_type):
+    def selectUtente(self, user_type):
         query = f"SELECT * from {self.table} WHERE utente_tipo = '{user_type}';"
         return self.cursor.execute(query).fetchall()
 
@@ -91,7 +92,7 @@ class UtenteDB(GestioneDatabase):
 class EventoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('eventi')
+        self.initTable('eventi')
 
     def event_name_by_date(self, date):
         query = f"SELECT * FROM {self.table} WHERE date = '{date}';"
@@ -100,14 +101,14 @@ class EventoDB(GestioneDatabase):
         return val
 
     def event_by_id(self, id):
-        return self.get_element_by_id(id=id)
+        return self.getElementById(id=id)
 
     def insert_event(self, name, date, location, time, organizer, description):
         query = f"INSERT INTO {self.table}(name, date, location, time, organizer, description) VALUES ('{name}','{date}', '{location}','{time}', '{organizer}', '{description}');"
         self.queryExecuteCommitter(query)
 
     def remove_event(self, event_id):
-        self.delete_element_by_id(id=event_id)
+        self.deleteElementById(id=event_id)
 
     def update_event(self, event_id, name, location, time, organizer, description):
         query = f"UPDATE {self.table} SET name = '{name}', location = '{location}', time = '{time}', organizer = '{organizer}', " \
@@ -142,23 +143,23 @@ class InventarioDB(GestioneDatabase):
 class PagamentoDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('pagamento')
+        self.initTable('pagamento')
         pass
 
-    def insert_pagamento(self, mittente, destinatario, timestamp, importo, dettaglio, descrizione):
+    def insertPagamento(self, mittente, destinatario, timestamp, importo, dettaglio, descrizione):
         query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato, descrizione) VALUES ('{mittente}','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'pagamento', 0, '{descrizione}');"
         self.queryExecuteCommitter(query)
 
-    def update_pagamento(self, pagamentoId, importo, dettaglio, descrizione, tipologia):
+    def updatePagamento(self, pagamentoId, importo, dettaglio, descrizione, tipologia):
         query = f"UPDATE {self.table} SET importo= '{importo}',dettaglio = '{dettaglio}', descrizione = '{descrizione}', tipologia = '{tipologia}'" \
                 f"WHERE id ={pagamentoId}"
         self.queryExecuteCommitter(query)
 
-    def delete_pagamento(self, id):
-        self.delete_element_by_id(id=id)
+    def deletePagamento(self, id):
+        self.deleteElementById(id=id)
 
     def getPagamentoById(self, id):
-        return self.get_element_by_id(id=id)
+        return self.getElementById(id=id)
 
     def getPagamentoByMittente(self, mittente):
         query = f"SELECT * FROM {self.table} WHERE mittente = '{mittente}';"
@@ -184,23 +185,23 @@ class PagamentoDB(GestioneDatabase):
 class MultaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('pagamento')
+        self.initTable('pagamento')
         pass
 
-    def insert_multa(self, destinatario, timestamp, importo, dettaglio):
+    def insertMulta(self, destinatario, timestamp, importo, dettaglio):
         query = f"INSERT INTO {self.table}(mittente, destinatario, timestamp, importo, dettaglio, tipologia, multato) VALUES ('Sistema','{destinatario}', '{timestamp}', '{importo}', '{dettaglio}', 'multa', 1);"
         self.queryExecuteCommitter(query)
 
-    def update_multa(self, multaId, mittente, destinatario, timestamp, importo, dettaglio):
+    def updateMulta(self, multaId, mittente, destinatario, timestamp, importo, dettaglio):
         query = f"UPDATE {self.table} SET mittente = '{mittente}', destinatario = '{destinatario}', timestamp= {timestamp}, importo= '{importo}',dettaglio = '{dettaglio}'" \
                 f"WHERE id ={multaId}"
         self.queryExecuteCommitter(query)
 
-    def delete_multa(self, id):
-        self.delete_element_by_id(id=id)
+    def deleteMulta(self, id):
+        self.deleteElementById(id=id)
 
-    def get_multa_by_id(self, id):
-        return self.get_element_by_id(id=id)
+    def getMultaById(self, id):
+        return self.getElementById(id=id)
 
     def getPagamentiNonMultati(self):
         query = f"SELECT * FROM {self.table} WHERE tipologia = 'pagamento' AND multato =0"
@@ -214,7 +215,7 @@ class MultaDB(GestioneDatabase):
         query = f"UPDATE {self.table} SET tipologia = 'multa pagata' WHERE id='{idMulta}'"
         self.queryExecuteCommitter(query=query)
 
-    def updatePamentoMultato(self, pagamentoId):
+    def updatePagamentoMultato(self, pagamentoId):
         query = f"UPDATE {self.table} SET multato = 1 WHERE id = {pagamentoId}"
         self.queryExecuteCommitter(query=query)
 
@@ -222,7 +223,7 @@ class MultaDB(GestioneDatabase):
 class NotificaDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('notifiche')
+        self.initTable('notifiche')
         pass
 
     def insert_notifica(self, destinatario, timestamp, dettaglio):
@@ -254,7 +255,7 @@ class NotificaDB(GestioneDatabase):
 class LogDB(GestioneDatabase):
     def __init__(self):
         super().__init__()
-        self.init_table('log')
+        self.initTable('log')
         pass
 
     def insertLog(self, data, descrizione):

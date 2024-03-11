@@ -24,12 +24,12 @@ class GestoreMulta(object):
 
                     elem.setStatusMultato(status=1)
 
-                    self.multeDB.insert_multa(destinatario = elem.destinatario,
-                                              timestamp = str(datetime.date.today()),
-                                              importo = 5.0,
-                                              dettaglio = f'Multa, mancato pagamento di iDPagamento: {elem.id} ' )
+                    self.multeDB.insertMulta(destinatario = elem.destinatario,
+                                             timestamp = str(datetime.date.today()),
+                                             importo = 5.0,
+                                             dettaglio = f'Multa, mancato pagamento di iDPagamento: {elem.id} ')
 
-                    self.multeDB.updatePamentoMultato(pagamentoId=elem.id)
+                    self.multeDB.updatePagamentoMultato(pagamentoId=elem.id)
 
     def dataControl(self, data, days):
         dataOdierna = datetime.date.today()
