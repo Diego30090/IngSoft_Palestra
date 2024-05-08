@@ -35,7 +35,7 @@ class ElencoPagamenti(QWidget):
         self.tabellaPagamenti.setRowCount(len(listaPagamenti))
 
         for row in range(len(listaPagamenti)):
-            self.tabellaPagamenti.setItem(row, 0, QTableWidgetItem(str(listaPagamenti[row].id)))
+            self.tabellaPagamenti.setItem(row, 0, QTableWidgetItem(str(listaPagamenti[row].mittente)))
             self.tabellaPagamenti.setItem(row, 1, QTableWidgetItem(str(listaPagamenti[row].timestamp)))
             self.tabellaPagamenti.setItem(row, 2, QTableWidgetItem(f"{str(listaPagamenti[row].importo)} €"))
             if listaPagamenti[row].tipologia == 'pagamento effettuato' or listaPagamenti[
@@ -60,7 +60,7 @@ class ElencoPagamenti(QWidget):
 
         currentItemId = self.tabellaPagamenti.item(row, 0).text()
         currentPagamento = GestorePagamenti()
-        currentPagamento.getSingoloPagamento(currentItemId)
+        currentPagamento.setSingoloPagamento(currentItemId)
         self.currentRow= row
 
         self.idInfo.setText(currentPagamento.getCurrentIdPagamento())

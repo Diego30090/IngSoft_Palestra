@@ -1,5 +1,4 @@
 import datetime
-import sqlite3
 
 from Controller.GestioneDatabase import GestoreDatabase
 from Model.GestioneNotifiche import NotificaModel

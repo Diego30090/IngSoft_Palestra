@@ -59,7 +59,7 @@ class modificaPagamento(QWidget):
 
     def populatePagamentoDetail(self):
         pagamentiController = GestorePagamenti()
-        pagamentiController.getSingoloPagamento(self.idPagamento)
+        pagamentiController.setSingoloPagamento(self.idPagamento)
 
         self.lineEditImporto.setText(pagamentiController.getCurrentImporto())
         self.lineEditDettagli.setText(pagamentiController.getCurrentDettaglio())

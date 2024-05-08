@@ -275,7 +275,22 @@ class LogDB(GestioneDatabase):
             return []
 
 
+class MenuDB(GestioneDatabase):
 
+    def __init__(self):
+        super().__init__()
+        self.initTable('menuVoice')
+
+    def getAllElements(self):
+        return self.generalizedSelect(table=self.table)
+
+    def getAllParents(self):
+        query = f"SELECT * FROM {self.table} WHERE parentVoice is Null;"
+        return self.cursor.execute(query).fetchall()
+
+    def getAllChild(self):
+        query = f"SELECT * FROM {self.table} WHERE parentVoice is not Null ORDER BY id;"
+        return self.cursor.execute(query).fetchall()
 
 
 if __name__ == "__main__":

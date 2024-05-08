@@ -9,16 +9,16 @@ class GestorePagamenti(object):
     def __init__(self):
         self.dbPagamenti = GestoreDatabase.PagamentoDB()
         self.pagamentiCompleti = []
-        self.listaPagamentiCompleta()
+        self.setListaPagamentiCompleta()
 
     def differenziazionePagamenti(self, utente: UtenteModel):
         print(utente.__dict__)
         if utente.utenteTipo == 'Admin':
-            return self.listaPagamentiCompleta()
+            return self.setListaPagamentiCompleta()
         else:
             return self.listaPagamentiUtente(utente.username)
 
-    def listaPagamentiCompleta(self):
+    def setListaPagamentiCompleta(self):
         self.pagamentiCompleti.clear()
         lista = self.dbPagamenti.listaPagamentiCompleta()
         for elem in lista:
@@ -36,11 +36,11 @@ class GestorePagamenti(object):
     def getListaPagamentiCompleta(self):
         return self.pagamentiCompleti
 
-    def getSingoloPagamento(self, id):
+    def setSingoloPagamento(self, id):
         pagamento = self.dbPagamenti.getPagamentoById(id)
         self.currentPagamento = PagamentoModel.PagamentoModel(*pagamento)
 
-    def returnSingoloPagamento(self, id):
+    def getSingoloPagamento(self, id):
         pagamento = self.dbPagamenti.getPagamentoById(id)
         return PagamentoModel.PagamentoModel(*pagamento)
 
@@ -82,7 +82,7 @@ class GestorePagamenti(object):
         self.dbPagamenti.updatePagamento(pagamentoId=id, importo=importo, dettaglio=dettagli, descrizione=descrizione, tipologia=stato)
 
     def statusInfo(self, id, stato):
-        pagamento = self.returnSingoloPagamento(id)
+        pagamento = self.getSingoloPagamento(id)
         if stato == 'Pagato':
             if pagamento.tipologia == 'pagamento' or pagamento.tipologia == 'pagamento effettuato':
                 return 'pagamento effettuato'
