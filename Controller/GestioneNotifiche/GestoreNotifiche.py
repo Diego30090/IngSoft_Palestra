@@ -21,7 +21,7 @@ class GestoreNotifiche(object):
 
     def listaNotificheUtente(self, id_utente):
         self.notificheUtente.clear()
-        lista = self.dbNotifiche.get_notifica_destinatario(destinatario=id_utente)
+        lista = self.dbNotifiche.getNotificaDestinatario(destinatario=id_utente)
         for elem in lista:
             notifica = NotificaModel.NotificaModel(*elem)
             self.notificheUtente.append(notifica)
@@ -29,7 +29,7 @@ class GestoreNotifiche(object):
 
     def insertNotifica(self, descrizione, destinatario):
         currentDay = str(datetime.date.today())
-        self.dbNotifiche.insert_notifica(destinatario=destinatario, timestamp=currentDay, descrizione=descrizione)
+        self.dbNotifiche.insertNotifica(destinatario=destinatario, timestamp=currentDay, descrizione=descrizione)
 
 if __name__ == "__main__":
     controller = GestoreNotifiche()
