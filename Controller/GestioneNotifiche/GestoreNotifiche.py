@@ -31,6 +31,9 @@ class GestoreNotifiche(object):
         currentDay = str(datetime.date.today())
         self.dbNotifiche.insertNotifica(destinatario=destinatario, timestamp=currentDay, descrizione=descrizione)
 
+    def deleteNotifica(self, idNotifica):
+        self.dbNotifiche.deleteNotifica(id=idNotifica)
+
 if __name__ == "__main__":
     controller = GestoreNotifiche()
     listaNotifiche = controller.listaNotificheCompleta()

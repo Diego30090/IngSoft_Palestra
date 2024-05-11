@@ -248,6 +248,12 @@ class NotificaDB(GestioneDatabase):
         query = f"SELECT * FROM {self.table} WHERE destinatario = '{destinatario}'"
         return self.cursor.execute(query).fetchall()
 
+    def deleteNotifica(self, id):
+        query = f"DELETE FROM {self.table} WHERE idNotifica='{id}';"
+        self.queryExecuteCommitter(query)
+
+
+
     def getListaNotificheCompleta(self):
         return self.generalizedSelect(self.table)
 
@@ -294,5 +300,5 @@ class MenuDB(GestioneDatabase):
 
 
 if __name__ == "__main__":
-    db = UtenteDB()
-    db.deleteUtente(utenteId=5)
+    db = NotificaDB()
+    db.deleteNotifica(id=4)

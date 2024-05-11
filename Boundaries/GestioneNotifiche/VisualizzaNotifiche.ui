@@ -13,22 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="backButton">
-   <property name="geometry">
-    <rect>
-     <x>750</x>
-     <y>502</y>
-     <width>141</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255,70,70)</string>
-   </property>
-   <property name="text">
-    <string>INDIETRO</string>
-   </property>
-  </widget>
   <widget class="QTableWidget" name="tabellaNotifiche">
    <property name="geometry">
     <rect>
@@ -57,6 +41,50 @@
      <string>Dettagli</string>
     </property>
    </column>
+  </widget>
+  <widget class="QPushButton" name="backButton">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>500</y>
+     <width>139</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(200,200,200)</string>
+   </property>
+   <property name="text">
+    <string>INDIETRO</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="eliminaNotificaButton">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>500</y>
+     <width>139</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255,70,70)</string>
+   </property>
+   <property name="text">
+    <string>ELIMINA</string>
+   </property>
   </widget>
  </widget>
  <resources/>
