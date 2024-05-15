@@ -149,42 +149,48 @@ class VistaEventoSelezionato(QWidget):
 
 class VistaModifica(QWidget):
     def __init__(self, id, accountController: AccountController):
-        self.eventoDB = EventoDB()
-        self.userController = accountController
-        self.username = accountController.utente.getUsername()
-        self.id_event = id
         super(VistaModifica, self).__init__()
         loadUi("../GestioneCalendario/Calendario/mainCalendarioModifiche.ui", self)
+        self.userController = accountController
+        self.eventController = GestoreCalendario.GestoreEventoCalendario(None, None, None, None, None, None, None)
+        self.eventController.setEvento(id)
+
         self.init_ui()
+        self.instruction()
+
+    def instruction(self):
         self.negate_button.clicked.connect(self.closeThis)
         self.confirm_button.clicked.connect(self.saveChanges)
 
     def init_ui(self):
-        event = self.eventoDB.eventById(self.id_event)
+        evento =self.eventController.getEvento()
         widget_list = [self.widget_name, self.widget_location, self.widget_time, self.widget_organizer,
                        self.widget_description]
-        wid_value = [event[1], event[3], event[4], event[5], event[6]]
+        wid_value = [evento.getNomeEvento(), evento.getLuogoEvento(), evento.getOrarioEvento(), evento.getDescrizioneEvento(), evento.getDescrizioneEvento()]
+
         for elem in range(len(wid_value)):
             widget_list[elem].clear()
             widget_list[elem].addItem(wid_value[elem])
 
+
     def closeThis(self):
-        self.window = VistaEventoSelezionato(id=self.id_event, accountController=self.userController)
+        self.window = VistaEventoSelezionato(id=self.evento.setIdEvento(), accountController=self.userController)
         self.window.show()
         self.close()
 
     def saveChanges(self):
-        new_name = self.line_edit_name.text()
-        new_location = self.line_edit_location.text()
-        new_time = self.line_edit_time.text()
-        new_organizer = self.line_edit_organizer.text()
-        new_description = self.line_edit_description.text()
-        self.eventoDB.updateEvent(self.id_event, new_name, new_location, new_time, new_organizer, new_description)
+        self.eventController.evento.nomeEvento = self.line_edit_name.text()
+        self.eventController.evento.luogoEvento = self.line_edit_location.text()
+        self.eventController.evento.orarioEvento = self.line_edit_time.text()
+        self.eventController.evento.organizzatoreEvento = self.line_edit_organizer.text()
+        self.eventController.evento.descrizioneEvento = self.line_edit_description.text()
+        self.eventController.updateEvent()
         self.init_ui()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = VistaCalendario(accountController=AccountController('root', '0000'))
+    #window = VistaCalendario(accountController=AccountController('root1', 'pwd'))
+    window = VistaModifica(id = 56, accountController=AccountController('root1', 'pwd'))
     window.show()
     sys.exit(app.exec())

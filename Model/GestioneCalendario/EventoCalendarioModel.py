@@ -1,14 +1,17 @@
 from datetime import datetime
 
 class EventoCalendarioModel(object):
-    def __init__(self, idEvento: int, nomeEvento: str, dataEvento: datetime.date, descrizioneEvento: str, organizzatoreEvento: str, orarioEvento: str, luogoEvento: str):
+    def __init__(self, idEvento: int, nomeEvento: str, dataEvento: datetime.date, luogoEvento: str,orarioEvento: str,organizzatoreEvento: str, descrizioneEvento: str):
         self.idEvento = idEvento
         self.nomeEvento = nomeEvento
         self.dataEvento = dataEvento
-        self.descrizioneEvento = descrizioneEvento
-        self.organizzatoreEvento = organizzatoreEvento
-        self.orarioEvento = orarioEvento
         self.luogoEvento = luogoEvento
+        self.orarioEvento = orarioEvento
+        self.organizzatoreEvento = organizzatoreEvento
+        self.descrizioneEvento = descrizioneEvento
+
+
+
         ## Definizione attributi del modello come nei diagrammi
 
     def getIdEvento(self): ##restituisce il valore desiderato
